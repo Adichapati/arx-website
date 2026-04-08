@@ -34,3 +34,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Local Python cache for bundled skills
+.agent/skills/ui-ux-pro-max/scripts/__pycache__/
