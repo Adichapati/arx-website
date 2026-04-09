@@ -34,6 +34,14 @@ function HeroSection() {
   const [heroInstallTarget, setHeroInstallTarget] = useState<"linux" | "windows">("linux");
   const heroInstallCommand = heroInstallTarget === "windows" ? INSTALLER.windows : INSTALLER.linux;
 
+  useEffect(() => {
+    const ua = typeof navigator !== "undefined" ? navigator.userAgent.toLowerCase() : "";
+    const isWindows = ua.includes("windows");
+    if (isWindows) {
+      setHeroInstallTarget("windows");
+    }
+  }, []);
+
   return (
     <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
