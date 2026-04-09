@@ -31,6 +31,9 @@ function HeroHeadline() {
 
 /* ─── HERO ─── */
 function HeroSection() {
+  const [heroInstallTarget, setHeroInstallTarget] = useState<"linux" | "windows">("linux");
+  const heroInstallCommand = heroInstallTarget === "windows" ? INSTALLER.windows : INSTALLER.linux;
+
   return (
     <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
@@ -67,10 +70,30 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
+          <div className="flex items-center gap-4 pb-3" style={{ borderBottom: "1px solid var(--border)" }}>
+            <button
+              type="button"
+              onClick={() => setHeroInstallTarget("linux")}
+              className="label-caps focus-ring"
+              style={{ color: heroInstallTarget === "linux" ? "var(--heading)" : "var(--muted)" }}
+              aria-pressed={heroInstallTarget === "linux"}
+            >
+              Linux
+            </button>
+            <button
+              type="button"
+              onClick={() => setHeroInstallTarget("windows")}
+              className="label-caps focus-ring"
+              style={{ color: heroInstallTarget === "windows" ? "var(--heading)" : "var(--muted)" }}
+              aria-pressed={heroInstallTarget === "windows"}
+            >
+              Windows
+            </button>
+          </div>
           <CodeBlock
-            code={INSTALLER.linux}
+            code={heroInstallCommand}
             language="bash"
-            label="INSTALL"
+            label={heroInstallTarget === "windows" ? "INSTALL (WINDOWS)" : "INSTALL"}
             step="1."
           />
           <CodeBlock
@@ -80,9 +103,9 @@ function HeroSection() {
             step="2."
           />
           <p className="label-caps pt-3" style={{ color: "var(--muted)" }}>
-            Requires WSL2 on Windows. &nbsp;
+            {heroInstallTarget === "windows" ? "PowerShell one-liner for Windows." : "Shell one-liner for Linux."} &nbsp;
             <Link href="/install" style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-              Windows installer →
+              Full installer options →
             </Link>
           </p>
         </motion.div>
