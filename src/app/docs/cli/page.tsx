@@ -6,18 +6,18 @@ import { CLI_COMMANDS } from "@/lib/constants";
 
 export default function CLIPage() {
   return (
-    <DocsPageLayout title="CLI Reference" description="Complete reference for all ARX command-line commands.">
+    <DocsPageLayout title="CLI Reference" description="Command-line operations for installing, running, and managing ARX.">
       <div className="space-y-8">
         <section>
           <h2 id="overview">Overview</h2>
           <p>
-            The <code>arx</code> CLI is the primary interface for managing your Minecraft server operations. After installation, it&apos;s available as a global command.
+            The global <code>arx</code> command is installed during setup and provides runtime lifecycle control.
           </p>
           <CodeBlock code="arx help" language="bash" />
         </section>
 
         <section>
-          <h2 id="commands">Commands</h2>
+          <h2 id="core-commands">Core commands</h2>
           <div style={{ borderTop: "1px solid var(--border)" }}>
             {CLI_COMMANDS.map((cmd) => (
               <div
@@ -33,46 +33,43 @@ export default function CLIPage() {
         </section>
 
         <section>
-          <h2 id="lifecycle">Lifecycle Commands</h2>
+          <h2 id="lifecycle">Lifecycle examples</h2>
           <CodeBlock
-            code={`# Start the full server stack (Minecraft server, dashboard, AI)\narx start\n\n# Check running status of all components\narx status\n\n# Gracefully shut down all components\narx shutdown`}
+            code={`# Start everything\narx start\n\n# Start single targets\narx start dashboard\narx start server\narx start ollama\n\n# Stop behavior\narx stop        # keeps ollama running\narx shutdown    # stops all services`}
             language="bash"
           />
         </section>
 
         <section>
-          <h2 id="ai-commands">AI Commands</h2>
-          <p>ARX uses Ollama with the Gemma model for local AI features. Configure the AI context window and model settings through the CLI.</p>
+          <h2 id="status-and-logs">Status and diagnostics</h2>
           <CodeBlock
-            code={`# Set AI context window size\narx ai set-context 4096\n\n# The default model is gemma4:e2b\n# Managed through Ollama`}
+            code={`arx status\narx doctor\narx logs dashboard --lines 120\narx logs server --lines 120`}
             language="bash"
           />
         </section>
 
         <section>
-          <h2 id="tunnel-commands">Tunnel Commands</h2>
-          <p>ARX supports optional internet access for your Minecraft server via the Playit tunnel system.</p>
+          <h2 id="ai-commands">AI tuning commands</h2>
           <CodeBlock
-            code={`# Set up Playit tunnel for internet access\narx tunnel setup\n\n# Check tunnel connection status\narx tunnel status`}
+            code={`arx ai set-context 4096\narx restart`}
+            language="bash"
+          />
+          <p>
+            Context values should remain in stable local ranges for your hardware.
+          </p>
+        </section>
+
+        <section>
+          <h2 id="tunnel-commands">Tunnel commands</h2>
+          <CodeBlock
+            code={`arx tunnel setup\narx tunnel setup --url your-name.playit.gg:12345 --enable\narx tunnel status\narx tunnel open\narx tunnel stop`}
             language="bash"
           />
         </section>
 
         <section>
-          <h2 id="global-options">Global Options</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Flag</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><code>--version</code></td><td>Display ARX version</td></tr>
-              <tr><td><code>--help, -h</code></td><td>Display help information</td></tr>
-              <tr><td><code>--verbose, -v</code></td><td>Enable verbose output</td></tr>
-            </tbody>
-          </table>
+          <h2 id="version">Version</h2>
+          <CodeBlock code={`arx version`} language="bash" />
         </section>
       </div>
     </DocsPageLayout>

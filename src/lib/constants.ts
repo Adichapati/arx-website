@@ -1,6 +1,3 @@
-// ARX Website — Single source of truth for all placeholder values and constants.
-// Replace these before production go-live.
-
 export const SITE_CONFIG = {
   name: "ARX",
   fullName: "Agentic Runtime for eXecution",
@@ -14,19 +11,19 @@ export const SITE_CONFIG = {
 
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
-  windows: `powershell -c "irm https://arxmc.studio/install.ps1 | iex"`,
+  windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://arxmc.studio/install.ps1 | iex"`,
   githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
 
 export const CLI_COMMANDS = [
-  { command: "arx start", description: "Launch your Minecraft server and dashboard" },
-  { command: "arx status", description: "Check server health and system status" },
-  { command: "arx shutdown", description: "Gracefully stop everything" },
-  { command: "arx help", description: "View all available commands" },
-  { command: "arx ai set-context 4096", description: "Configure AI context window" },
-  { command: "arx tunnel setup", description: "Set up Playit tunnel for internet access" },
-  { command: "arx tunnel status", description: "Check tunnel connection status" },
+  { command: "arx start", description: "Launch dashboard, Minecraft runtime, and AI services" },
+  { command: "arx status", description: "Show live status for dashboard/server/ollama/playit" },
+  { command: "arx shutdown", description: "Gracefully stop all managed services" },
+  { command: "arx help", description: "Show complete command menu" },
+  { command: "arx ai set-context 4096", description: "Set Gemma context size for local runtime" },
+  { command: "arx tunnel setup", description: "Set up optional Playit tunnel" },
+  { command: "arx tunnel status", description: "Show tunnel status and configured public URL" },
 ] as const;
 
 export const GITHUB = {

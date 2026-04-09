@@ -5,56 +5,50 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function ConfigurationPage() {
   return (
-    <DocsPageLayout title="Configuration" description="Customize ARX settings, AI context, server options, and more.">
+    <DocsPageLayout title="Configuration" description="How ARX stores and applies runtime configuration.">
       <div className="space-y-8">
         <section>
-          <h2 id="config-file">Configuration File</h2>
+          <h2 id="env-file">Primary configuration: .env</h2>
           <p>
-            ARX uses a YAML configuration file located at <code>~/.arx/config.yml</code> (Linux) or <code>%APPDATA%\arx\config.yml</code> (Windows).
+            ARX runtime configuration is generated into a project-local <code>.env</code> file during install.
           </p>
           <CodeBlock
-            code={`# ARX configuration file\n# ~/.arx/config.yml\n\nserver:\n  name: "My Minecraft Server"\n  port: 25565\n  max_players: 20\n  motd: "Powered by ARX"\n\nai:\n  model: "gemma4:e2b"\n  context_size: 4096\n  ollama_host: "http://localhost:11434"\n\ndashboard:\n  port: 3000\n  host: "0.0.0.0"\n\ntunnel:\n  enabled: false\n  provider: "playit"\n\nlogging:\n  level: "info"\n  file: "~/.arx/logs/arx.log"`}
-            language="yaml"
+            code={`# Key runtime examples\nBIND_HOST=0.0.0.0\nBIND_PORT=18890\nAGENT_TRIGGER=gemma\nGEMMA_OLLAMA_MODEL=gemma4:e2b\nGEMMA_CONTEXT_SIZE=4096\nGEMMA_TEMPERATURE=0.2\nPLAYIT_ENABLED=false\nPLAYIT_URL=`}
+            language="bash"
           />
         </section>
 
         <section>
-          <h2 id="server-config">Server Settings</h2>
-          <table>
-            <thead>
-              <tr><th>Key</th><th>Default</th><th>Description</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>server.port</code></td><td>25565</td><td>Minecraft server port</td></tr>
-              <tr><td><code>server.max_players</code></td><td>20</td><td>Maximum concurrent players</td></tr>
-              <tr><td><code>server.motd</code></td><td>&quot;Powered by ARX&quot;</td><td>Server message of the day</td></tr>
-            </tbody>
-          </table>
+          <h2 id="runtime-state">Runtime state file</h2>
+          <p>
+            ARX also persists setup/runtime defaults in <code>state/arx_config.json</code>.
+          </p>
         </section>
 
         <section>
-          <h2 id="ai-config">AI Settings</h2>
-          <p>AI settings control the local Ollama integration. You can also modify these via CLI:</p>
+          <h2 id="recommended-changes">Recommended way to change settings</h2>
+          <p>
+            Prefer CLI commands for common changes so state stays consistent.
+          </p>
           <CodeBlock
-            code={`# Set context window via CLI\narx ai set-context 4096\n\n# Or edit config.yml directly\nai:\n  model: "gemma4:e2b"\n  context_size: 4096`}
-            language="yaml"
+            code={`# Update AI context safely\narx ai set-context 4096\n\n# Apply changes\narx restart`}
+            language="bash"
           />
         </section>
 
         <section>
-          <h2 id="tunnel-config">Tunnel Settings</h2>
-          <p>Enable and configure the Playit tunnel for internet access to your server.</p>
-          <CodeBlock
-            code={`tunnel:\n  enabled: true\n  provider: "playit"\n\n# Or use CLI:\narx tunnel setup`}
-            language="yaml"
-          />
+          <h2 id="network">Networking notes</h2>
+          <ul>
+            <li>Dashboard default: <code>18890</code></li>
+            <li>Minecraft default: <code>25565</code></li>
+            <li>Ollama default local API: <code>127.0.0.1:11434</code></li>
+          </ul>
         </section>
 
         <section>
-          <h2 id="environment">Environment Variables</h2>
-          <p>ARX also supports environment variable overrides with the <code>ARX_</code> prefix:</p>
+          <h2 id="tunnel">Playit tunnel configuration</h2>
           <CodeBlock
-            code={`# Override server port\nexport ARX_SERVER_PORT=25566\n\n# Override AI context size\nexport ARX_AI_CONTEXT_SIZE=8192\n\n# Override dashboard port\nexport ARX_DASHBOARD_PORT=8080`}
+            code={`arx tunnel setup\narx tunnel setup --url your-name.playit.gg:12345 --enable\narx tunnel status`}
             language="bash"
           />
         </section>

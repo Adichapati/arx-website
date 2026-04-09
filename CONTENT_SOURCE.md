@@ -1,42 +1,45 @@
-# ARX Content Source (Single Source of Truth)
+# ARX Website Content Source (Canonical)
 
-Use this file as factual grounding for public website copy.
+Use this document as factual guardrails for website and docs copy.
 
-## Product
+## Product Identity
 
 - Name: ARX
 - Expansion: Agentic Runtime for eXecution
-- Category: Local-first Minecraft operations platform with installer, dashboard, and CLI
+- Category: Local-first Minecraft operations platform
 
-## Positioning
+## Core Positioning
 
-ARX provides a one-command setup experience, local AI assistance via Ollama + Gemma, and operational controls for Minecraft server lifecycle management.
+ARX provides one-command onboarding, local AI assistance via Ollama + Gemma, and practical operations controls through dashboard + CLI.
 
-## Core promises (safe to claim)
+## Allowed claims
 
-- One-command installation flow
-- Local-first model usage through Ollama
-- Gemma-focused workflow (default model: `gemma4:e2b`)
-- Browser dashboard + CLI controls
+- One-command installer flow
+- Local model runtime through Ollama
+- Gemma-focused default model path: `gemma4:e2b`
+- Dashboard + CLI lifecycle operations
 - Optional Playit tunnel support
-- Release integrity verification via checksums
+- Release checksum verification
 
-## Platform support
+## Platform support policy
 
 - Official support: Linux + Windows
 - macOS: best effort
 
-Always present this support policy clearly and consistently.
+Keep this exact support policy consistent across pages.
 
-## Installation placeholder
+## Install endpoints
 
-Until final domain exists, use placeholder URL:
+- `https://arxmc.studio/install.sh`
+- `https://arxmc.studio/install.ps1`
+- `https://arxmc.studio/arx-runtime.zip`
+- `https://arxmc.studio/checksums.txt`
 
-`curl -fsSL https://arxmc.studio/install.sh | bash`
+GitHub fallback:
 
-Also include a GitHub release artifact fallback path.
+- `https://github.com/Adichapati/ARX/releases`
 
-## CLI commands to showcase
+## CLI commands to surface prominently
 
 - `arx start`
 - `arx status`
@@ -46,39 +49,25 @@ Also include a GitHub release artifact fallback path.
 - `arx tunnel setup`
 - `arx tunnel status`
 
-## Security and safety messaging (allowed)
+## Security framing
+
+Safe language:
 
 - local-first operation
 - controlled command pathways
-- command validation safeguards
+- explicit validation safeguards
 - OP-oriented command execution boundaries
 
-Avoid overclaiming: do not claim perfect security or impossible guarantees.
+Avoid absolute claims (e.g., “perfectly secure”).
 
 ## Audience
 
 - Primary: Minecraft server operators and technical hobbyists
-- Secondary: creators wanting streamlined setup and operations tooling
+- Secondary: creators who want a clean setup + operations workflow
 
-## Copy tone
+## Tone
 
-- Confident, technical, clean
+- Confident
+- Practical
 - Beginner-friendly where needed
-- No exaggerated marketing fluff
-
-## Must-have docs topics
-
-- Getting started
-- Install by platform
-- CLI reference
-- Configuration
-- Troubleshooting
-- Security model
-- Release verification
-- Changelog/Release notes
-
-## Domain note
-
-Include a visible note in docs/install pages:
-
-"Installer URL is currently placeholder and will be replaced after domain finalization."
+- No overhype

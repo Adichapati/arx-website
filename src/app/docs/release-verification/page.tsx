@@ -5,47 +5,54 @@ import { CodeBlock } from "@/components/CodeBlock";
 
 export default function ReleaseVerificationPage() {
   return (
-    <DocsPageLayout title="Release Verification" description="How to verify the integrity of your ARX installation.">
+    <DocsPageLayout title="Release Verification" description="Verify installer integrity before running ARX artifacts.">
       <div className="space-y-8">
         <section>
-          <h2 id="why-verify">Why Verify?</h2>
-          <p>Verifying release checksums ensures the files you downloaded are authentic and haven&apos;t been tampered with. ARX provides SHA-256 checksums for every official release.</p>
+          <h2 id="why-verify">Why verify</h2>
+          <p>
+            Verifying checksums ensures downloaded installer artifacts match official releases and were not modified in transit.
+          </p>
         </section>
 
         <section>
-          <h2 id="linux-verify">Linux Verification</h2>
+          <h2 id="official-endpoints">Official endpoints</h2>
           <CodeBlock
-            code={`# 1. Download the checksum file\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\n\n# 2. Download the installer (if not already)\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\n\n# 3. Verify checksum\nsha256sum -c checksums.txt\n# Expected output: install.sh: OK`}
+            code={`https://arxmc.studio/install.sh\nhttps://arxmc.studio/install.ps1\nhttps://arxmc.studio/arx-runtime.zip\nhttps://arxmc.studio/checksums.txt`}
             language="bash"
           />
         </section>
 
         <section>
-          <h2 id="windows-verify">Windows Verification</h2>
+          <h2 id="linux-macos">Linux/macOS verification</h2>
           <CodeBlock
-            code={`# 1. Download the installer and checksum file from GitHub releases\n# or from https://arxmc.studio\n\n# 2. Verify using PowerShell\nGet-FileHash arx-installer.exe -Algorithm SHA256\n\n# 3. Compare the output hash with the value in checksums.txt\n# They should match exactly`}
+            code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\nsha256sum -c checksums.txt`}
             language="bash"
           />
         </section>
 
         <section>
-          <h2 id="github-releases">GitHub Releases</h2>
-          <p>Checksums are also available as release assets on GitHub. Each release includes:</p>
-          <ul>
-            <li>Installer binaries for each platform</li>
-            <li><code>checksums.txt</code> — SHA-256 hashes for all artifacts</li>
-            <li>Release notes with changelog</li>
-          </ul>
+          <h2 id="windows">Windows verification</h2>
+          <CodeBlock
+            code={`Invoke-WebRequest https://arxmc.studio/checksums.txt -OutFile checksums.txt\nInvoke-WebRequest https://arxmc.studio/install.ps1 -OutFile install.ps1\nGet-FileHash .\\install.ps1 -Algorithm SHA256\nGet-Content .\\checksums.txt`}
+            language="bash"
+          />
         </section>
 
         <section>
-          <h2 id="troubleshooting">Verification Fails?</h2>
-          <p>If the checksum does not match:</p>
+          <h2 id="fallback">GitHub fallback</h2>
+          <p>
+            If website endpoints are unavailable, use release assets from:
+          </p>
+          <CodeBlock code={`https://github.com/Adichapati/ARX/releases`} language="bash" />
+        </section>
+
+        <section>
+          <h2 id="failure-policy">If verification fails</h2>
           <ul>
-            <li>Re-download the installer from the official source</li>
-            <li>Ensure you downloaded the correct version for your platform</li>
-            <li>Check that the download completed fully (no partial downloads)</li>
-            <li>If issues persist, report to <code>security@arxmc.studio</code></li>
+            <li>Do not run the file.</li>
+            <li>Delete and re-download from official source.</li>
+            <li>Re-check hash values.</li>
+            <li>Report persistent mismatch to <code>security@arxmc.studio</code>.</li>
           </ul>
         </section>
       </div>

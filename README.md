@@ -1,22 +1,56 @@
-# ARX Website Handoff Repo
+# ARX Website
 
-This repository is a Claude Code handoff package for building the public ARX website.
+Public website and documentation for ARX.
 
-Use these files first:
+Live: https://arxmc.studio
 
-1. `WEBSITE_BUILD_PROMPT.md` — the full implementation prompt for Claude
-2. `CONTENT_SOURCE.md` — source-of-truth product facts and copy constraints
-3. `BRAND_NOTES.md` — design direction and UX/motion expectations
-4. `PLACEHOLDERS.md` — URLs/handles that must be replaced before launch
+## What this repo contains
 
-## Recommended Claude workflow
+- Marketing site pages (`/`, `/install`, `/changelog`, `/status`)
+- Documentation pages (`/docs/*`)
+- Public installer artifacts under `public/`
+  - `install.sh`
+  - `install.ps1`
+  - `arx-runtime.zip`
+  - `checksums.txt`
 
-1. Open this repo in Claude Code.
-2. Ask Claude to read all four handoff docs before generating code.
-3. Ask Claude to scaffold and implement a production-ready site (Next.js + TypeScript preferred).
-4. Ask Claude to output a final `LAUNCH_CHECKLIST.md` and `REPLACEMENT_GUIDE.md`.
+## Tech stack
 
-## Scope reminder
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Framer Motion
 
-- This is only for the public website and docs experience.
-- Do NOT mix this repo with runtime/dashboard backend code.
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Production checks:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Artifact publishing notes
+
+`public/` is treated as release surface for installer files.
+When updating installer artifacts:
+
+1. Replace files in `public/`
+2. Regenerate `public/checksums.txt` (SHA-256)
+3. Commit and push
+4. Confirm live endpoints on `arxmc.studio`
+
+## Runtime repository
+
+ARX runtime/backend repo:
+
+https://github.com/Adichapati/ARX
+
+## License
+
+Use the repository license policy in this project.

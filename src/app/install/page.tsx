@@ -167,7 +167,7 @@ export default function InstallPage() {
                 step="2."
               />
               <CodeBlock
-                code={`Get-FileHash arx-installer.exe -Algorithm SHA256`}
+                code={`Get-FileHash install.ps1 -Algorithm SHA256\nGet-FileHash arx-runtime.zip -Algorithm SHA256`}
                 language="bash"
                 label="VERIFY (WINDOWS)"
                 step="2."
