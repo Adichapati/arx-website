@@ -14,7 +14,7 @@ export const SITE_CONFIG = {
 
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
-  windows: `irm https://arxmc.studio/install.ps1 | iex`,
+  windows: `powershell -c "irm https://arxmc.studio/install.ps1 | iex"`,
   githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
