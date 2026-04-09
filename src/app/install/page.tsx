@@ -2,254 +2,204 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Download,
-  Terminal,
-  Shield,
-  CheckCircle2,
-  AlertCircle,
-  ExternalLink,
-  Info,
-} from "lucide-react";
+import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { AnimatedButton } from "@/components/AnimatedButton";
+import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { INSTALLER, GITHUB } from "@/lib/constants";
-import type { Metadata } from "next";
+import { ExternalLink } from "lucide-react";
 
 type Platform = "linux" | "windows" | "macos";
+
+const PLATFORMS: { id: Platform; label: string }[] = [
+  { id: "linux", label: "Linux" },
+  { id: "windows", label: "Windows" },
+  { id: "macos", label: "macOS" },
+];
+
+const POST_INSTALL = [
+  { step: "1.", cmd: "arx start", label: "START" },
+  { step: "2.", cmd: "arx status", label: "STATUS" },
+  { step: "3.", cmd: "arx help", label: "HELP" },
+];
+
+const TROUBLESHOOT = [
+  { issue: "Command not found after install", fix: "Restart your terminal or run source ~/.bashrc" },
+  { issue: "Ollama fails to start", fix: "Ensure port 11434 is free and run ollama serve" },
+  { issue: "Permission denied on Linux", fix: "Run the install script with sudo" },
+  { issue: "Windows Defender blocks script", fix: "Run PowerShell as Administrator with execution policy bypass" },
+];
 
 export default function InstallPage() {
   const [activePlatform, setActivePlatform] = useState<Platform>("linux");
 
-  const platforms: { id: Platform; label: string; icon: string; supported: string }[] = [
-    { id: "linux", label: "Linux", icon: "🐧", supported: "Official" },
-    { id: "windows", label: "Windows", icon: "🪟", supported: "Official" },
-    { id: "macos", label: "macOS", icon: "🍎", supported: "Best Effort" },
-  ];
+  const installCmds: Record<Platform, { cmd: string; note: string }> = {
+    linux: {
+      cmd: INSTALLER.linux,
+      note: "Installs ARX, Ollama, and pulls gemma4:e2b automatically.",
+    },
+    windows: {
+      cmd: INSTALLER.windows,
+      note: "Run PowerShell as Administrator. Handles Ollama installation and model setup.",
+    },
+    macos: {
+      cmd: INSTALLER.linux,
+      note: "macOS is best-effort. Community contributions welcome.",
+    },
+  };
 
   return (
-    <div className="min-h-screen pt-24 pb-20">
+    <div className="min-h-screen pt-14">
       {/* Header */}
-      <section className="section-padding !pt-8 !pb-12">
-        <div className="container-narrow text-center">
-          <ScrollReveal>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-arx-bg-card/60 border border-arx-border mb-6">
-              <Download className="w-3.5 h-3.5 text-arx-cyan" />
-              <span className="text-xs font-medium text-arx-text-secondary">Installation</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-              Install <span className="text-gradient-cyan">ARX</span>
-            </h1>
-            <p className="text-arx-text-secondary max-w-xl mx-auto">
-              Get ARX running on your system in one command. Linux and Windows are officially
-              supported. macOS is best effort.
+      <section className="px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto" style={{ borderBottom: "1px solid var(--border)" }}>
+        <ScrollReveal>
+          <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Installation</p>
+          <h1 className="display font-bold mb-4"
+            style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
+            Install ARX.
+          </h1>
+          <p className="max-w-xl text-base leading-relaxed mt-6" style={{ color: "var(--body)" }}>
+            One command installs ARX, Ollama, and the Gemma model.
+            Linux and Windows are officially supported. macOS is best effort.
+          </p>
+        </ScrollReveal>
+      </section>
+
+      <div className="px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
+        {/* Placeholder notice */}
+        <ScrollReveal>
+          <div className="py-4" style={{ borderBottom: "1px solid var(--border)" }}>
+            <p className="label-caps" style={{ color: "var(--muted)" }}>
+              ⚠ Installer URL is a placeholder pending domain finalization.{" "}
+              <a href={INSTALLER.githubFallback} target="_blank" rel="noopener noreferrer"
+                style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                View GitHub Releases →
+              </a>
             </p>
-          </ScrollReveal>
+          </div>
+        </ScrollReveal>
+
+        {/* Platform selector — text links in column grid */}
+        <div className="grid" style={{ gridTemplateColumns: `repeat(${PLATFORMS.length}, 1fr)`, borderBottom: "1px solid var(--border)" }}>
+          {PLATFORMS.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => setActivePlatform(p.id)}
+              className="relative py-4 text-left focus-ring"
+              style={{
+                borderRight: p.id !== "macos" ? "1px solid var(--border)" : "none",
+                paddingLeft: p.id !== "linux" ? "1.5rem" : "0",
+              }}
+            >
+              {activePlatform === p.id && (
+                <motion.div
+                  layoutId="platform-underline"
+                  className="absolute bottom-0 left-0 right-0 h-[2px]"
+                  style={{ backgroundColor: "var(--accent)" }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="label-caps" style={{ color: activePlatform === p.id ? "var(--heading)" : "var(--muted)" }}>
+                {p.label}
+                {p.id === "macos" && <span style={{ color: "var(--muted)" }}> (best effort)</span>}
+              </span>
+            </button>
+          ))}
         </div>
-      </section>
 
-      {/* Placeholder notice */}
-      <div className="container-narrow px-4 sm:px-6 mb-8">
+        {/* Install command */}
         <ScrollReveal>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
-            <Info className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-yellow-200/80">
-              Installer URL is currently a placeholder and will be replaced after domain finalization.
+          <motion.div
+            key={activePlatform}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="py-8"
+            style={{ borderBottom: "1px solid var(--border)" }}
+          >
+            <CodeBlock
+              code={installCmds[activePlatform].cmd}
+              language="bash"
+              label="INSTALL"
+              step="1."
+            />
+            <p className="text-sm mt-4" style={{ color: "var(--muted)", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", letterSpacing: "0.06em" }}>
+              {installCmds[activePlatform].note}
             </p>
-          </div>
-        </ScrollReveal>
-      </div>
-
-      {/* Platform tabs */}
-      <section className="container-narrow px-4 sm:px-6 mb-12">
-        <ScrollReveal>
-          <div className="flex gap-2 p-1 bg-arx-bg-card/50 border border-arx-border rounded-xl w-fit mx-auto mb-8">
-            {platforms.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => setActivePlatform(p.id)}
-                className={`relative px-5 py-2.5 rounded-lg text-sm font-medium transition-all focus-ring ${
-                  activePlatform === p.id
-                    ? "text-arx-bg"
-                    : "text-arx-text-secondary hover:text-arx-text-primary"
-                }`}
-              >
-                {activePlatform === p.id && (
-                  <motion.div
-                    layoutId="platform-tab"
-                    className="absolute inset-0 bg-arx-cyan rounded-lg"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>{p.icon}</span>
-                  <span>{p.label}</span>
-                </span>
-              </button>
-            ))}
-          </div>
+          </motion.div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <div className="space-y-6">
-            {/* Install command */}
-            {activePlatform === "linux" && (
-              <div>
-                <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <Terminal className="w-5 h-5 text-arx-cyan" />
-                  Quick Install (Linux)
-                </h2>
+        {/* Post-install */}
+        <section className="py-16" style={{ borderBottom: "1px solid var(--border)" }}>
+          <ScrollReveal>
+            <p className="label-caps mb-8" style={{ color: "var(--muted)" }}>After Installation</p>
+            <div className="space-y-0 max-w-xl">
+              {POST_INSTALL.map((item) => (
                 <CodeBlock
-                  code={INSTALLER.linux}
+                  key={item.cmd}
+                  code={item.cmd}
                   language="bash"
-                  title="Terminal"
+                  label={item.label}
+                  step={item.step}
                 />
-                <p className="text-sm text-arx-text-secondary mt-3">
-                  This script installs ARX, sets up Ollama, and pulls the{" "}
-                  <code className="px-1.5 py-0.5 bg-arx-bg-card rounded text-arx-cyan text-xs">
-                    {INSTALLER.model}
-                  </code>{" "}
-                  model automatically.
-                </p>
-              </div>
-            )}
-
-            {activePlatform === "windows" && (
-              <div>
-                <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <Terminal className="w-5 h-5 text-arx-cyan" />
-                  Quick Install (Windows — PowerShell)
-                </h2>
-                <CodeBlock
-                  code={INSTALLER.windows}
-                  language="bash"
-                  title="PowerShell (Run as Administrator)"
-                />
-                <p className="text-sm text-arx-text-secondary mt-3">
-                  Run PowerShell as Administrator. The script handles Ollama installation and model setup.
-                </p>
-              </div>
-            )}
-
-            {activePlatform === "macos" && (
-              <div>
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20 mb-4">
-                  <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-yellow-200">Best Effort Support</p>
-                    <p className="text-sm text-yellow-200/70 mt-1">
-                      macOS is not officially supported. The installer may work but is not regularly tested.
-                      Community contributions welcome.
-                    </p>
-                  </div>
-                </div>
-                <CodeBlock
-                  code={INSTALLER.linux}
-                  language="bash"
-                  title="Terminal (macOS)"
-                />
-              </div>
-            )}
-
-            {/* GitHub fallback */}
-            <div className="glass-card p-6">
-              <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                <ExternalLink className="w-4 h-4 text-arx-text-muted" />
-                Alternative: GitHub Release Download
-              </h3>
-              <p className="text-sm text-arx-text-secondary mb-3">
-                You can also download release assets directly from GitHub:
-              </p>
-              <AnimatedButton
-                href={INSTALLER.githubFallback}
-                variant="secondary"
-                size="sm"
-                external
-              >
-                View GitHub Releases
-              </AnimatedButton>
+              ))}
             </div>
-          </div>
-        </ScrollReveal>
-      </section>
+          </ScrollReveal>
+        </section>
 
-      {/* Post-install */}
-      <section className="container-narrow px-4 sm:px-6 mb-12">
-        <ScrollReveal>
-          <div className="gradient-line mb-12" />
-          <h2 className="text-2xl font-bold mb-6">After Installation</h2>
-          <p className="text-arx-text-secondary mb-6">
-            Once installed, the <code className="px-1.5 py-0.5 bg-arx-bg-card rounded text-arx-cyan text-xs">arx</code> command
-            is available globally. Try these commands:
-          </p>
-          <CodeBlock
-            code={`# Start the server stack\narx start\n\n# Check status\narx status\n\n# Gracefully shut down\narx shutdown\n\n# Get help\narx help`}
-            language="bash"
-            title="Post-install commands"
-          />
-        </ScrollReveal>
-      </section>
+        {/* Verification */}
+        <section className="py-16" style={{ borderBottom: "1px solid var(--border)" }}>
+          <ScrollReveal>
+            <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Release Verification</p>
+            <h2 className="display font-semibold mb-8"
+              style={{ fontSize: "clamp(1.5rem, 3vw, 2.5rem)", color: "var(--heading)" }}>
+              Verify your install.
+            </h2>
+            <div className="max-w-xl space-y-0">
+              <CodeBlock
+                code={`curl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/checksums.txt -o checksums.txt`}
+                language="bash"
+                label="DOWNLOAD CHECKSUMS"
+                step="1."
+              />
+              <CodeBlock
+                code={`sha256sum -c checksums.txt`}
+                language="bash"
+                label="VERIFY (LINUX)"
+                step="2."
+              />
+              <CodeBlock
+                code={`Get-FileHash arx-installer.exe -Algorithm SHA256`}
+                language="bash"
+                label="VERIFY (WINDOWS)"
+                step="2."
+              />
+            </div>
+            <Link href="/docs/release-verification" className="btn-secondary inline-flex mt-8">
+              Full Verification Guide
+            </Link>
+          </ScrollReveal>
+        </section>
 
-      {/* Verification */}
-      <section className="container-narrow px-4 sm:px-6 mb-12">
-        <ScrollReveal>
-          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-            <Shield className="w-6 h-6 text-arx-violet" />
-            Verify Your Installation
-          </h2>
-          <p className="text-arx-text-secondary mb-6">
-            Every ARX release includes SHA-256 checksums. Verify your download:
-          </p>
-          <CodeBlock
-            code={`# Download checksum file\ncurl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/checksums.txt -o checksums.txt\n\n# Verify (Linux)\nsha256sum -c checksums.txt\n\n# Verify (Windows PowerShell)\nGet-FileHash arx-installer.exe -Algorithm SHA256`}
-            language="bash"
-            title="Release verification"
-          />
-          <div className="mt-4">
-            <AnimatedButton href="/docs/release-verification" variant="ghost" showArrow>
-              Full verification guide
-            </AnimatedButton>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* Troubleshooting */}
-      <section className="container-narrow px-4 sm:px-6">
-        <ScrollReveal>
-          <h2 className="text-2xl font-bold mb-6">Quick Troubleshooting</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              {
-                issue: "Command not found after install",
-                fix: "Restart your terminal or run `source ~/.bashrc`",
-              },
-              {
-                issue: "Ollama fails to start",
-                fix: "Ensure port 11434 is free and run `ollama serve`",
-              },
-              {
-                issue: "Permission denied on Linux",
-                fix: "Run the install script with `sudo`",
-              },
-              {
-                issue: "Windows Defender blocks script",
-                fix: "Run PowerShell as Administrator with execution policy bypass",
-              },
-            ].map((item, i) => (
-              <div key={i} className="glass-card p-5">
-                <h3 className="text-sm font-semibold text-arx-text-primary mb-1.5">{item.issue}</h3>
-                <p className="text-sm text-arx-text-secondary">{item.fix}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-6">
-            <AnimatedButton href="/docs/troubleshooting" variant="secondary" showArrow>
-              Full Troubleshooting Guide
-            </AnimatedButton>
-          </div>
-        </ScrollReveal>
-      </section>
+        {/* Troubleshooting */}
+        <section className="py-16">
+          <ScrollReveal>
+            <p className="label-caps mb-8" style={{ color: "var(--muted)" }}>Quick Troubleshooting</p>
+            <div className="space-y-0 max-w-2xl" style={{ borderTop: "1px solid var(--border)" }}>
+              {TROUBLESHOOT.map((item, i) => (
+                <div key={i} className="py-5" style={{ borderBottom: "1px solid var(--border)" }}>
+                  <p className="text-sm font-medium mb-1" style={{ color: "var(--heading)" }}>{item.issue}</p>
+                  <p className="text-sm" style={{ color: "var(--body)", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem" }}>
+                    {item.fix}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <Link href="/docs/troubleshooting" className="btn-secondary inline-flex mt-8">
+              Full Troubleshooting Guide →
+            </Link>
+          </ScrollReveal>
+        </section>
+      </div>
     </div>
   );
 }

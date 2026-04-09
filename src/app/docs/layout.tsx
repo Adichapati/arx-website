@@ -6,13 +6,9 @@ export const metadata: Metadata = {
   description: "ARX documentation — guides, CLI reference, configuration, security, and troubleshooting.",
 };
 
-export default function DocsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen pt-16 flex">
+    <div className="min-h-screen flex" style={{ paddingTop: "3.5rem" }}>
       <DocsSidebar />
       <div className="flex-1 min-w-0">
         {children}

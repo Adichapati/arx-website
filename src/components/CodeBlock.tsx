@@ -1,81 +1,79 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Check, Copy } from "lucide-react";
 
 interface CodeBlockProps {
   code: string;
   language?: string;
-  title?: string;
-  showLineNumbers?: boolean;
+  label?: string;
+  /** Numbered step prefix e.g. "1." */
+  step?: string;
 }
 
-export function CodeBlock({
-  code,
-  language = "bash",
-  title,
-  showLineNumbers = false,
-}: CodeBlockProps) {
+export function CodeBlock({ code, language = "bash", label, step }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      document.body.appendChild(textarea);
-      textarea.select();
+      const t = document.createElement("textarea");
+      t.value = code;
+      document.body.appendChild(t);
+      t.select();
       document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      document.body.removeChild(t);
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }, [code]);
 
-  const lines = code.split("\n");
-
   return (
-    <div className="group relative code-block">
-      {/* Header */}
-      {title && (
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-arx-border bg-arx-bg-elevated/50">
-          <span className="text-xs font-medium text-arx-text-secondary">{title}</span>
-          <span className="text-xs text-arx-text-muted">{language}</span>
+    <div className="group" style={{ borderBottom: "1px solid var(--border)" }}>
+      {/* Header row */}
+      {(label || step) && (
+        <div
+          className="flex items-center justify-between px-0 py-2"
+          style={{ borderBottom: "1px solid var(--border)" }}
+        >
+          <span className="label-caps" style={{ color: "var(--muted)" }}>
+            {step && <span style={{ color: "var(--heading)" }}>{step} </span>}
+            {label}
+          </span>
+          <button
+            onClick={handleCopy}
+            className="label-caps transition-colors duration-200 focus:outline-none focus-visible:underline"
+            style={{ color: copied ? "var(--accent)" : "var(--muted)", cursor: "pointer" }}
+            aria-label={copied ? "Copied" : "Copy code"}
+          >
+            {copied ? "COPIED" : "COPY"}
+          </button>
         </div>
       )}
 
-      {/* Copy button */}
-      <button
-        onClick={handleCopy}
-        className={`absolute top-2 right-2 ${
-          title ? "top-12" : ""
-        } p-1.5 rounded-md bg-arx-bg-card/80 border border-arx-border text-arx-text-secondary hover:text-arx-cyan hover:border-arx-cyan/30 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus-ring z-10`}
-        aria-label={copied ? "Copied" : "Copy code"}
-      >
-        {copied ? (
-          <Check className="w-3.5 h-3.5 text-green-400" />
-        ) : (
-          <Copy className="w-3.5 h-3.5" />
+      {/* Code area */}
+      <div className="relative">
+        {/* Copy button when no header */}
+        {!label && !step && (
+          <button
+            onClick={handleCopy}
+            className="label-caps absolute top-3 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:opacity-100 focus:outline-none"
+            style={{ color: copied ? "var(--accent)" : "var(--muted)", cursor: "pointer" }}
+            aria-label={copied ? "Copied" : "Copy code"}
+          >
+            {copied ? "COPIED" : "COPY"}
+          </button>
         )}
-      </button>
 
-      {/* Code */}
-      <div className="overflow-x-auto">
-        <pre className="p-4 text-sm leading-relaxed">
+        <pre
+          className="py-4 overflow-x-auto text-sm leading-relaxed"
+          style={{ fontFamily: "'JetBrains Mono', monospace", lineHeight: 1.7 }}
+        >
           <code>
-            {lines.map((line, i) => (
+            {code.split("\n").map((line, i) => (
               <div key={i} className="flex">
-                {showLineNumbers && (
-                  <span className="inline-block w-8 text-right pr-4 text-arx-text-muted select-none flex-shrink-0">
-                    {i + 1}
-                  </span>
-                )}
-                <span className="flex-1">
-                  {colorizeCode(line, language)}
+                <span style={{ color: colorize(line, language) === "comment" ? "var(--muted)" : line.includes("#") ? undefined : undefined }}>
+                  {renderLine(line, language)}
                 </span>
               </div>
             ))}
@@ -86,50 +84,47 @@ export function CodeBlock({
   );
 }
 
-function colorizeCode(line: string, language: string): React.ReactNode {
+function colorize(line: string, language: string): string {
+  if (line.trimStart().startsWith("#")) return "comment";
+  return "default";
+}
+
+function renderLine(line: string, language: string): React.ReactNode {
   if (language === "bash" || language === "shell") {
-    // Colorize comments
     if (line.trimStart().startsWith("#")) {
-      return <span className="text-arx-text-muted">{line}</span>;
+      return <span style={{ color: "var(--muted)" }}>{line}</span>;
     }
-    // Colorize the prompt
-    if (line.startsWith("$") || line.startsWith(">")) {
+    if (line.startsWith("$")) {
       return (
         <>
-          <span className="text-arx-cyan">{line[0]}</span>
-          <span className="text-arx-text-primary">{line.slice(1)}</span>
+          <span style={{ color: "var(--accent)" }}>$</span>
+          <span style={{ color: "var(--heading)" }}>{line.slice(1)}</span>
         </>
       );
     }
-    // Colorize commands (first word)
-    const parts = line.match(/^(\s*)(\S+)(.*)/);
-    if (parts) {
+    // Color first word (command) in accent
+    const m = line.match(/^(\s*)(\S+)(.*)/);
+    if (m) {
       return (
         <>
-          <span>{parts[1]}</span>
-          <span className="text-arx-cyan">{parts[2]}</span>
-          <span className="text-arx-text-primary">{parts[3]}</span>
+          <span>{m[1]}</span>
+          <span style={{ color: "var(--accent)" }}>{m[2]}</span>
+          <span style={{ color: "var(--heading)" }}>{m[3]}</span>
         </>
       );
     }
   }
-
   if (language === "yaml" || language === "yml") {
-    const keyVal = line.match(/^(\s*)([\w-]+)(:)(.*)/);
-    if (keyVal) {
-      return (
-        <>
-          <span>{keyVal[1]}</span>
-          <span className="text-arx-cyan">{keyVal[2]}</span>
-          <span className="text-arx-text-muted">{keyVal[3]}</span>
-          <span className="text-arx-text-primary">{keyVal[4]}</span>
-        </>
-      );
-    }
-    if (line.trimStart().startsWith("#")) {
-      return <span className="text-arx-text-muted">{line}</span>;
-    }
+    if (line.trimStart().startsWith("#")) return <span style={{ color: "var(--muted)" }}>{line}</span>;
+    const m = line.match(/^(\s*)([\w-]+)(:)(.*)/);
+    if (m) return (
+      <>
+        <span>{m[1]}</span>
+        <span style={{ color: "var(--accent)" }}>{m[2]}</span>
+        <span style={{ color: "var(--muted)" }}>{m[3]}</span>
+        <span style={{ color: "var(--heading)" }}>{m[4]}</span>
+      </>
+    );
   }
-
-  return <span className="text-arx-text-primary">{line}</span>;
+  return <span style={{ color: "var(--heading)" }}>{line}</span>;
 }

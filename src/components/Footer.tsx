@@ -1,48 +1,44 @@
 import Link from "next/link";
-import { Terminal, Github, MessageCircle } from "lucide-react";
+import { Github } from "lucide-react";
 import { NAV_LINKS, SOCIAL_LINKS, SITE_CONFIG } from "@/lib/constants";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-arx-border bg-arx-bg-elevated/50">
-      {/* Gradient line */}
-      <div className="gradient-line" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer style={{ borderTop: "1px solid var(--border)", backgroundColor: "var(--bg-nav)" }}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        {/* Main footer grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0" style={{ borderBottom: "1px solid var(--border)" }}>
           {/* Brand */}
-          <div className="md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-4" aria-label="ARX Home">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-arx-cyan to-arx-violet flex items-center justify-center">
-                <Terminal className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-lg font-bold tracking-tight">
-                <span className="text-arx-text-primary">A</span>
-                <span className="text-arx-cyan">R</span>
-                <span className="text-arx-text-primary">X</span>
+          <div className="col-span-2 md:col-span-1 py-16 pr-8 md:border-r" style={{ borderColor: "var(--border)" }}>
+            <Link href="/" aria-label="ARX Home" className="block mb-4">
+              <span className="display font-bold text-2xl" style={{ color: "var(--heading)", letterSpacing: "-0.03em" }}>
+                {SITE_CONFIG.name}
               </span>
             </Link>
-            <p className="text-sm text-arx-text-secondary leading-relaxed">
-              {SITE_CONFIG.tagline}
-              <br />
-              Local AI. Full control.
+            <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--muted)" }}>
+              Local-first Minecraft<br />operations platform.
             </p>
+            <a
+              href={SOCIAL_LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="inline-flex items-center gap-2 label-caps footer-link"
+            >
+              <Github className="w-3.5 h-3.5" />
+              GitHub
+            </a>
           </div>
 
           {/* Navigation */}
-          <div>
-            <h3 className="text-sm font-semibold text-arx-text-primary mb-4 uppercase tracking-wider">
-              Navigation
-            </h3>
-            <ul className="space-y-2.5">
+          <div className="py-16 px-8 md:border-r" style={{ borderColor: "var(--border)" }}>
+            <p className="label-caps mb-6">Navigation</p>
+            <ul className="space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-arx-text-secondary hover:text-arx-cyan transition-colors animated-underline"
-                  >
+                  <Link href={link.href} className="text-sm footer-link">
                     {link.label}
                   </Link>
                 </li>
@@ -51,11 +47,9 @@ export function Footer() {
           </div>
 
           {/* Docs */}
-          <div>
-            <h3 className="text-sm font-semibold text-arx-text-primary mb-4 uppercase tracking-wider">
-              Documentation
-            </h3>
-            <ul className="space-y-2.5">
+          <div className="py-16 px-8 md:border-r" style={{ borderColor: "var(--border)" }}>
+            <p className="label-caps mb-6">Documentation</p>
+            <ul className="space-y-3">
               {[
                 { label: "Getting Started", href: "/docs/getting-started" },
                 { label: "CLI Reference", href: "/docs/cli" },
@@ -64,10 +58,7 @@ export function Footer() {
                 { label: "Troubleshooting", href: "/docs/troubleshooting" },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-arx-text-secondary hover:text-arx-cyan transition-colors animated-underline"
-                  >
+                  <Link href={link.href} className="text-sm footer-link">
                     {link.label}
                   </Link>
                 </li>
@@ -75,45 +66,26 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
-          <div>
-            <h3 className="text-sm font-semibold text-arx-text-primary mb-4 uppercase tracking-wider">
-              Community
-            </h3>
-            <div className="flex gap-3 mb-6">
-              <a
-                href={SOCIAL_LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-arx-bg-card border border-arx-border flex items-center justify-center text-arx-text-secondary hover:text-arx-cyan hover:border-arx-cyan/30 transition-all"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href={SOCIAL_LINKS.discord}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-arx-bg-card border border-arx-border flex items-center justify-center text-arx-text-secondary hover:text-arx-cyan hover:border-arx-cyan/30 transition-all"
-                aria-label="Discord"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </a>
-            </div>
-            <p className="text-xs text-arx-text-muted">
-              Built with care for the Minecraft community.
+          {/* Install */}
+          <div className="py-16 px-8">
+            <p className="label-caps mb-6">Get started</p>
+            <Link href="/install" className="btn-primary mb-6 inline-flex">
+              Install ARX
+            </Link>
+            <p className="text-xs leading-relaxed mt-6" style={{ color: "var(--muted)" }}>
+              Linux + Windows official.<br />macOS best effort.
             </p>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-arx-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-arx-text-muted">
-            © {currentYear} ARX Project. All rights reserved.
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-6">
+          <p className="label-caps" style={{ color: "var(--muted)", fontSize: "0.65rem" }}>
+            © {currentYear} {SITE_CONFIG.name} Project — Installer URL is a placeholder pending domain finalization.
           </p>
-          <p className="text-xs text-arx-text-muted">
-            Installer URL is currently placeholder and will be replaced after domain finalization.
-          </p>
+          <Link href="/status" className="label-caps footer-link" style={{ fontSize: "0.65rem" }}>
+            System Status
+          </Link>
         </div>
       </div>
     </footer>

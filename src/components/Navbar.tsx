@@ -4,136 +4,127 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Terminal } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMobileOpen(false);
-  }, [pathname]);
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-arx-bg/80 backdrop-blur-xl border-b border-arx-border shadow-lg shadow-black/20"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+      style={{
+        backgroundColor: "var(--bg-nav)",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid var(--border)",
+      }}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-18">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="ARX Home">
-            <div className="relative">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-arx-cyan to-arx-violet flex items-center justify-center group-hover:shadow-lg group-hover:shadow-arx-cyan/20 transition-shadow duration-300">
-                <Terminal className="w-4 h-4 text-white" />
-              </div>
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-arx-cyan to-arx-violet opacity-0 group-hover:opacity-40 blur-lg transition-opacity duration-300" />
-            </div>
-            <span className="text-lg font-bold tracking-tight">
-              <span className="text-arx-text-primary">A</span>
-              <span className="text-arx-cyan">R</span>
-              <span className="text-arx-text-primary">X</span>
-            </span>
-          </Link>
+      {/* Desktop nav — column grid */}
+      <nav className="hidden md:grid" style={{ gridTemplateColumns: `240px repeat(${NAV_LINKS.length}, 1fr) 160px` }}>
+        {/* Brand cell */}
+        <Link
+          href="/"
+          aria-label="ARX Home"
+          className="flex items-center px-6 py-5 border-r group"
+          style={{ borderColor: "var(--border)" }}
+        >
+          <span
+            className="display font-bold text-xl tracking-tight transition-opacity duration-200 group-hover:opacity-80"
+            style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)" }}
+          >
+            {SITE_CONFIG.name}
+          </span>
+        </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => {
-              const href = link.href as string;
-              const isActive =
-                pathname === href || (href !== "/" && pathname.startsWith(href));
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                    isActive
-                      ? "text-arx-cyan"
-                      : "text-arx-text-secondary hover:text-arx-text-primary"
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-arx-cyan rounded-full"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
+        {/* Nav link cells */}
+        {NAV_LINKS.map((link) => {
+          const href = link.href as string;
+          const isActive = pathname === href || (href !== "/" && href !== "/#features" && pathname.startsWith(href));
+          return (
             <Link
-              href="/install"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-arx-bg bg-arx-cyan rounded-lg hover:bg-arx-cyan-dim transition-all duration-200 hover:shadow-lg hover:shadow-arx-cyan/25 focus-ring"
+              key={href}
+              href={href}
+              className={`nav-link flex items-center justify-center px-4 py-5 border-r text-center transition-colors duration-200 ${isActive ? "active" : ""}`}
+              style={{ borderColor: "var(--border)" }}
             >
-              Get Started
+              {link.label}
             </Link>
+          );
+        })}
 
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden p-2 text-arx-text-secondary hover:text-arx-text-primary transition-colors focus-ring rounded-lg"
-              aria-label={isMobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMobileOpen}
-            >
-              {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
+        {/* CTA cell */}
+        <Link
+          href="/install"
+          className="btn-primary flex items-center justify-center px-4 py-5 text-center"
+          style={{ borderLeft: "none" }}
+        >
+          Install
+        </Link>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile nav */}
+      <div
+        className="md:hidden flex items-center justify-between px-5 py-4"
+        style={{ borderBottom: mobileOpen ? "1px solid var(--border)" : "none" }}
+      >
+        <Link href="/" className="display font-bold text-lg" style={{ color: "var(--heading)", letterSpacing: "-0.03em" }}>
+          {SITE_CONFIG.name}
+        </Link>
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-2 focus-ring"
+          style={{ color: "var(--muted)" }}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
       <AnimatePresence>
-        {isMobileOpen && (
+        {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-arx-bg-elevated/95 backdrop-blur-xl border-b border-arx-border overflow-hidden"
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden overflow-hidden"
+            style={{ backgroundColor: "var(--bg-nav)" }}
           >
-            <div className="px-4 py-4 space-y-1">
-              {NAV_LINKS.map((link) => {
-                const mHref = link.href as string;
-                const isActive =
-                  pathname === mHref || (mHref !== "/" && pathname.startsWith(mHref));
-                return (
+            {NAV_LINKS.map((link, i) => {
+              const href = link.href as string;
+              const isActive = pathname === href || (href !== "/" && href !== "/#features" && pathname.startsWith(href));
+              return (
+                <motion.div
+                  key={href}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04, duration: 0.2 }}
+                  style={{ borderBottom: "1px solid var(--border)" }}
+                >
                   <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                      isActive
-                        ? "text-arx-cyan bg-arx-cyan/5"
-                        : "text-arx-text-secondary hover:text-arx-text-primary hover:bg-arx-bg-hover"
-                    }`}
+                    href={href}
+                    className="block px-5 py-4 label-caps transition-colors duration-200"
+                    style={{ color: isActive ? "var(--heading)" : "var(--muted)" }}
                   >
                     {link.label}
                   </Link>
-                );
-              })}
-              <div className="pt-2">
-                <Link
-                  href="/install"
-                  className="block px-4 py-2.5 text-sm font-semibold text-center text-arx-bg bg-arx-cyan rounded-lg hover:bg-arx-cyan-dim transition-colors"
-                >
-                  Get Started
-                </Link>
-              </div>
+                </motion.div>
+              );
+            })}
+            <div className="p-4">
+              <Link href="/install" className="btn-primary w-full justify-center">
+                Install ARX
+              </Link>
             </div>
           </motion.div>
         )}
