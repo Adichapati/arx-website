@@ -53,12 +53,13 @@ export default function InstallPage() {
         <ScrollReveal>
           <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Installation</p>
           <h1 className="display font-bold mb-4"
-            style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
+            style={{ fontSize: "clamp(2.1rem, 5.8vw, 4.7rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
             Install ARX.
           </h1>
-          <p className="max-w-xl text-base leading-relaxed mt-6" style={{ color: "var(--body)" }}>
-            One command installs ARX, Ollama, and the Gemma model.
-            Linux and Windows are officially supported. macOS is best effort.
+          <p className="max-w-2xl text-base leading-relaxed mt-6" style={{ color: "var(--body)" }}>
+            ARX gives you a local-first control layer for Minecraft operations — start/stop and monitor your server,
+            manage players and backups, and run Gemma via Ollama from one dashboard + CLI.
+            Install it if you want reliable day-to-day server ops without cloud lock-in.
           </p>
         </ScrollReveal>
       </section>

@@ -12,7 +12,7 @@ import { ChevronDown, Check, Shield, Github } from "lucide-react";
 function HeroHeadline() {
   const words = ["LOCAL-FIRST", "MINECRAFT", "OPERATIONS."];
   return (
-    <h1 className="display font-bold mb-6 leading-none" style={{ fontSize: "clamp(3rem, 9vw, 8rem)", letterSpacing: "-0.03em", color: "var(--heading)" }}>
+    <h1 className="display font-bold mb-6 leading-none" style={{ fontSize: "clamp(2.5rem, 7.2vw, 6.4rem)", letterSpacing: "-0.03em", color: "var(--heading)" }}>
       {words.map((word, wi) => (
         <span key={wi} className="block overflow-hidden">
           <motion.span
@@ -61,14 +61,15 @@ function HeroSection() {
 
         {/* Subline */}
         <motion.p
-          className="max-w-xl text-base sm:text-lg leading-relaxed mb-12"
+          className="max-w-2xl text-base sm:text-lg leading-relaxed mb-5"
           style={{ color: "var(--body)" }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          One command to install. Local AI via Ollama &amp; Gemma.
-          Dashboard + CLI to run your server — no cloud lock-in.
+          ARX is a local-first Minecraft operations platform: install once, run your server reliably,
+          and manage day-to-day ops from one dashboard + CLI with Gemma on Ollama.
+          It’s built for admins who want fast setup, safer controls, and zero cloud lock-in.
         </motion.p>
 
         {/* Hermes-style numbered install steps */}
