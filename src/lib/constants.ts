@@ -33,7 +33,7 @@ export const GITHUB = {
 } as const;
 
 export const SOCIAL_LINKS = {
-  github: `https://github.com/Adichapati`,
+  github: `https://github.com/Adichapati/ARX`,
 } as const;
 
 export const CONTACT = {

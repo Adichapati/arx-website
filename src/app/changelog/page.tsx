@@ -4,13 +4,13 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 
 const releases = [
   {
-    version: "Unreleased",
-    date: "In progress",
+    version: "1.0.0-beta",
+    date: "2026-04-09",
     tag: "current",
     changes: [
-      "Production documentation and messaging refresh",
-      "Installer artifact publishing hardening",
-      "Windows bootstrap installer alignment",
+      "Production launch candidate with Gemma Ops in beta testing stage",
+      "Linux and Windows installer hardening for real-world setup reliability",
+      "Public installer artifacts and checksum verification published on arxmc.studio",
     ],
   },
   {
