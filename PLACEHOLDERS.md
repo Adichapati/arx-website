@@ -5,17 +5,17 @@ Replace these before production go-live.
 ## URLs
 
 - Installer URL:
-  - `https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh`
+  - `https://arxmc.studio/install.sh`
 - Docs URL:
-  - `https://INSTALLER_DOMAIN_PLACEHOLDER/docs`
+  - `https://arxmc.studio/docs`
 - Status URL (if created):
-  - `https://status.YOUR_DOMAIN`
+  - `https://status.arxmc.studio`
 
 ## GitHub references
 
-- Org/User: `YOUR_GITHUB_ORG_OR_USER`
+- Org/User: `Adichapati`
 - Repo (website): `arx-website`
-- Repo (runtime project): `openclaw-dashboard-oneclick` (or future final runtime repo name)
+- Repo (runtime project): `ARX` (or future final runtime repo name)
 
 ## Social links
 
@@ -25,8 +25,8 @@ Replace these before production go-live.
 
 ## Contact
 
-- Support: `support@YOUR_DOMAIN`
-- Security: `security@YOUR_DOMAIN`
+- Support: `support@arxmc.studio`
+- Security: `security@arxmc.studio`
 
 ## SEO metadata placeholders
 

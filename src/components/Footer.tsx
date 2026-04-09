@@ -81,7 +81,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-6">
           <p className="label-caps" style={{ color: "var(--muted)", fontSize: "0.65rem" }}>
-            © {currentYear} {SITE_CONFIG.name} Project — Installer URL is a placeholder pending domain finalization.
+            © {currentYear} {SITE_CONFIG.name} Project — Official domain: arxmc.studio.
           </p>
           <Link href="/status" className="label-caps footer-link" style={{ fontSize: "0.65rem" }}>
             System Status

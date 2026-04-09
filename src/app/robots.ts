@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://INSTALLER_DOMAIN_PLACEHOLDER/sitemap.xml",
+    sitemap: "https://arxmc.studio/sitemap.xml",
   };
 }

@@ -32,8 +32,8 @@ Project context (must reflect accurately):
 Domain/status constraints:
 - I do NOT have final domain yet
 - Use placeholders where needed:
-  - https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh
-  - https://INSTALLER_DOMAIN_PLACEHOLDER/docs
+  - https://arxmc.studio/install.sh
+  - https://arxmc.studio/docs
 - Also include a GitHub install fallback section using release assets
 
 What I want you to build:
@@ -111,7 +111,7 @@ Content requirements:
 
 Install commands section:
 - Show placeholder command block:
-  curl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh | bash
+  curl -fsSL https://arxmc.studio/install.sh | bash
 - Show Windows command examples (PowerShell/cmd style)
 - Show ARX post-install commands:
   arx start

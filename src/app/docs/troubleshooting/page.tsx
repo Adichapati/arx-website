@@ -16,7 +16,7 @@ export default function TroubleshootingPage() {
 
           <h3>Permission denied on Linux install</h3>
           <p>The installer needs elevated permissions to install system-wide.</p>
-          <CodeBlock code={`# Run with sudo\ncurl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh | sudo bash`} language="bash" />
+          <CodeBlock code={`# Run with sudo\ncurl -fsSL https://arxmc.studio/install.sh | sudo bash`} language="bash" />
 
           <h3>Windows Defender blocks the script</h3>
           <p>PowerShell execution policies may need adjustment.</p>
@@ -59,9 +59,8 @@ export default function TroubleshootingPage() {
           <h2 id="get-help">Still Need Help?</h2>
           <p>If your issue isn&apos;t covered here, reach out through:</p>
           <ul>
-            <li>GitHub Issues: <code>github.com/YOUR_GITHUB_ORG_OR_USER/openclaw-dashboard-oneclick/issues</code></li>
-            <li>Discord: <code>discord.gg/YOUR_INVITE</code></li>
-            <li>Email: <code>support@YOUR_DOMAIN</code></li>
+            <li>GitHub Issues: <code>github.com/Adichapati/ARX/issues</code></li>
+            <li>Email: <code>support@arxmc.studio</code></li>
           </ul>
         </section>
       </div>

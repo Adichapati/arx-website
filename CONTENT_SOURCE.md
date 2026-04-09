@@ -32,7 +32,7 @@ Always present this support policy clearly and consistently.
 
 Until final domain exists, use placeholder URL:
 
-`curl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh | bash`
+`curl -fsSL https://arxmc.studio/install.sh | bash`
 
 Also include a GitHub release artifact fallback path.
 

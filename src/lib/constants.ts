@@ -7,15 +7,15 @@ export const SITE_CONFIG = {
   tagline: "One-command local-first Minecraft server operations.",
   description:
     "ARX is a local-first Minecraft operations platform with one-command install, local AI via Ollama + Gemma, a browser dashboard, CLI controls, and optional internet tunneling.",
-  url: "https://INSTALLER_DOMAIN_PLACEHOLDER",
-  docsUrl: "https://INSTALLER_DOMAIN_PLACEHOLDER/docs",
-  statusUrl: "https://status.YOUR_DOMAIN",
+  url: "https://arxmc.studio",
+  docsUrl: "https://arxmc.studio/docs",
+  statusUrl: "https://arxmc.studio/status",
 } as const;
 
 export const INSTALLER = {
-  linux: `curl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh | bash`,
-  windows: `irm https://INSTALLER_DOMAIN_PLACEHOLDER/install.ps1 | iex`,
-  githubFallback: `https://github.com/YOUR_GITHUB_ORG_OR_USER/openclaw-dashboard-oneclick/releases`,
+  linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
+  windows: `irm https://arxmc.studio/install.ps1 | iex`,
+  githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
 
@@ -30,21 +30,18 @@ export const CLI_COMMANDS = [
 ] as const;
 
 export const GITHUB = {
-  org: "YOUR_GITHUB_ORG_OR_USER",
+  org: "Adichapati",
   websiteRepo: "arx-website",
-  runtimeRepo: "openclaw-dashboard-oneclick",
+  runtimeRepo: "ARX",
 } as const;
 
 export const SOCIAL_LINKS = {
-  twitter: "https://x.com/YOUR_HANDLE",
-  discord: "https://discord.gg/YOUR_INVITE",
-  youtube: "https://youtube.com/@YOUR_CHANNEL",
-  github: `https://github.com/YOUR_GITHUB_ORG_OR_USER`,
+  github: `https://github.com/Adichapati`,
 } as const;
 
 export const CONTACT = {
-  support: "support@YOUR_DOMAIN",
-  security: "security@YOUR_DOMAIN",
+  support: "support@arxmc.studio",
+  security: "security@arxmc.studio",
 } as const;
 
 export const NAV_LINKS = [

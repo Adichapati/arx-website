@@ -15,7 +15,7 @@ export default function ReleaseVerificationPage() {
         <section>
           <h2 id="linux-verify">Linux Verification</h2>
           <CodeBlock
-            code={`# 1. Download the checksum file\ncurl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/checksums.txt -o checksums.txt\n\n# 2. Download the installer (if not already)\ncurl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/install.sh -o install.sh\n\n# 3. Verify checksum\nsha256sum -c checksums.txt\n# Expected output: install.sh: OK`}
+            code={`# 1. Download the checksum file\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\n\n# 2. Download the installer (if not already)\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\n\n# 3. Verify checksum\nsha256sum -c checksums.txt\n# Expected output: install.sh: OK`}
             language="bash"
           />
         </section>
@@ -23,7 +23,7 @@ export default function ReleaseVerificationPage() {
         <section>
           <h2 id="windows-verify">Windows Verification</h2>
           <CodeBlock
-            code={`# 1. Download the installer and checksum file from GitHub releases\n# or from https://INSTALLER_DOMAIN_PLACEHOLDER\n\n# 2. Verify using PowerShell\nGet-FileHash arx-installer.exe -Algorithm SHA256\n\n# 3. Compare the output hash with the value in checksums.txt\n# They should match exactly`}
+            code={`# 1. Download the installer and checksum file from GitHub releases\n# or from https://arxmc.studio\n\n# 2. Verify using PowerShell\nGet-FileHash arx-installer.exe -Algorithm SHA256\n\n# 3. Compare the output hash with the value in checksums.txt\n# They should match exactly`}
             language="bash"
           />
         </section>
@@ -45,7 +45,7 @@ export default function ReleaseVerificationPage() {
             <li>Re-download the installer from the official source</li>
             <li>Ensure you downloaded the correct version for your platform</li>
             <li>Check that the download completed fully (no partial downloads)</li>
-            <li>If issues persist, report to <code>security@YOUR_DOMAIN</code></li>
+            <li>If issues persist, report to <code>security@arxmc.studio</code></li>
           </ul>
         </section>
       </div>

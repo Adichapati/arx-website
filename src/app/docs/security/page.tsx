@@ -39,7 +39,7 @@ export default function SecurityPage() {
           <h2 id="release-integrity">Release Integrity</h2>
           <p>Every ARX release includes SHA-256 checksums so you can verify download authenticity:</p>
           <CodeBlock
-            code={`# Download checksums\ncurl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/checksums.txt -o checksums.txt\n\n# Verify\nsha256sum -c checksums.txt`}
+            code={`# Download checksums\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\n\n# Verify\nsha256sum -c checksums.txt`}
             language="bash"
           />
           <p>See <a href="/docs/release-verification">Release Verification</a> for the complete guide.</p>
@@ -49,7 +49,7 @@ export default function SecurityPage() {
           <h2 id="reporting">Security Reporting</h2>
           <p>
             If you discover a security vulnerability, please report it responsibly by emailing{" "}
-            <code>security@YOUR_DOMAIN</code>. Do not open public issues for security vulnerabilities.
+            <code>security@arxmc.studio</code>. Do not open public issues for security vulnerabilities.
           </p>
         </section>
       </div>

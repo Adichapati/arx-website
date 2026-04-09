@@ -4,9 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
-import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
-import { INSTALLER, GITHUB } from "@/lib/constants";
-import { ExternalLink } from "lucide-react";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { INSTALLER } from "@/lib/constants";
 
 type Platform = "linux" | "windows" | "macos";
 
@@ -65,11 +64,11 @@ export default function InstallPage() {
       </section>
 
       <div className="px-5 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-        {/* Placeholder notice */}
+        {/* Installer sources */}
         <ScrollReveal>
           <div className="py-4" style={{ borderBottom: "1px solid var(--border)" }}>
             <p className="label-caps" style={{ color: "var(--muted)" }}>
-              ⚠ Installer URL is a placeholder pending domain finalization.{" "}
+              Official installer endpoints are live on arxmc.studio.{" "}
               <a href={INSTALLER.githubFallback} target="_blank" rel="noopener noreferrer"
                 style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                 View GitHub Releases →
@@ -156,7 +155,7 @@ export default function InstallPage() {
             </h2>
             <div className="max-w-xl space-y-0">
               <CodeBlock
-                code={`curl -fsSL https://INSTALLER_DOMAIN_PLACEHOLDER/checksums.txt -o checksums.txt`}
+                code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt`}
                 language="bash"
                 label="DOWNLOAD CHECKSUMS"
                 step="1."
