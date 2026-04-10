@@ -117,11 +117,12 @@ banner() {
   fi
   cat <<'EOF'
 
-      ___      ____   __   __
-     /   |    / __ \  \ \ / /
-    / /| |   / /_/ /   \ V /
-   / ___ |  / _, _/     > <
-  /_/  |_| /_/ |_|     /_/\_\
+█████╗ ██████╗ ██╗  ██╗
+██╔══██╗██╔══██╗╚██╗██╔╝
+███████║██████╔╝ ╚███╔╝
+██╔══██║██╔══██╗ ██╔██╗
+██║  ██║██║  ██║██╔╝ ██╗
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
 +------------------------------------------------------------------+
 | Agentic Runtime for eXecution | Production Setup                |
@@ -737,7 +738,7 @@ write_env() {
     return
   fi
 
-  ARX_BIND_HOST="0.0.0.0" \
+  ARX_BIND_HOST="127.0.0.1" \
   ARX_BIND_PORT="$DASHBOARD_PORT" \
   ARX_ADMIN_USER="$ARX_ADMIN_USER" \
   ARX_ADMIN_PASS="$ARX_ADMIN_PASS" \

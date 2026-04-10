@@ -87,11 +87,12 @@ function Safe-Clear {
 
 function Get-BannerLines {
     return @(
-        '      ___      ____   __   __',
-        '     /   |    / __ \  \ \ / /',
-        '    / /| |   / /_/ /   \ V / ',
-        '   / ___ |  / _, _/     > <  ',
-        '  /_/  |_| /_/ |_|     /_/\_\ '
+        '█████╗ ██████╗ ██╗  ██╗',
+        '██╔══██╗██╔══██╗╚██╗██╔╝',
+        '███████║██████╔╝ ╚███╔╝ ',
+        '██╔══██║██╔══██╗ ██╔██╗ ',
+        '██║  ██║██║  ██║██╔╝ ██╗',
+        '╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝'
     )
 }
 
@@ -99,7 +100,7 @@ function Show-Banner {
     Safe-Clear
     Write-Host ''
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'White')
     for ($i = 0; $i -lt $lines.Count; $i++) {
         Write-Host $lines[$i] -ForegroundColor $colors[$i]
     }
@@ -114,7 +115,7 @@ function Show-TitleAnimation {
     if ($Yes -or -not $script:CanUseFancyUi) { return }
 
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'White')
     $maxLen = ($lines | ForEach-Object { $_.Length } | Measure-Object -Maximum).Maximum
 
     for ($col = 1; $col -le $maxLen; $col += 2) {
@@ -867,7 +868,7 @@ try {
         if ((Test-Path .env) -and (-not $ForceEnv)) {
             Write-Host '.env already exists. Keeping current values. Use --force-env to regenerate.' -ForegroundColor Yellow
         } else {
-            $env:ARX_BIND_HOST = '0.0.0.0'
+            $env:ARX_BIND_HOST = '127.0.0.1'
             $env:ARX_BIND_PORT = "$Port"
             $env:ARX_ADMIN_USER = "$AdminUser"
             $env:ARX_ADMIN_PASS = "$AdminPass"
