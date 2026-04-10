@@ -39,32 +39,23 @@ if (-not (Test-ProjectRoot $ScriptDir)) {
         Remove-Item $zipPath -Force -ErrorAction SilentlyContinue
     }
 
-    $reentry = Join-Path $BootstrapInstallDir 'install.ps1'
-    if (-not (Test-Path $reentry)) {
-        $nested = Get-ChildItem -Path $BootstrapInstallDir -Filter install.ps1 -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-        if ($nested) { $reentry = $nested.FullName }
-    }
-    if (-not (Test-Path $reentry)) {
-        throw "Bootstrap failed: install.ps1 not found after extracting $BootstrapZipUrl"
+    $resolvedRoot = $BootstrapInstallDir
+    if (-not (Test-ProjectRoot $resolvedRoot)) {
+        $nested = Get-ChildItem -Path $BootstrapInstallDir -Filter requirements.txt -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($nested) {
+            $candidate = Split-Path -Parent $nested.FullName
+            if (Test-ProjectRoot $candidate) {
+                $resolvedRoot = $candidate
+            }
+        }
     }
 
-    Write-Host "[ARX] Re-launching installer from $reentry" -ForegroundColor Cyan
-    $reentryArgs = @{
-        Yes = $Yes
-        ForceEnv = $ForceEnv
-        Port = $Port
-        Trigger = $Trigger
-        Model = $Model
-        ContextSize = $ContextSize
-        Temperature = $Temperature
-        McVersion = $McVersion
-        PlayitEnabled = $PlayitEnabled
-        PlayitUrl = $PlayitUrl
-        AdminUser = $AdminUser
-        AdminPass = $AdminPass
+    if (-not (Test-ProjectRoot $resolvedRoot)) {
+        throw "Bootstrap failed: extracted bundle at $BootstrapInstallDir is not a valid ARX runtime root"
     }
-    & $reentry @reentryArgs
-    exit $LASTEXITCODE
+
+    Write-Host "[ARX] Runtime extracted to $resolvedRoot" -ForegroundColor Cyan
+    $ScriptDir = $resolvedRoot
 }
 
 Set-Location -Path $ScriptDir
