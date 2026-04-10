@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { CodeBlock } from "@/components/CodeBlock";
-import { CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
+import { ARX_ASCII, CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
 import { ChevronDown, Check, Shield, Github } from "lucide-react";
 
 /* ─── WORD-STAGGER hero headline ─── */
@@ -58,6 +58,17 @@ function HeroSection() {
 
         {/* Staggered headline */}
         <HeroHeadline />
+
+        {/* ARX ASCII brand block */}
+        <motion.pre
+          className="arx-ascii mt-2 mb-6"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          aria-label="ARX ASCII logo"
+        >
+          {ARX_ASCII.join("\n")}
+        </motion.pre>
 
         {/* Subline */}
         <motion.p

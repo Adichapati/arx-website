@@ -9,6 +9,15 @@ export const SITE_CONFIG = {
   statusUrl: "https://arxmc.studio/status",
 } as const;
 
+export const ARX_ASCII = [
+  "█████╗ ██████╗ ██╗  ██╗",
+  "██╔══██╗██╔══██╗╚██╗██╔╝",
+  "███████║██████╔╝ ╚███╔╝ ",
+  "██╔══██║██╔══██╗ ██╔██╗ ",
+  "██║  ██║██║  ██║██╔╝ ██╗",
+  "╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝",
+] as const;
+
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
   windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://arxmc.studio/install.ps1 | iex"`,
