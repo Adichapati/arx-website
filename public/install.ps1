@@ -87,12 +87,11 @@ function Safe-Clear {
 
 function Get-BannerLines {
     return @(
-        '█████╗ ██████╗ ██╗  ██╗',
-        '██╔══██╗██╔══██╗╚██╗██╔╝',
-        '███████║██████╔╝ ╚███╔╝ ',
-        '██╔══██║██╔══██╗ ██╔██╗ ',
-        '██║  ██║██║  ██║██╔╝ ██╗',
-        '╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝'
+        '    _    ____  __  __',
+        '   / \\  |  _ \\ \\/ /',
+        '  / _ \\ | |_) | >  < ',
+        ' / ___ \\|  _ < /_/\\_\\',
+        '/_/   \\_\\_| \\_\\      '
     )
 }
 
@@ -100,7 +99,7 @@ function Show-Banner {
     Safe-Clear
     Write-Host ''
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'White')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
     for ($i = 0; $i -lt $lines.Count; $i++) {
         Write-Host $lines[$i] -ForegroundColor $colors[$i]
     }
@@ -115,7 +114,7 @@ function Show-TitleAnimation {
     if ($Yes -or -not $script:CanUseFancyUi) { return }
 
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'White')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
     $maxLen = ($lines | ForEach-Object { $_.Length } | Measure-Object -Maximum).Maximum
 
     for ($col = 1; $col -le $maxLen; $col += 2) {
