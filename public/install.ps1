@@ -78,11 +78,10 @@ function Safe-Clear {
 
 function Get-BannerLines {
     return @(
-        '    _    ____  __  __',
-        '   / \\  |  _ \\ \\/ /',
-        '  / _ \\ | |_) | >  < ',
-        ' / ___ \\|  _ < /_/\\_\\',
-        '/_/   \\_\\_| \\_\\      '
+        '   ___   ____  __ __',
+        '  / _ | / __ \/ // /',
+        ' / __ |/ /_/ / _  / ',
+        '/_/ |_|\____/_//_/  '
     )
 }
 
@@ -90,7 +89,7 @@ function Show-Banner {
     Safe-Clear
     Write-Host ''
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow')
     for ($i = 0; $i -lt $lines.Count; $i++) {
         Write-Host $lines[$i] -ForegroundColor $colors[$i]
     }
@@ -102,28 +101,7 @@ function Show-Banner {
 }
 
 function Show-TitleAnimation {
-    if ($Yes -or -not $script:CanUseFancyUi) { return }
-
-    $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
-    $maxLen = ($lines | ForEach-Object { $_.Length } | Measure-Object -Maximum).Maximum
-
-    for ($col = 1; $col -le $maxLen; $col += 2) {
-        Clear-Host
-        Write-Host ''
-        for ($i = 0; $i -lt $lines.Count; $i++) {
-            $line = $lines[$i]
-            $n = [Math]::Min($col, $line.Length)
-            $left = $line.Substring(0, $n)
-            $pad = ' ' * ($maxLen - $n)
-            Write-Host ($left + $pad) -ForegroundColor $colors[$i]
-        }
-        Write-Host ''
-        Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
-        Write-Host '| Agentic Runtime for eXecution | Production Setup                |' -ForegroundColor White
-        Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
-        Start-Sleep -Milliseconds 35
-    }
+    return
 }
 
 function Show-Transition([string]$Text) {
@@ -138,40 +116,25 @@ function Show-Transition([string]$Text) {
 }
 
 function Show-IntroAnim {
-    if ($Yes -or -not $script:CanUseFancyUi) { return }
-    $bars = @(
-        @{P=10; B='#####.............................................'},
-        @{P=24; B='############......................................'},
-        @{P=38; B='###################...............................'},
-        @{P=52; B='##########################........................'},
-        @{P=66; B='#################################.................'},
-        @{P=80; B='########################################..........'},
-        @{P=100; B='##################################################'}
-    )
-    foreach ($x in $bars) {
-        Write-Host ("[ARX] Initializing UI [{0}] {1,3}%" -f $x.B, $x.P) -ForegroundColor DarkCyan
-        Start-Sleep -Milliseconds 70
-    }
+    return
 }
 
 function Show-Box([string]$Title) {
     Write-Host ''
-    Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
-    Write-Host "| $Title" -ForegroundColor White
-    Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
+    Write-Host ('[ {0} ]' -f $Title) -ForegroundColor White
 }
 
 function Show-AsciiDivider([string]$Tag) {
-    $art = switch ($Tag) {
-        'port'    { @('   +-----------+','   |  PORT CFG |','   +-----------+') }
-        'trigger' { @('   (o_o)  say the magic word','    \  gemma  /','     \______/') }
-        'model'   { @('   [ GEMMA CORE ]','   > model select <') }
-        'ctx'     { @('   [########      ]','   context tuning') }
-        'temp'    { @('   ~ creativity dial ~','   low <----> high') }
-        'admin'   { @('   +------------+','   |  ADMIN KEY |','   +------------+') }
-        default   { @('   +-----------+','   |  ARX SET  |','   +-----------+') }
+    $label = switch ($Tag) {
+        'port'    { 'PORT CONFIG' }
+        'trigger' { 'TRIGGER WORD' }
+        'model'   { 'MODEL SELECT' }
+        'ctx'     { 'CONTEXT' }
+        'temp'    { 'TEMPERATURE' }
+        'admin'   { 'ADMIN ACCOUNT' }
+        default   { 'ARX SETUP' }
     }
-    foreach ($line in $art) { Write-Host $line -ForegroundColor DarkGray }
+    Write-Host ("--- {0} ---" -f $label) -ForegroundColor DarkGray
 }
 
 function Select-FromList(
