@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { CodeBlock } from "@/components/CodeBlock";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ARX_ASCII, INSTALLER } from "@/lib/constants";
+import { INSTALLER } from "@/lib/constants";
 
 type Platform = "linux" | "windows" | "macos";
 
@@ -54,11 +54,8 @@ export default function InstallPage() {
           <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Installation</p>
           <h1 className="display font-bold mb-4"
             style={{ fontSize: "clamp(2.1rem, 5.8vw, 4.7rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
-            Install ARX.
+            Install <span className="align-middle">ARX</span>.
           </h1>
-          <pre className="arx-ascii mt-2 mb-5" aria-label="ARX ASCII logo">
-            {ARX_ASCII.join("\n")}
-          </pre>
           <p className="max-w-2xl text-base leading-relaxed mt-6" style={{ color: "var(--body)" }}>
             ARX gives you a local-first control layer for Minecraft operations — start/stop and monitor your server,
             manage players and backups, and run Gemma via Ollama from one dashboard + CLI.
