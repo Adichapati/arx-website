@@ -39,23 +39,32 @@ if (-not (Test-ProjectRoot $ScriptDir)) {
         Remove-Item $zipPath -Force -ErrorAction SilentlyContinue
     }
 
-    $resolvedRoot = $BootstrapInstallDir
-    if (-not (Test-ProjectRoot $resolvedRoot)) {
-        $nested = Get-ChildItem -Path $BootstrapInstallDir -Filter requirements.txt -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-        if ($nested) {
-            $candidate = Split-Path -Parent $nested.FullName
-            if (Test-ProjectRoot $candidate) {
-                $resolvedRoot = $candidate
-            }
-        }
+    $reentry = Join-Path $BootstrapInstallDir 'install.ps1'
+    if (-not (Test-Path $reentry)) {
+        $nested = Get-ChildItem -Path $BootstrapInstallDir -Filter install.ps1 -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($nested) { $reentry = $nested.FullName }
+    }
+    if (-not (Test-Path $reentry)) {
+        throw "Bootstrap failed: install.ps1 not found after extracting $BootstrapZipUrl"
     }
 
-    if (-not (Test-ProjectRoot $resolvedRoot)) {
-        throw "Bootstrap failed: extracted bundle at $BootstrapInstallDir is not a valid ARX runtime root"
+    Write-Host "[ARX] Re-launching installer from $reentry" -ForegroundColor Cyan
+    $reentryArgs = @{
+        Yes = $Yes
+        ForceEnv = $ForceEnv
+        Port = $Port
+        Trigger = $Trigger
+        Model = $Model
+        ContextSize = $ContextSize
+        Temperature = $Temperature
+        McVersion = $McVersion
+        PlayitEnabled = $PlayitEnabled
+        PlayitUrl = $PlayitUrl
+        AdminUser = $AdminUser
+        AdminPass = $AdminPass
     }
-
-    Write-Host "[ARX] Runtime extracted to $resolvedRoot" -ForegroundColor Cyan
-    $ScriptDir = $resolvedRoot
+    & $reentry @reentryArgs
+    exit $LASTEXITCODE
 }
 
 Set-Location -Path $ScriptDir
@@ -78,10 +87,11 @@ function Safe-Clear {
 
 function Get-BannerLines {
     return @(
-        '   ___   ____  __ __',
-        '  / _ | / __ \/ // /',
-        ' / __ |/ /_/ / _  / ',
-        '/_/ |_|\____/_//_/  '
+        '      ___      ____   __   __',
+        '     /   |    / __ \  \ \ / /',
+        '    / /| |   / /_/ /   \ V / ',
+        '   / ___ |  / _, _/     > <  ',
+        '  /_/  |_| /_/ |_|     /_/\_\ '
     )
 }
 
@@ -89,7 +99,7 @@ function Show-Banner {
     Safe-Clear
     Write-Host ''
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow')
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
     for ($i = 0; $i -lt $lines.Count; $i++) {
         Write-Host $lines[$i] -ForegroundColor $colors[$i]
     }
@@ -101,7 +111,28 @@ function Show-Banner {
 }
 
 function Show-TitleAnimation {
-    return
+    if ($Yes -or -not $script:CanUseFancyUi) { return }
+
+    $lines = Get-BannerLines
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
+    $maxLen = ($lines | ForEach-Object { $_.Length } | Measure-Object -Maximum).Maximum
+
+    for ($col = 1; $col -le $maxLen; $col += 2) {
+        Clear-Host
+        Write-Host ''
+        for ($i = 0; $i -lt $lines.Count; $i++) {
+            $line = $lines[$i]
+            $n = [Math]::Min($col, $line.Length)
+            $left = $line.Substring(0, $n)
+            $pad = ' ' * ($maxLen - $n)
+            Write-Host ($left + $pad) -ForegroundColor $colors[$i]
+        }
+        Write-Host ''
+        Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
+        Write-Host '| Agentic Runtime for eXecution | Production Setup                |' -ForegroundColor White
+        Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
+        Start-Sleep -Milliseconds 35
+    }
 }
 
 function Show-Transition([string]$Text) {
@@ -116,25 +147,40 @@ function Show-Transition([string]$Text) {
 }
 
 function Show-IntroAnim {
-    return
+    if ($Yes -or -not $script:CanUseFancyUi) { return }
+    $bars = @(
+        @{P=10; B='#####.............................................'},
+        @{P=24; B='############......................................'},
+        @{P=38; B='###################...............................'},
+        @{P=52; B='##########################........................'},
+        @{P=66; B='#################################.................'},
+        @{P=80; B='########################################..........'},
+        @{P=100; B='##################################################'}
+    )
+    foreach ($x in $bars) {
+        Write-Host ("[ARX] Initializing UI [{0}] {1,3}%" -f $x.B, $x.P) -ForegroundColor DarkCyan
+        Start-Sleep -Milliseconds 70
+    }
 }
 
 function Show-Box([string]$Title) {
     Write-Host ''
-    Write-Host ('[ {0} ]' -f $Title) -ForegroundColor White
+    Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
+    Write-Host "| $Title" -ForegroundColor White
+    Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
 }
 
 function Show-AsciiDivider([string]$Tag) {
-    $label = switch ($Tag) {
-        'port'    { 'PORT CONFIG' }
-        'trigger' { 'TRIGGER WORD' }
-        'model'   { 'MODEL SELECT' }
-        'ctx'     { 'CONTEXT' }
-        'temp'    { 'TEMPERATURE' }
-        'admin'   { 'ADMIN ACCOUNT' }
-        default   { 'ARX SETUP' }
+    $art = switch ($Tag) {
+        'port'    { @('   +-----------+','   |  PORT CFG |','   +-----------+') }
+        'trigger' { @('   (o_o)  say the magic word','    \  gemma  /','     \______/') }
+        'model'   { @('   [ GEMMA CORE ]','   > model select <') }
+        'ctx'     { @('   [########      ]','   context tuning') }
+        'temp'    { @('   ~ creativity dial ~','   low <----> high') }
+        'admin'   { @('   +------------+','   |  ADMIN KEY |','   +------------+') }
+        default   { @('   +-----------+','   |  ARX SET  |','   +-----------+') }
     }
-    Write-Host ("--- {0} ---" -f $label) -ForegroundColor DarkGray
+    foreach ($line in $art) { Write-Host $line -ForegroundColor DarkGray }
 }
 
 function Select-FromList(
@@ -464,7 +510,7 @@ function Invoke-WingetInstallPackage {
         }
 
         if (($elapsed -ge 18) -and (-not $printedUacHint)) {
-            Write-Host "[ARX] Still waiting - check for a hidden UAC/admin popup and approve it." -ForegroundColor Yellow
+            Write-Host "[ARX] Still waiting — check for a hidden UAC/admin popup and approve it." -ForegroundColor Yellow
             $printedUacHint = $true
         }
 
@@ -504,7 +550,7 @@ function Ensure-Java {
         $src = if ($info.source) { $info.source } else { 'java' }
         $line = if ($info.firstLine) { $info.firstLine } else { 'version output unavailable' }
         $jpath = if ($info.path) { $info.path } else { 'java (PATH)' }
-        Write-Host "Java 21+ detected via $src (major=$major) - skipping install." -ForegroundColor DarkGray
+        Write-Host "Java 21+ detected via $src (major=$major) — skipping install." -ForegroundColor DarkGray
         Write-Host ("  Java: {0}" -f $line) -ForegroundColor DarkGray
         Write-Host ("  Path: {0}" -f $jpath) -ForegroundColor DarkGray
         return
@@ -518,7 +564,7 @@ function Ensure-Java {
         $src = if ($info.source) { $info.source } else { 'java' }
         $line = if ($info.firstLine) { $info.firstLine } else { 'version output unavailable' }
         $jpath = if ($info.path) { $info.path } else { 'java (PATH)' }
-        Write-Host "Java 21+ detected via $src after PATH refresh (major=$major) - skipping install." -ForegroundColor DarkGray
+        Write-Host "Java 21+ detected via $src after PATH refresh (major=$major) — skipping install." -ForegroundColor DarkGray
         Write-Host ("  Java: {0}" -f $line) -ForegroundColor DarkGray
         Write-Host ("  Path: {0}" -f $jpath) -ForegroundColor DarkGray
         return
@@ -706,22 +752,21 @@ function Install-ArxLauncher {
     if (-not (Test-Path $pythonPath)) { throw '.venv\Scripts\python.exe not found.' }
     if (-not (Test-Path $cliPath)) { throw 'scripts\arx_cli.py not found.' }
 
-    $launcherLines = @(
-        '@echo off',
-        'setlocal',
-        ('set "ARX_PY={0}"' -f $pythonPath),
-        ('set "ARX_CLI={0}"' -f $cliPath),
-        'if not exist "%ARX_PY%" (',
-        '  echo [ARX][ERROR] Python runtime not found: %ARX_PY%',
-        '  exit /b 1',
-        ')',
-        'if not exist "%ARX_CLI%" (',
-        '  echo [ARX][ERROR] CLI script not found: %ARX_CLI%',
-        '  exit /b 1',
-        ')',
-        '"%ARX_PY%" "%ARX_CLI%" %*'
-    )
-    $launcher = ($launcherLines -join "`r`n") + "`r`n"
+    $launcher = @"
+@echo off
+setlocal
+set "ARX_PY=$pythonPath"
+set "ARX_CLI=$cliPath"
+if not exist "%ARX_PY%" (
+  echo [ARX][ERROR] Python runtime not found: %ARX_PY%
+  exit /b 1
+)
+if not exist "%ARX_CLI%" (
+  echo [ARX][ERROR] CLI script not found: %ARX_CLI%
+  exit /b 1
+)
+"%ARX_PY%" "%ARX_CLI%" %*
+"@
     Set-Content -Path (Join-Path $targetDir 'arx.bat') -Value $launcher -Encoding ASCII
 }
 
