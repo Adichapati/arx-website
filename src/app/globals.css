@@ -67,17 +67,6 @@
     color: var(--muted);
   }
 
-  .arx-ascii {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.52rem, 1.15vw, 0.72rem);
-    line-height: 1.2;
-    letter-spacing: 0;
-    color: var(--accent);
-    white-space: pre;
-    overflow-x: auto;
-    max-width: 100%;
-  }
-
   /* ===== RULED LINES ===== */
   .ruled-line {
     height: 1px;

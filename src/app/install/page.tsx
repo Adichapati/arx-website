@@ -54,7 +54,7 @@ export default function InstallPage() {
           <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Installation</p>
           <h1 className="display font-bold mb-4"
             style={{ fontSize: "clamp(2.1rem, 5.8vw, 4.7rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
-            Install <span className="align-middle">ARX</span>.
+            Install ARX.
           </h1>
           <p className="max-w-2xl text-base leading-relaxed mt-6" style={{ color: "var(--body)" }}>
             ARX gives you a local-first control layer for Minecraft operations — start/stop and monitor your server,

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { CodeBlock } from "@/components/CodeBlock";
-import { ARX_ASCII, CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
+import { CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
 import { ChevronDown, Check, Shield, Github } from "lucide-react";
 
 /* ─── WORD-STAGGER hero headline ─── */
@@ -45,23 +45,12 @@ function HeroSection() {
   return (
     <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
-        {/* ARX ASCII brand block */}
-        <motion.pre
-          className="arx-ascii mb-5"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          aria-label="ARX ASCII logo"
-        >
-          {ARX_ASCII.join("\n")}
-        </motion.pre>
-
         {/* Overline */}
         <motion.p
           className="label-caps mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.18 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           style={{ color: "var(--muted)" }}
         >
           {SITE_CONFIG.fullName} &bull; Open Source &bull; Local AI
