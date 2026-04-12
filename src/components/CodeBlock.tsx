@@ -29,7 +29,7 @@ export function CodeBlock({ code, language = "bash", label, step }: CodeBlockPro
   }, [code]);
 
   return (
-    <div className="group" style={{ borderBottom: "1px solid var(--border)" }}>
+    <div className="group" style={{ borderBottom: "1px solid var(--border)", backgroundColor: "rgba(95, 125, 255, 0.03)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.02)" }}>
       {/* Header row */}
       {(label || step) && (
         <div

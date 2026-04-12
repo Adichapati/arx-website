@@ -25,7 +25,9 @@ export function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
       style={{
         backgroundColor: "var(--bg-nav)",
-        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid var(--border)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderBottom: scrolled ? "1px solid var(--border-bright)" : "1px solid var(--border)",
       }}
     >
       {/* Desktop nav — column grid */}
@@ -54,7 +56,10 @@ export function Navbar() {
               key={href}
               href={href}
               className={`nav-link flex items-center justify-center px-4 py-5 border-r text-center transition-colors duration-200 ${isActive ? "active" : ""}`}
-              style={{ borderColor: "var(--border)" }}
+              style={{
+                borderColor: "var(--border)",
+                backgroundColor: isActive ? "rgba(95,125,255,0.08)" : "transparent",
+              }}
             >
               {link.label}
             </Link>

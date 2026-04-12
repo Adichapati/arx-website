@@ -4,16 +4,18 @@
 
 @layer base {
   :root {
-    --bg: #0c1a0d;
-    --bg-surface: #111f12;
-    --bg-nav: #0a160b;
-    --bg-code: #0a140b;
-    --heading: #e8dfc0;
-    --body: #9aab9b;
-    --muted: #596359;
-    --accent: #c8e63c;
-    --border: rgba(232, 223, 192, 0.1);
-    --border-bright: rgba(232, 223, 192, 0.22);
+    --bg: #0a0e1a;
+    --bg-surface: #12182a;
+    --bg-nav: rgba(7, 11, 22, 0.84);
+    --bg-code: #0d1322;
+    --heading: #e8ecff;
+    --body: #a5b2d3;
+    --muted: #6a79a6;
+    --accent: #5f7dff;
+    --accent-soft: #7f96ff;
+    --emerald: #66e28f;
+    --border: rgba(95, 125, 255, 0.16);
+    --border-bright: rgba(111, 139, 255, 0.36);
   }
 
   * {
@@ -31,26 +33,28 @@
   body {
     background-color: var(--bg);
     color: var(--heading);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
     overflow-x: hidden;
+    background-image: radial-gradient(rgba(48, 80, 255, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 
   ::selection {
-    background-color: rgba(200, 230, 60, 0.25);
-    color: #e8dfc0;
+    background-color: rgba(95, 125, 255, 0.28);
+    color: #eef2ff;
   }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(232, 223, 192, 0.12); border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(232, 223, 192, 0.22); }
+  ::-webkit-scrollbar-thumb { background: rgba(111, 139, 255, 0.25); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(127, 150, 255, 0.42); }
 }
 
 @layer components {
   /* ===== TYPOGRAPHY ===== */
   .display {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Fraunces, Georgia, serif;
     letter-spacing: -0.02em;
     line-height: 0.95;
     color: var(--heading);
@@ -58,7 +62,7 @@
   }
 
   .label-caps {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -117,27 +121,30 @@
   /* ===== BUTTONS ===== */
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 font-mono text-xs tracking-label uppercase;
-    background: var(--accent);
-    color: #0c1a0d;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+    color: #f4f7ff;
     border: 1px solid var(--accent);
-    transition: background 150ms, color 150ms, border-color 150ms;
+    box-shadow: 0 0 0 1px rgba(95, 125, 255, 0.2), 0 10px 32px rgba(36, 64, 216, 0.32);
+    transition: transform 180ms, filter 180ms, box-shadow 180ms;
   }
   .btn-primary:hover {
-    background: transparent;
-    color: var(--accent);
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+    box-shadow: 0 0 0 1px rgba(127, 150, 255, 0.34), 0 14px 40px rgba(36, 64, 216, 0.45);
   }
 
   .btn-secondary {
     @apply inline-flex items-center gap-2 px-6 py-3 font-mono text-xs tracking-label uppercase;
-    background: transparent;
-    color: var(--heading);
+    background: rgba(95, 125, 255, 0.04);
+    color: #d7e2ff;
     border: 1px solid var(--border-bright);
-    transition: background 150ms, color 150ms, border-color 150ms;
+    transition: background 150ms, color 150ms, border-color 150ms, transform 150ms;
   }
   .btn-secondary:hover {
-    background: var(--heading);
-    color: var(--bg);
-    border-color: var(--heading);
+    background: rgba(95, 125, 255, 0.14);
+    color: #eef2ff;
+    border-color: rgba(127, 150, 255, 0.65);
+    transform: translateY(-1px);
   }
 
   /* ===== NAV UNDERLINE HOVER ===== */
@@ -158,7 +165,7 @@
     left: 0;
     width: 0%;
     height: 1px;
-    background: var(--heading);
+    background: var(--accent-soft);
     transition: width 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .nav-link:hover {
@@ -188,7 +195,7 @@
 
   /* ===== DOCS ===== */
   .prose-arx h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Fraunces, Georgia, serif;
     font-size: 1.75rem;
     font-weight: 600;
     color: var(--heading);
@@ -197,7 +204,7 @@
     letter-spacing: -0.01em;
   }
   .prose-arx h3 {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -233,7 +240,7 @@
     top: 0.15rem;
   }
   .prose-arx code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
     font-size: 0.8em;
     background: var(--bg-code);
     border: 1px solid var(--border);
@@ -255,7 +262,7 @@
     margin-bottom: 1.5rem;
   }
   .prose-arx th {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -305,10 +312,49 @@
   top: 0;
   left: 0;
   height: 1px;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--emerald), var(--accent), var(--accent-soft));
   z-index: 1000;
   transform-origin: left;
   transition: none;
+}
+
+/* Ambient background glows inspired by Hermes rhythm, tuned for Minecraft/night palette */
+.ambient-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.12;
+}
+
+.ambient-glow-1 {
+  width: 560px;
+  height: 560px;
+  left: -180px;
+  top: -200px;
+  background: rgba(95, 125, 255, 0.55);
+}
+
+.ambient-glow-2 {
+  width: 520px;
+  height: 520px;
+  right: -150px;
+  top: 20%;
+  background: rgba(102, 226, 143, 0.35);
+}
+
+.ambient-glow-3 {
+  width: 460px;
+  height: 460px;
+  left: 30%;
+  bottom: -220px;
+  background: rgba(127, 150, 255, 0.3);
 }
 
 /* Reduced motion */

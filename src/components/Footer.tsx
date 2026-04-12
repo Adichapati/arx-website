@@ -6,7 +6,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer style={{ borderTop: "1px solid var(--border)", backgroundColor: "var(--bg-nav)" }}>
+    <footer style={{ borderTop: "1px solid var(--border)", backgroundColor: "rgba(7, 11, 22, 0.86)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Main footer grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-0" style={{ borderBottom: "1px solid var(--border)" }}>

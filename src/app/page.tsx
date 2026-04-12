@@ -126,7 +126,7 @@ function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.6 }}
-        style={{ borderTop: "1px solid var(--border)" }}
+        style={{ borderTop: "1px solid var(--border)", background: "linear-gradient(180deg, rgba(95,125,255,0.06), rgba(95,125,255,0.01))" }}
       >
         <p className="label-caps" style={{ color: "var(--muted)" }}>↓ Scroll</p>
         <div className="flex items-center gap-6">
@@ -383,7 +383,13 @@ function SecuritySection() {
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ borderBottom: "1px solid var(--border)" }}>
+    <div
+      style={{
+        borderBottom: "1px solid var(--border)",
+        backgroundColor: open ? "rgba(95,125,255,0.06)" : "transparent",
+        transition: "background-color 180ms",
+      }}
+    >
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-start justify-between gap-4 py-5 text-left focus-ring"

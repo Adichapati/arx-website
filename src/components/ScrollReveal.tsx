@@ -22,22 +22,22 @@ export function ScrollReveal({
   const isInView = useInView(ref, { once, margin: "-60px" });
 
   const offsets: Record<string, object> = {
-    up: { y: 24 },
-    down: { y: -24 },
-    left: { x: 24 },
-    right: { x: -24 },
-    none: {},
+    up: { y: 24, filter: "blur(4px)" },
+    down: { y: -24, filter: "blur(4px)" },
+    left: { x: 24, filter: "blur(4px)" },
+    right: { x: -24, filter: "blur(4px)" },
+    none: { filter: "blur(3px)" },
   };
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, ...offsets[direction] }}
-      animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...offsets[direction] }}
+      animate={isInView ? { opacity: 1, x: 0, y: 0, filter: "blur(0px)" } : { opacity: 0, ...offsets[direction] }}
       transition={{
-        duration: 0.7,
+        duration: 0.74,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.19, 1, 0.22, 1],
       }}
       className={className}
     >
