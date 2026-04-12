@@ -81,9 +81,13 @@ function MouseParallaxBackground() {
   const layer1ScrollY = useTransform(scrollY, [0, 1400], [0, -110]);
   const layer2ScrollY = useTransform(scrollY, [0, 1400], [0, -150]);
 
-  const baseY = useTransform(() => layer0Y.get() + layer0ScrollY.get());
-  const depthY = useTransform(() => layer1Y.get() + layer1ScrollY.get());
-  const glowY = useTransform(() => layer2Y.get() + layer2ScrollY.get());
+  const floatA = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, 2.5, -1.5, 3, -2, 1.5, 0]);
+  const floatB = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, -3, 2, -2.5, 1.5, -1, 0]);
+  const floatC = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, 4, -2.5, 3.5, -2, 1, 0]);
+
+  const baseY = useTransform(() => layer0Y.get() + layer0ScrollY.get() + floatA.get());
+  const depthY = useTransform(() => layer1Y.get() + layer1ScrollY.get() + floatB.get());
+  const glowY = useTransform(() => layer2Y.get() + layer2ScrollY.get() + floatC.get());
 
   return (
     <div className="hero-parallax-shell" aria-hidden="true">
