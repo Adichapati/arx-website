@@ -14,6 +14,7 @@
     --accent: #c8e63c;
     --border: rgba(232, 223, 192, 0.1);
     --border-bright: rgba(232, 223, 192, 0.22);
+    --nav-offset: 72px;
   }
 
   * {
@@ -317,7 +318,7 @@
 }
 
 .home-with-parallax section[id] {
-  scroll-margin-top: 72px;
+  scroll-margin-top: var(--nav-offset);
 }
 
 .hero-parallax-section {
@@ -460,7 +461,7 @@
 
 @media (max-width: 1024px) {
   .home-with-parallax section[id] {
-    scroll-margin-top: 66px;
+    scroll-margin-top: var(--nav-offset);
   }
 
   .hero-steve-badge {
@@ -480,7 +481,7 @@
 
 @media (max-width: 768px) {
   .home-with-parallax section[id] {
-    scroll-margin-top: 60px;
+    scroll-margin-top: var(--nav-offset);
   }
 
   .hero-parallax-shell {

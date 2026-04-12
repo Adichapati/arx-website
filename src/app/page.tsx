@@ -259,6 +259,45 @@ function HeroSection() {
   );
 }
 
+/* ─── TRUST STRIP ─── */
+function TrustStrip() {
+  const trustItems = [
+    "Local-first",
+    "Open source",
+    "SHA-256 verified releases",
+    "Runs with Ollama + Gemma",
+  ];
+
+  return (
+    <section
+      aria-label="Trust highlights"
+      className="px-5 sm:px-8 lg:px-12 py-4"
+      style={{ borderBottom: "1px solid var(--border)", borderTop: "1px solid var(--border)" }}
+    >
+      <div className="container-wide">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+          {trustItems.map((item, idx) => (
+            <li
+              key={item}
+              className="label-caps py-3 pr-5"
+              style={{
+                color: "var(--muted)",
+                borderRight: idx < trustItems.length - 1 ? "1px solid var(--border)" : "none",
+                paddingLeft: idx > 0 ? "1.25rem" : 0,
+              }}
+            >
+              <span aria-hidden="true" style={{ color: "var(--accent)", marginRight: "0.5rem" }}>
+                ●
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 /* ─── HOW IT WORKS ─── */
 function HowItWorksSection() {
   const steps = [
@@ -591,6 +630,7 @@ export default function HomePage() {
   return (
     <div className="home-with-parallax">
       <HeroSection />
+      <TrustStrip />
       <HowItWorksSection />
       <FeaturesSection />
       <CLISection />
