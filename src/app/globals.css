@@ -311,6 +311,88 @@
   transition: none;
 }
 
+.home-with-parallax {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-with-parallax section[id] {
+  scroll-margin-top: 72px;
+}
+
+.hero-parallax-section {
+  position: relative;
+  overflow: clip;
+}
+
+.hero-parallax-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-parallax-layer {
+  position: absolute;
+  inset: -8vh -6vw;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  image-rendering: auto;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.hero-parallax-base {
+  background-image: url('/assets/wallpapers/mc-depth-parallax-base.webp');
+  opacity: 0.48;
+}
+
+.hero-parallax-depth {
+  background-image: url('/assets/wallpapers/mc-depth-parallax-depth.webp');
+  opacity: 0.38;
+  mix-blend-mode: screen;
+  filter: saturate(1.04);
+}
+
+.hero-parallax-glow {
+  inset: -12vh -10vw;
+  background:
+    radial-gradient(circle at 25% 24%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 42%),
+    radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--heading) 16%, transparent), transparent 45%);
+  opacity: 0.5;
+}
+
+.hero-parallax-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 30%, transparent), color-mix(in srgb, var(--bg) 72%, black)),
+    radial-gradient(circle at 50% 36%, transparent 18%, color-mix(in srgb, var(--bg) 38%, black) 72%);
+}
+
+@media (max-width: 1024px) {
+  .home-with-parallax section[id] {
+    scroll-margin-top: 66px;
+  }
+
+  .hero-parallax-layer {
+    inset: -6vh -10vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-with-parallax section[id] {
+    scroll-margin-top: 60px;
+  }
+
+  .hero-parallax-shell {
+    display: none;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -319,4 +401,5 @@
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
+  .hero-parallax-shell { display: none; }
 }

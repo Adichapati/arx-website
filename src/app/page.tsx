@@ -1,12 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { CodeBlock } from "@/components/CodeBlock";
 import { CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
-import { ChevronDown, Check, Shield, Github } from "lucide-react";
+import { Check, Github } from "lucide-react";
 
 /* ─── WORD-STAGGER hero headline ─── */
 function HeroHeadline() {
@@ -29,6 +37,73 @@ function HeroHeadline() {
   );
 }
 
+function MouseParallaxBackground() {
+  const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 90, damping: 22, mass: 0.7 });
+  const smoothY = useSpring(mouseY, { stiffness: 90, damping: 22, mass: 0.7 });
+
+  useEffect(() => {
+    if (reduced) return;
+
+    const onMove = (event: MouseEvent) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 2;
+      const y = (event.clientY / window.innerHeight - 0.5) * 2;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    const onLeave = () => {
+      mouseX.set(0);
+      mouseY.set(0);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseleave", onLeave);
+    };
+  }, [mouseX, mouseY, reduced]);
+
+  const layer0X = useTransform(smoothX, [-1, 1], [-8, 8]);
+  const layer0Y = useTransform(smoothY, [-1, 1], [-5, 5]);
+  const layer1X = useTransform(smoothX, [-1, 1], [-16, 16]);
+  const layer1Y = useTransform(smoothY, [-1, 1], [-12, 12]);
+  const layer2X = useTransform(smoothX, [-1, 1], [-22, 22]);
+  const layer2Y = useTransform(smoothY, [-1, 1], [-16, 16]);
+
+  const layer0ScrollY = useTransform(scrollY, [0, 1400], [0, -60]);
+  const layer1ScrollY = useTransform(scrollY, [0, 1400], [0, -110]);
+  const layer2ScrollY = useTransform(scrollY, [0, 1400], [0, -150]);
+
+  const baseY = useTransform(() => layer0Y.get() + layer0ScrollY.get());
+  const depthY = useTransform(() => layer1Y.get() + layer1ScrollY.get());
+  const glowY = useTransform(() => layer2Y.get() + layer2ScrollY.get());
+
+  return (
+    <div className="hero-parallax-shell" aria-hidden="true">
+      <motion.div
+        className="hero-parallax-layer hero-parallax-base"
+        style={reduced ? undefined : { x: layer0X, y: baseY }}
+      />
+      <motion.div
+        className="hero-parallax-layer hero-parallax-depth"
+        style={reduced ? undefined : { x: layer1X, y: depthY }}
+      />
+      <motion.div
+        className="hero-parallax-layer hero-parallax-glow"
+        style={reduced ? undefined : { x: layer2X, y: glowY }}
+      />
+      <div className="hero-parallax-vignette" />
+    </div>
+  );
+}
+
 /* ─── HERO ─── */
 function HeroSection() {
   const [heroInstallTarget, setHeroInstallTarget] = useState<"linux" | "windows">("linux");
@@ -43,8 +118,9 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
-      <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
+    <section className="hero-parallax-section min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
+      <MouseParallaxBackground />
+      <div className="relative z-20 flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
         {/* Overline */}
         <motion.p
           className="label-caps mb-8"
@@ -122,7 +198,7 @@ function HeroSection() {
 
       {/* Bottom row — scroll hint */}
       <motion.div
-        className="flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 max-w-7xl mx-auto w-full"
+        className="relative z-20 flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 max-w-7xl mx-auto w-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.6 }}
@@ -479,7 +555,7 @@ function CTABanner() {
 /* ─── PAGE ─── */
 export default function HomePage() {
   return (
-    <>
+    <div className="home-with-parallax">
       <HeroSection />
       <HowItWorksSection />
       <FeaturesSection />
@@ -488,6 +564,6 @@ export default function HomePage() {
       <SecuritySection />
       <FAQSection />
       <CTABanner />
-    </>
+    </div>
   );
 }
