@@ -21,7 +21,7 @@ function WorldHeroSection() {
 
   return (
     <section className="mc-world-hero" id="top">
-      <div className="container-wide section-padding relative z-20 pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-18">
+      <div className="container-wide section-padding relative z-20 pt-8 sm:pt-10 lg:pt-12 pb-12 sm:pb-16 lg:pb-18">
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
           <div>
             <ScrollReveal>
@@ -35,7 +35,7 @@ function WorldHeroSection() {
               <h1
                 className="display font-bold leading-none mb-6"
                 style={{
-                  fontSize: "clamp(2.5rem, 6.9vw, 6.1rem)",
+                  fontSize: "clamp(2.25rem, 6.2vw, 5.4rem)",
                   letterSpacing: "-0.035em",
                   color: "var(--heading)",
                 }}
@@ -407,16 +407,37 @@ function FinalSection() {
 }
 
 export default function HomePage() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const navigationEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const isReload = navigationEntry?.type === "reload";
+
+    if (isReload) {
+      if (window.location.hash) {
+        window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+      }
+
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      });
+    }
+  }, []);
+
   return (
     <div className="mc-world-page">
       <WorldScrollScene />
-      <main className="relative z-20">
+      <div className="relative z-20 mc-home-main">
         <WorldHeroSection />
         <JourneySection />
         <InventorySection />
         <CommandDeckSection />
         <FinalSection />
-      </main>
+      </div>
     </div>
   );
 }

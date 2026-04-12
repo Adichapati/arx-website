@@ -49,7 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Scroll progress */}
         <GrainAndProgress />
         <Navbar />
-        <main className="relative z-10">{children}</main>
+        <main className="relative z-10 page-shell">{children}</main>
         <Footer />
         <Analytics />
       </body>

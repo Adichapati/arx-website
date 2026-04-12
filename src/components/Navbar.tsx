@@ -18,6 +18,7 @@ const HOME_LINKS = [
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentHash, setCurrentHash] = useState("");
   const pathname = usePathname();
 
   useEffect(() => {
@@ -29,6 +30,13 @@ export function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const updateHash = () => setCurrentHash(window.location.hash || "");
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
 
   return (
     <header
@@ -54,17 +62,18 @@ export function Navbar() {
         </Link>
 
         {HOME_LINKS.map((link) => {
-          const active = pathname === link.href || (pathname === "/" && link.href.startsWith("/#"));
+          const isSectionLink = link.href.startsWith("/#");
+          const sectionHash = isSectionLink ? link.href.slice(1) : "";
+          const active = isSectionLink ? pathname === "/" && currentHash === sectionHash : pathname === link.href;
           return (
             <Link
               key={link.href}
               href={link.href}
-              className={`nav-link nav-link-shot flex items-center justify-center px-4 py-4 border-r text-center ${active ? "active" : ""}`}
+              className={`nav-link nav-link-rune flex items-center justify-center px-4 py-4 border-r text-center ${active ? "active" : ""}`}
               style={{ borderColor: "var(--border)" }}
-              data-shot="true"
             >
               <span className="nav-link-label">{link.label}</span>
-              <span className="nav-arrow-shot" aria-hidden="true" />
+              <span className="nav-hover-rune" aria-hidden="true" />
             </Link>
           );
         })}
