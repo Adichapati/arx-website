@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
+import { BiomeThemeControl } from "@/components/BiomeThemeControl";
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,7 +32,7 @@ export function Navbar() {
       }}
     >
       {/* Desktop nav — column grid */}
-      <nav className="hidden md:grid" style={{ gridTemplateColumns: `240px repeat(${NAV_LINKS.length}, 1fr) 160px` }}>
+      <nav className="hidden md:grid" style={{ gridTemplateColumns: `240px repeat(${NAV_LINKS.length}, 1fr) 260px 160px` }}>
         {/* Brand cell */}
         <Link
           href="/"
@@ -65,6 +66,11 @@ export function Navbar() {
             </Link>
           );
         })}
+
+        {/* Biome theme cell */}
+        <div className="flex items-center justify-center px-4 py-5 border-r" style={{ borderColor: "var(--border)" }}>
+          <BiomeThemeControl />
+        </div>
 
         {/* CTA cell */}
         <Link
@@ -126,6 +132,10 @@ export function Navbar() {
                 </motion.div>
               );
             })}
+            <div className="px-4 pt-4 pb-2" style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="label-caps mb-2" style={{ color: "var(--muted)" }}>Biome Theme</p>
+              <BiomeThemeControl compact />
+            </div>
             <div className="p-4">
               <Link href="/install" className="btn-primary w-full justify-center">
                 Install ARX
