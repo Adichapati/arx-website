@@ -662,9 +662,207 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--heading) 5%, transparent);
 }
 
+.ambient-glow-4 {
+  width: 420px;
+  height: 420px;
+  right: 18%;
+  bottom: -160px;
+  background: color-mix(in srgb, var(--emerald) 42%, transparent);
+  animation-delay: -4s;
+}
+
+.mc-world-hero {
+  position: relative;
+  min-height: 100vh;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.mc-world-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 24%, color-mix(in srgb, var(--ambient-2) 28%, transparent), transparent 36%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--ambient-1) 30%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 12%, transparent), color-mix(in srgb, var(--bg) 72%, black));
+}
+
+.mc-immersive-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.mc-backdrop-stars,
+.mc-backdrop-clouds,
+.mc-backdrop-ridge,
+.mc-backdrop-fog {
+  position: absolute;
+  inset: 0;
+}
+
+.mc-backdrop-stars {
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--heading) 68%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in srgb, var(--accent-soft) 46%, transparent) 1px, transparent 1px);
+  background-size: 52px 36px, 80px 52px;
+  background-position: 0 0, 25px 12px;
+  opacity: 0.52;
+  animation: pulse-soft 6.5s ease-in-out infinite;
+}
+
+.mc-backdrop-clouds {
+  top: 8%;
+  height: 38%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 110px, color-mix(in srgb, var(--heading) 12%, transparent) 110px 148px, transparent 148px 230px),
+    linear-gradient(180deg, color-mix(in srgb, var(--heading) 10%, transparent) 0 42%, transparent 42%);
+  opacity: 0.42;
+}
+
+.mc-backdrop-ridge-far {
+  top: 42%;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--emerald) 20%, transparent) 0 36px, color-mix(in srgb, var(--bg-surface) 90%, black) 36px 74px),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg-surface) 76%, black));
+  clip-path: polygon(0 70%, 8% 58%, 15% 68%, 23% 52%, 31% 68%, 40% 56%, 49% 72%, 58% 58%, 66% 74%, 75% 54%, 84% 71%, 92% 57%, 100% 69%, 100% 100%, 0 100%);
+  opacity: 0.66;
+}
+
+.mc-backdrop-ridge-near {
+  top: 56%;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent) 0 18px, color-mix(in srgb, var(--bg-surface) 88%, black) 18px 34px),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg) 76%, black));
+  clip-path: polygon(0 60%, 6% 46%, 12% 64%, 18% 42%, 26% 68%, 35% 44%, 44% 70%, 52% 46%, 61% 72%, 70% 44%, 79% 70%, 88% 46%, 95% 64%, 100% 52%, 100% 100%, 0 100%);
+  opacity: 0.88;
+}
+
+.mc-backdrop-fog {
+  background:
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 32%, transparent) 58%, color-mix(in srgb, var(--bg) 76%, black) 100%);
+}
+
+.mc-hero-stage {
+  position: relative;
+}
+
+.mc-scene-strip-immersive {
+  height: clamp(220px, 34vw, 340px);
+  margin-top: 0;
+  border: 1px solid var(--border-bright);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--heading) 12%, transparent),
+    0 28px 70px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.mc-hero-console {
+  margin-top: -1px;
+  border-top: none;
+  padding: 1rem 1rem 1.2rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-surface) 92%, transparent), color-mix(in srgb, var(--bg) 76%, transparent));
+}
+
+.mc-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.mc-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.62rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-surface) 74%, transparent);
+  color: var(--heading);
+  font-size: 0.73rem;
+}
+
+.mc-world-section {
+  position: relative;
+}
+
+.mc-world-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg-surface) 16%, transparent));
+  opacity: 0.45;
+}
+
+.mc-world-section > .container-wide {
+  position: relative;
+  z-index: 1;
+}
+
+.mc-quest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.mc-quest-card {
+  padding: 1.5rem;
+  min-height: 210px;
+}
+
+.mc-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.mc-inventory-card {
+  padding: 1.5rem;
+  min-height: 220px;
+}
+
+.mc-faq-item {
+  transition: background-color 180ms;
+}
+
+.mc-faq-item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+@media (max-width: 1024px) {
+  .mc-quest-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mc-inventory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .mc-scene-strip {
     height: 86px;
+  }
+
+  .mc-scene-strip-immersive {
+    height: 190px;
+  }
+
+  .mc-stat-row {
+    gap: 0.45rem;
+  }
+
+  .mc-stat-chip {
+    font-size: 0.66rem;
+    padding: 0.34rem 0.5rem;
+  }
+
+  .mc-quest-grid,
+  .mc-inventory-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-biome-markers {
@@ -687,6 +885,15 @@
   }
 }
 
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -694,4 +901,5 @@
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
+  .grain-overlay { display: none; }
 }

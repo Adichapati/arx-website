@@ -37,11 +37,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-biome="overworld">
       <body className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`} style={{ backgroundColor: "var(--bg)", color: "var(--heading)" }}>
-        {/* Hermes-style ambient glows */}
+        {/* Ambient world glow system */}
         <div className="ambient-root" aria-hidden="true">
           <div className="ambient-glow ambient-glow-1" />
           <div className="ambient-glow ambient-glow-2" />
           <div className="ambient-glow ambient-glow-3" />
+          <div className="ambient-glow ambient-glow-4" />
         </div>
         {/* Grain film overlay */}
         <div className="grain-overlay" aria-hidden="true" />

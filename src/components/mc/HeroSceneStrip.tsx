@@ -2,11 +2,11 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-export function HeroSceneStrip() {
+export function HeroSceneStrip({ immersive = false }: { immersive?: boolean }) {
   const reduced = useReducedMotion();
 
   return (
-    <div className="mc-scene-strip" aria-hidden="true">
+    <div className={`mc-scene-strip ${immersive ? "mc-scene-strip-immersive" : ""}`} aria-hidden="true">
       <div className="mc-scene-moon" />
       <motion.div
         className="mc-scene-stars"
