@@ -87,7 +87,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-padding-top: 92px;
+    scroll-padding-top: 0;
   }
 
   html,
@@ -474,17 +474,17 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--ambient-1) 52%, transparent), transparent 44%),
-    radial-gradient(circle at 82% 34%, color-mix(in srgb, var(--ambient-2) 44%, transparent), transparent 48%),
-    radial-gradient(circle at 50% 88%, color-mix(in srgb, var(--ambient-3) 34%, transparent), transparent 56%);
-  opacity: 0.52;
+    radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--ambient-1) 48%, transparent), transparent 46%),
+    radial-gradient(circle at 82% 34%, color-mix(in srgb, var(--ambient-2) 38%, transparent), transparent 50%),
+    radial-gradient(circle at 50% 88%, color-mix(in srgb, var(--ambient-3) 30%, transparent), transparent 58%);
+  opacity: 0.42;
 }
 
 .ambient-root::after {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.16;
+  opacity: 0.08;
   background-image:
     linear-gradient(color-mix(in srgb, var(--heading) 10%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--heading) 8%, transparent) 1px, transparent 1px);
@@ -495,8 +495,8 @@
 .ambient-glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(120px);
-  opacity: 0.18;
+  filter: blur(92px);
+  opacity: 0.13;
   animation: ambient-drift 22s ease-in-out infinite;
 }
 
@@ -734,7 +734,7 @@
 }
 
 .mc-world-page section[id] {
-  scroll-margin-top: 98px;
+  scroll-margin-top: 56px;
 }
 
 .mc-scroll-scene {
@@ -772,39 +772,41 @@
   background-position: center bottom;
   background-repeat: no-repeat;
   image-rendering: pixelated;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   will-change: transform;
 }
 
 .mc-scene-layer-base {
   background-image: url('/assets/autumn-optimized/hero-bg-2.png');
-  opacity: 0.94;
+  opacity: 1;
 }
 
 .mc-scene-layer-mid {
   background-image: url('/assets/autumn-optimized/hero-layer-2-plan5.png');
-  opacity: 0.62;
-  mix-blend-mode: screen;
+  opacity: 0.76;
+  mix-blend-mode: normal;
 }
 
 .mc-scene-layer-fore {
   background-image: url('/assets/autumn-optimized/hero-layer-2-plan6.png');
-  opacity: 0.52;
-  mix-blend-mode: soft-light;
+  opacity: 0.62;
+  mix-blend-mode: normal;
 }
 
 .mc-scene-layer-overlay {
   background-image: url('/assets/autumn-optimized/section-bg-4.png');
-  opacity: 0.14;
-  filter: saturate(0.9) brightness(0.9);
+  opacity: 0.09;
+  filter: saturate(1.06) brightness(1.03);
 }
 
 .mc-scene-vignette {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 18%, color-mix(in srgb, #f8c576 15%, transparent), transparent 38%),
-    radial-gradient(circle at 84% 20%, color-mix(in srgb, #e47d3d 14%, transparent), transparent 40%),
-    linear-gradient(180deg, color-mix(in srgb, #2f1a0f 8%, transparent), color-mix(in srgb, #120d0a 56%, black));
+    radial-gradient(circle at 20% 18%, color-mix(in srgb, #f8c576 20%, transparent), transparent 40%),
+    radial-gradient(circle at 84% 20%, color-mix(in srgb, #e47d3d 18%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, #2f1a0f 4%, transparent), color-mix(in srgb, #120d0a 34%, black));
   transition: filter 420ms ease, opacity 420ms ease;
 }
 
@@ -855,7 +857,9 @@
 
 .mc-world-hero {
   position: relative;
-  min-height: 64vh;
+  min-height: calc(100svh - 76px);
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid var(--border);
 }
 
@@ -1004,8 +1008,8 @@
 }
 
 @keyframes runner-path-b {
-  from { transform: translateX(112vw); }
-  to { transform: translateX(-12vw); }
+  from { transform: translateX(112vw) scaleX(-1); }
+  to { transform: translateX(-12vw) scaleX(-1); }
 }
 
 @keyframes runner-path-c {
@@ -1191,6 +1195,15 @@
 }
 
 @media (max-width: 1024px) {
+  .mc-world-hero {
+    min-height: auto;
+    display: block;
+  }
+
+  .mc-world-page section[id] {
+    scroll-margin-top: 54px;
+  }
+
   .mc-quest-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1209,6 +1222,10 @@
 }
 
 @media (max-width: 768px) {
+  .mc-world-page section[id] {
+    scroll-margin-top: 52px;
+  }
+
   .mc-scene-strip {
     height: 86px;
   }

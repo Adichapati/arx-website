@@ -21,8 +21,8 @@ function WorldHeroSection() {
 
   return (
     <section className="mc-world-hero" id="top">
-      <div className="container-wide section-padding relative z-20 pt-8 sm:pt-10 lg:pt-12 pb-12 sm:pb-16 lg:pb-18">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
+      <div className="container-wide section-padding relative z-20 pt-3 sm:pt-5 lg:pt-6 pb-8 sm:pb-10 lg:pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-10 items-center">
           <div>
             <ScrollReveal>
               <p className="sprite-chip label-caps mb-5" style={{ color: "var(--heading)", width: "fit-content" }}>
@@ -35,8 +35,8 @@ function WorldHeroSection() {
               <h1
                 className="display font-bold leading-none mb-6"
                 style={{
-                  fontSize: "clamp(2.25rem, 6.2vw, 5.4rem)",
-                  letterSpacing: "-0.035em",
+                  fontSize: "clamp(2rem, 5.6vw, 4.9rem)",
+                  letterSpacing: "-0.03em",
                   color: "var(--heading)",
                 }}
               >
@@ -47,7 +47,7 @@ function WorldHeroSection() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <p className="max-w-2xl text-base sm:text-lg leading-relaxed mb-8" style={{ color: "var(--body)" }}>
+              <p className="max-w-2xl text-sm sm:text-base leading-relaxed mb-6" style={{ color: "var(--body)" }}>
                 {SITE_CONFIG.name} is a game-like operations manual for Minecraft server admins.
                 Install once, launch fast, manage everything from your dashboard and CLI — with
                 local Gemma on Ollama and no cloud lock-in.
@@ -55,7 +55,7 @@ function WorldHeroSection() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.14}>
-              <div className="flex flex-wrap items-center gap-3 mb-8">
+              <div className="flex flex-wrap items-center gap-3 mb-6">
                 <Link href="/install" className="btn-primary">Install ARX</Link>
                 <Link href="/docs" className="btn-secondary">Open Manual</Link>
                 <a

@@ -65,17 +65,17 @@ export function WorldScrollScene() {
     };
   }, [mouseX, mouseY, reduced]);
 
-  const tiltX = useTransform(smoothY, [-1, 1], [2.2, -2.2]);
-  const tiltY = useTransform(smoothX, [-1, 1], [-2.8, 2.8]);
+  const tiltX = useTransform(smoothY, [-1, 1], [1.3, -1.3]);
+  const tiltY = useTransform(smoothX, [-1, 1], [-1.7, 1.7]);
 
-  const driftFarX = useTransform(smoothX, [-1, 1], [-8, 8]);
-  const driftFarY = useTransform(smoothY, [-1, 1], [-5, 5]);
-  const driftMidX = useTransform(smoothX, [-1, 1], [-14, 14]);
-  const driftMidY = useTransform(smoothY, [-1, 1], [-8, 8]);
-  const driftForeX = useTransform(smoothX, [-1, 1], [-20, 20]);
-  const driftForeY = useTransform(smoothY, [-1, 1], [-12, 12]);
-  const driftOverlayX = useTransform(smoothX, [-1, 1], [-24, 24]);
-  const driftOverlayY = useTransform(smoothY, [-1, 1], [-14, 14]);
+  const driftFarX = useTransform(smoothX, [-1, 1], [-5, 5]);
+  const driftFarY = useTransform(smoothY, [-1, 1], [-3, 3]);
+  const driftMidX = useTransform(smoothX, [-1, 1], [-8, 8]);
+  const driftMidY = useTransform(smoothY, [-1, 1], [-5, 5]);
+  const driftForeX = useTransform(smoothX, [-1, 1], [-12, 12]);
+  const driftForeY = useTransform(smoothY, [-1, 1], [-8, 8]);
+  const driftOverlayX = useTransform(smoothX, [-1, 1], [-14, 14]);
+  const driftOverlayY = useTransform(smoothY, [-1, 1], [-9, 9]);
 
   const sceneClass = useMemo(() => `mc-scroll-scene mc-zone-${zone}`, [zone]);
 
