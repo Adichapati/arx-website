@@ -94,8 +94,10 @@
     color: var(--heading);
     font-family: var(--font-inter), Inter, system-ui, sans-serif;
     overflow-x: hidden;
-    background-image: radial-gradient(color-mix(in srgb, var(--accent) 22%, transparent) 1px, transparent 1px);
-    background-size: 32px 32px;
+    background-image:
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 56%, transparent), color-mix(in srgb, var(--bg-surface) 74%, transparent)),
+      radial-gradient(color-mix(in srgb, var(--accent) 22%, transparent) 1px, transparent 1px);
+    background-size: 100% 100%, 28px 28px;
   }
 
   ::selection {
@@ -429,11 +431,35 @@
   z-index: 0;
 }
 
+.ambient-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--ambient-1) 52%, transparent), transparent 44%),
+    radial-gradient(circle at 82% 34%, color-mix(in srgb, var(--ambient-2) 44%, transparent), transparent 48%),
+    radial-gradient(circle at 50% 88%, color-mix(in srgb, var(--ambient-3) 34%, transparent), transparent 56%);
+  opacity: 0.52;
+}
+
+.ambient-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--heading) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--heading) 8%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, transparent, black 22%, black 80%, transparent);
+}
+
 .ambient-glow {
   position: absolute;
   border-radius: 9999px;
   filter: blur(120px);
-  opacity: 0.12;
+  opacity: 0.18;
+  animation: ambient-drift 22s ease-in-out infinite;
 }
 
 .ambient-glow-1 {
@@ -450,6 +476,7 @@
   right: -150px;
   top: 20%;
   background: var(--ambient-2);
+  animation-delay: -8s;
 }
 
 .ambient-glow-3 {
@@ -458,6 +485,7 @@
   left: 30%;
   bottom: -220px;
   background: var(--ambient-3);
+  animation-delay: -14s;
 }
 
 /* Hero scene strip */
@@ -473,10 +501,27 @@
 .mc-scene-stars,
 .mc-scene-clouds,
 .mc-scene-hills,
+.mc-scene-trees,
 .mc-scene-foreground,
+.mc-scene-fireflies,
 .mc-scene-mist {
   position: absolute;
   inset: 0;
+}
+
+.mc-scene-moon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 18px;
+  top: 14px;
+  border: 1px solid color-mix(in srgb, var(--heading) 68%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--heading) 74%, transparent) 0 52%, color-mix(in srgb, var(--accent-soft) 42%, transparent) 52%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
+    0 0 20px color-mix(in srgb, var(--heading) 24%, transparent);
+  image-rendering: pixelated;
 }
 
 .mc-scene-stars {
@@ -501,11 +546,34 @@
   opacity: 0.6;
 }
 
+.mc-scene-trees {
+  top: 54px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 8px,
+      color-mix(in srgb, var(--emerald) 58%, transparent) 8px 12px,
+      color-mix(in srgb, var(--bg-surface) 86%, black) 12px 14px,
+      transparent 14px 22px
+    );
+  clip-path: polygon(0 72%, 6% 64%, 10% 72%, 16% 58%, 22% 72%, 28% 60%, 34% 74%, 42% 58%, 48% 74%, 56% 56%, 64% 74%, 72% 60%, 80% 74%, 88% 58%, 94% 72%, 100% 64%, 100% 100%, 0 100%);
+  opacity: 0.56;
+}
+
 .mc-scene-foreground {
   top: 62px;
   background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent) 0 10px, color-mix(in srgb, var(--bg-surface) 92%, black) 10px 16px);
   clip-path: polygon(0 48%, 4% 30%, 8% 50%, 12% 28%, 16% 52%, 22% 34%, 28% 56%, 34% 30%, 40% 60%, 48% 34%, 56% 58%, 64% 32%, 72% 56%, 80% 28%, 88% 52%, 96% 26%, 100% 48%, 100% 100%, 0 100%);
-  opacity: 0.5;
+  opacity: 0.6;
+}
+
+.mc-scene-fireflies {
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--emerald) 68%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in srgb, var(--accent-soft) 62%, transparent) 1px, transparent 1px);
+  background-size: 54px 32px, 70px 40px;
+  background-position: 0 0, 22px 14px;
+  opacity: 0.25;
 }
 
 .mc-scene-mist {
@@ -513,13 +581,112 @@
   opacity: 0.84;
 }
 
+.hero-biome-markers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.hero-biome-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid var(--border-bright);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--heading);
+  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+
+.mc-hero {
+  position: relative;
+}
+
+.mc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--emerald) 20%, transparent), transparent 34%),
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 36%);
+  opacity: 0.6;
+}
+
+.mc-story-section {
+  position: relative;
+}
+
+.mc-story-section::after {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 0;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--border-bright) 90%, transparent) 0 8px, transparent 8px 16px);
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.mc-feature-card {
+  position: relative;
+}
+
+.mc-feature-card::after {
+  content: "";
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: 10px;
+  height: 10px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--emerald) 76%, transparent) 0 50%, transparent 50%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 72%, transparent) 0 50%, transparent 50%);
+  opacity: 0.75;
+  image-rendering: pixelated;
+}
+
+.nav-pixel-grass {
+  width: 18px;
+  height: 14px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--emerald) 72%, transparent) 0 46%, color-mix(in srgb, var(--bg-surface) 84%, black) 46% 100%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--heading) 5%, transparent);
+}
+
 @media (max-width: 768px) {
   .mc-scene-strip {
     height: 86px;
   }
+
+  .hero-biome-markers {
+    gap: 0.45rem;
+  }
+
+  .hero-biome-marker {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.52rem;
+  }
 }
 
 /* Reduced motion */
+@keyframes ambient-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.04);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

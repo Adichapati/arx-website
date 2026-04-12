@@ -37,9 +37,10 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="ARX Home"
-          className="flex items-center px-6 py-5 border-r group"
+          className="flex items-center gap-2 px-6 py-5 border-r group"
           style={{ borderColor: "var(--border)" }}
         >
+          <span className="nav-pixel-grass" aria-hidden="true" />
           <span
             className="display font-bold text-xl tracking-tight transition-opacity duration-200 group-hover:opacity-80"
             style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)" }}

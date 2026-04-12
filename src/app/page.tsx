@@ -45,7 +45,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem]" style={{ borderBottom: "1px solid var(--border)" }}>
+    <section className="min-h-[100dvh] flex flex-col justify-between pt-[4.5rem] mc-hero" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 lg:px-12 py-16 max-w-7xl mx-auto w-full">
         {/* Overline */}
         <motion.p
@@ -81,6 +81,18 @@ function HeroSection() {
           className="max-w-3xl"
         >
           <HeroSceneStrip />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.66, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="hero-biome-markers"
+          aria-hidden="true"
+        >
+          <span className="hero-biome-marker">🌲 Overworld</span>
+          <span className="hero-biome-marker">🔥 Nether</span>
+          <span className="hero-biome-marker">✨ End</span>
         </motion.div>
 
         {/* Hermes-style numbered install steps */}
@@ -170,7 +182,7 @@ function HowItWorksSection() {
   ];
 
   return (
-    <section className="section-padding" id="how-it-works">
+    <section className="section-padding mc-story-section" id="how-it-works">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <ScrollReveal>
@@ -184,13 +196,16 @@ function HowItWorksSection() {
           {steps.map((step, i) => (
             <ScrollReveal key={step.n} delay={i * 0.08}>
               <div
-                className="py-10 pr-8 group"
+                className="py-10 pr-8 group pixel-card"
                 style={{ borderRight: i < 3 ? "1px solid var(--border)" : "none", paddingLeft: i > 0 ? "2rem" : 0 }}
               >
                 <p className="label-caps mb-6" style={{ color: "var(--muted)" }}>{step.n}</p>
                 <h3 className="display font-semibold text-2xl mb-3 transition-colors duration-200 group-hover:text-accent"
                   style={{ color: "var(--heading)" }}>
-                  {step.title}
+                  <span className="inline-flex items-center gap-2">
+                    <SpriteGlyph name={i % 2 === 0 ? "map" : "pickaxe"} size={13} tone="accent" />
+                    {step.title}
+                  </span>
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{step.desc}</p>
               </div>
@@ -214,7 +229,7 @@ function FeaturesSection() {
   ];
 
   return (
-    <section className="section-padding" id="features">
+    <section className="section-padding mc-story-section" id="features">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <ScrollReveal>
@@ -228,7 +243,7 @@ function FeaturesSection() {
           {features.map((feat, i) => (
             <ScrollReveal key={feat.title} delay={i * 0.06}>
               <div
-                className="py-8 group cursor-default pixel-card"
+                className="py-8 group cursor-default pixel-card mc-feature-card"
                 style={{
                   borderRight: (i % 3 !== 2) ? "1px solid var(--border)" : "none",
                   borderBottom: i < 3 ? "1px solid var(--border)" : "none",
@@ -263,7 +278,7 @@ function FeaturesSection() {
 /* ─── CLI REFERENCE ─── */
 function CLISection() {
   return (
-    <section className="section-padding" id="cli-preview">
+    <section className="section-padding mc-story-section" id="cli-preview">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-20 items-start">
@@ -317,7 +332,7 @@ function PlatformSection() {
   ];
 
   return (
-    <section className="section-padding">
+    <section className="section-padding mc-story-section">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <ScrollReveal>
@@ -362,7 +377,7 @@ function SecuritySection() {
   ];
 
   return (
-    <section className="section-padding" id="security">
+    <section className="section-padding mc-story-section" id="security">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -452,7 +467,7 @@ function FAQSection() {
   ];
 
   return (
-    <section className="section-padding" id="faq">
+    <section className="section-padding mc-story-section" id="faq">
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <ScrollReveal>
@@ -479,7 +494,7 @@ function FAQSection() {
 /* ─── CTA BANNER ─── */
 function CTABanner() {
   return (
-    <section className="section-padding" style={{ borderTop: "1px solid var(--border)" }}>
+    <section className="section-padding mc-story-section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="container-wide">
         <ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
