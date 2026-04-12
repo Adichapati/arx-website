@@ -7,9 +7,8 @@ import { Github } from "lucide-react";
 import { CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
 import { CodeBlock } from "@/components/CodeBlock";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
-import { HeroSceneStrip } from "@/components/mc/HeroSceneStrip";
 import { SpriteGlyph } from "@/components/mc/SpriteGlyph";
-import { ImmersiveBackdrop } from "@/components/mc/ImmersiveBackdrop";
+import { WorldScrollScene } from "@/components/mc/WorldScrollScene";
 
 function WorldHeroSection() {
   const [heroInstallTarget, setHeroInstallTarget] = useState<"linux" | "windows">("linux");
@@ -22,10 +21,7 @@ function WorldHeroSection() {
 
   return (
     <section className="mc-world-hero" id="top">
-      <ImmersiveBackdrop />
-      <div className="mc-world-veil" aria-hidden="true" />
-
-      <div className="container-wide section-padding relative z-10 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24">
+      <div className="container-wide section-padding relative z-20 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
           <div>
             <ScrollReveal>
@@ -94,7 +90,6 @@ function WorldHeroSection() {
 
           <ScrollReveal delay={0.12}>
             <div className="mc-hero-stage">
-              <HeroSceneStrip immersive />
               <div className="mc-hero-console pixel-card">
                 <div className="flex items-center justify-between pb-2 mb-2" style={{ borderBottom: "1px solid var(--border)" }}>
                   <p className="label-caps" style={{ color: "var(--muted)" }}>Quick Spawn</p>
@@ -413,12 +408,15 @@ function FinalSection() {
 
 export default function HomePage() {
   return (
-    <>
-      <WorldHeroSection />
-      <JourneySection />
-      <InventorySection />
-      <CommandDeckSection />
-      <FinalSection />
-    </>
+    <div className="mc-world-page">
+      <WorldScrollScene />
+      <main className="relative z-20">
+        <WorldHeroSection />
+        <JourneySection />
+        <InventorySection />
+        <CommandDeckSection />
+        <FinalSection />
+      </main>
+    </div>
   );
 }
