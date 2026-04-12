@@ -6,7 +6,9 @@ import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { CodeBlock } from "@/components/CodeBlock";
 import { CLI_COMMANDS, INSTALLER, SITE_CONFIG, SOCIAL_LINKS } from "@/lib/constants";
-import { ChevronDown, Check, Shield, Github } from "lucide-react";
+import { Github } from "lucide-react";
+import { HeroSceneStrip } from "@/components/mc/HeroSceneStrip";
+import { SpriteGlyph } from "@/components/mc/SpriteGlyph";
 
 /* ─── WORD-STAGGER hero headline ─── */
 function HeroHeadline() {
@@ -71,6 +73,15 @@ function HeroSection() {
           and manage day-to-day ops from one dashboard + CLI with Gemma on Ollama.
           It’s built for admins who want fast setup, safer controls, and zero cloud lock-in.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.62, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl"
+        >
+          <HeroSceneStrip />
+        </motion.div>
 
         {/* Hermes-style numbered install steps */}
         <motion.div
@@ -194,12 +205,12 @@ function HowItWorksSection() {
 /* ─── FEATURES ─── */
 function FeaturesSection() {
   const features = [
-    { tag: "AI", title: "Local AI via Ollama", desc: "Gemma-focused experience with gemma4:e2b. Your data stays on your machine." },
-    { tag: "CLI", title: "Powerful CLI", desc: "Full lifecycle management from your terminal. Start, stop, configure, and monitor." },
-    { tag: "Dashboard", title: "Browser Dashboard", desc: "Visual operations dashboard alongside CLI. No cloud dependency required." },
-    { tag: "Network", title: "Playit Tunnel", desc: "Optional internet access tunnel via Playit. Share your server easily." },
-    { tag: "Security", title: "Security-First", desc: "Local-first operation, controlled command pathways, OP-only execution boundaries." },
-    { tag: "Integrity", title: "Verified Releases", desc: "Checksum verification for every release. Know your install is authentic." },
+    { tag: "AI", glyph: "spark" as const, title: "Local AI via Ollama", desc: "Gemma-focused experience with gemma4:e2b. Your data stays on your machine." },
+    { tag: "CLI", glyph: "map" as const, title: "Powerful CLI", desc: "Full lifecycle management from your terminal. Start, stop, configure, and monitor." },
+    { tag: "Dashboard", glyph: "chest" as const, title: "Browser Dashboard", desc: "Visual operations dashboard alongside CLI. No cloud dependency required." },
+    { tag: "Network", glyph: "torch" as const, title: "Playit Tunnel", desc: "Optional internet access tunnel via Playit. Share your server easily." },
+    { tag: "Security", glyph: "shield" as const, title: "Security-First", desc: "Local-first operation, controlled command pathways, OP-only execution boundaries." },
+    { tag: "Integrity", glyph: "pickaxe" as const, title: "Verified Releases", desc: "Checksum verification for every release. Know your install is authentic." },
   ];
 
   return (
@@ -217,18 +228,27 @@ function FeaturesSection() {
           {features.map((feat, i) => (
             <ScrollReveal key={feat.title} delay={i * 0.06}>
               <div
-                className="py-8 group cursor-default"
+                className="py-8 group cursor-default pixel-card"
                 style={{
                   borderRight: (i % 3 !== 2) ? "1px solid var(--border)" : "none",
                   borderBottom: i < 3 ? "1px solid var(--border)" : "none",
                   paddingLeft: (i % 3 !== 0) ? "2rem" : 0,
                   paddingRight: "2rem",
-                  transition: "background 200ms",
+                  transition: "background 200ms, transform 200ms",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--bg-surface)")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
+                onMouseEnter={e => {
+                  e.currentTarget.style.backgroundColor = "var(--bg-surface)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
               >
-                <p className="label-caps mb-3" style={{ color: "var(--accent)" }}>{feat.tag}</p>
+                <p className="label-caps mb-3 sprite-chip" style={{ color: "var(--accent)", width: "fit-content" }}>
+                  <SpriteGlyph name={feat.glyph} size={14} tone="accent" />
+                  {feat.tag}
+                </p>
                 <h3 className="display font-semibold text-xl mb-3" style={{ color: "var(--heading)" }}>{feat.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{feat.desc}</p>
               </div>
@@ -334,11 +354,11 @@ function PlatformSection() {
 /* ─── SECURITY ─── */
 function SecuritySection() {
   const safeguards = [
-    "Local-first — data never leaves your machine",
-    "Controlled command execution pathways",
-    "OP-oriented execution boundaries",
-    "Explicit command validation safeguards",
-    "Release integrity via SHA-256 checksums",
+    { icon: "shield" as const, text: "Local-first — data never leaves your machine" },
+    { icon: "pickaxe" as const, text: "Controlled command execution pathways" },
+    { icon: "torch" as const, text: "OP-oriented execution boundaries" },
+    { icon: "spark" as const, text: "Explicit command validation safeguards" },
+    { icon: "chest" as const, text: "Release integrity via SHA-256 checksums" },
   ];
 
   return (
@@ -346,18 +366,21 @@ function SecuritySection() {
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          <ScrollReveal>
-            <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>Security</p>
-            <h2 className="display font-semibold mb-6" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
-              Built for trust.
-            </h2>
-            <p className="text-sm leading-relaxed mb-8" style={{ color: "var(--body)" }}>
-              ARX is local-first. No cloud LLM dependency, no hidden runtime network calls, no uncontrolled command execution.
-            </p>
-            <Link href="/docs/security" className="btn-secondary inline-flex">
-              Security Model →
-            </Link>
-          </ScrollReveal>
+        <ScrollReveal>
+          <p className="label-caps mb-4 sprite-chip" style={{ color: "var(--muted)", width: "fit-content" }}>
+            <SpriteGlyph name="shield" size={14} tone="emerald" />
+            Security
+          </p>
+          <h2 className="display font-semibold mb-6" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
+            Built for trust.
+          </h2>
+          <p className="text-sm leading-relaxed mb-8" style={{ color: "var(--body)" }}>
+            ARX is local-first. No cloud LLM dependency, no hidden runtime network calls, no uncontrolled command execution.
+          </p>
+          <Link href="/docs/security" className="btn-secondary inline-flex">
+            Security Model →
+          </Link>
+        </ScrollReveal>
 
           <ScrollReveal delay={0.12}>
             <div className="space-y-0">
@@ -367,8 +390,8 @@ function SecuritySection() {
                   className="flex items-center gap-4 py-4"
                   style={{ borderBottom: "1px solid var(--border)" }}
                 >
-                  <Check className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "var(--accent)" }} />
-                  <span className="text-sm" style={{ color: "var(--body)" }}>{s}</span>
+                  <SpriteGlyph name={s.icon} size={14} tone="emerald" className="flex-shrink-0" />
+                  <span className="text-sm" style={{ color: "var(--body)" }}>{s.text}</span>
                 </div>
               ))}
             </div>
@@ -433,7 +456,10 @@ function FAQSection() {
       <div className="container-wide">
         <RevealedRule className="mb-16" />
         <ScrollReveal>
-          <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>FAQ</p>
+          <p className="label-caps mb-4 sprite-chip" style={{ color: "var(--muted)", width: "fit-content" }}>
+            <SpriteGlyph name="map" size={14} tone="accent" />
+            FAQ
+          </p>
           <h2 className="display font-semibold mb-16" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
             Common questions.
           </h2>
