@@ -1,5 +1,4 @@
-"use client";
-
+import Link from "next/link";
 import { DocsPageLayout } from "@/components/DocsPageLayout";
 import { CodeBlock } from "@/components/CodeBlock";
 import { INSTALLER } from "@/lib/constants";
@@ -57,8 +56,8 @@ export default function GettingStartedPage() {
         <section>
           <h2 id="next-steps">Next Steps</h2>
           <ul>
-            <li>Review <a href="/docs/cli">CLI Reference</a></li>
-            <li>Tune options in <a href="/docs/configuration">Configuration</a></li>
+            <li>Review <Link href="/docs/cli">CLI Reference</Link></li>
+            <li>Tune options in <Link href="/docs/configuration">Configuration</Link></li>
             <li>Enable public access with <code>arx tunnel setup</code> if needed</li>
           </ul>
         </section>

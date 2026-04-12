@@ -1,5 +1,3 @@
-"use client";
-
 import { DocsPageLayout } from "@/components/DocsPageLayout";
 import { CodeBlock } from "@/components/CodeBlock";
 import { CLI_COMMANDS } from "@/lib/constants";

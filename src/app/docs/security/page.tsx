@@ -1,5 +1,4 @@
-"use client";
-
+import Link from "next/link";
 import { DocsPageLayout } from "@/components/DocsPageLayout";
 import { CodeBlock } from "@/components/CodeBlock";
 
@@ -17,10 +16,10 @@ export default function SecurityPage() {
         <section>
           <h2 id="local-first">Local-First Operation</h2>
           <ul>
-            <li>All AI processing runs locally through Ollama — no cloud API calls</li>
+            <li>All AI processing runs locally through Ollama — no cloud LLM API dependency</li>
             <li>Server management operates entirely on your machine</li>
-            <li>Dashboard is served locally, accessible only on your network by default</li>
-            <li>No telemetry, analytics, or phone-home behavior</li>
+            <li>Dashboard binds to localhost by default</li>
+            <li>No runtime usage telemetry by default; optional/explicit network features may perform external calls</li>
           </ul>
         </section>
 
@@ -42,7 +41,7 @@ export default function SecurityPage() {
             code={`# Download checksums\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\n\n# Verify\nsha256sum -c checksums.txt`}
             language="bash"
           />
-          <p>See <a href="/docs/release-verification">Release Verification</a> for the complete guide.</p>
+          <p>See <Link href="/docs/release-verification">Release Verification</Link> for the complete guide.</p>
         </section>
 
         <section>

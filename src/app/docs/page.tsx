@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 
@@ -31,8 +29,6 @@ export default function DocsHomePage() {
               href={card.href}
               className="flex items-center justify-between py-5 group transition-all duration-200"
               style={{ borderBottom: "1px solid var(--border)" }}
-              onMouseEnter={e => (e.currentTarget.style.paddingLeft = "0.75rem")}
-              onMouseLeave={e => (e.currentTarget.style.paddingLeft = "0")}
             >
               <div>
                 <p className="label-caps mb-1" style={{ color: "var(--accent)" }}>{card.tag}</p>

@@ -352,7 +352,7 @@ function SecuritySection() {
               Built for trust.
             </h2>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "var(--body)" }}>
-              ARX is local-first. No cloud dependencies, no hidden network calls, no uncontrolled command execution.
+              ARX is local-first. No cloud LLM dependency, no hidden runtime network calls, no uncontrolled command execution.
             </p>
             <Link href="/docs/security" className="btn-secondary inline-flex">
               Security Model →

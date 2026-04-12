@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { GrainAndProgress } from "@/components/GrainAndProgress";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" });
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +36,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen font-sans antialiased" style={{ backgroundColor: "var(--bg)", color: "var(--heading)" }}>
+      <body className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`} style={{ backgroundColor: "var(--bg)", color: "var(--heading)" }}>
         {/* Grain film overlay */}
         <div className="grain-overlay" aria-hidden="true" />
         {/* Scroll progress */}
