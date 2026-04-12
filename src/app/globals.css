@@ -383,6 +383,25 @@
   display: inline-flex;
 }
 
+.hero-steve-landing-shadow {
+  position: absolute;
+  left: 56%;
+  bottom: 0.04em;
+  width: clamp(0.95rem, 1.7vw, 1.72rem);
+  height: clamp(0.22rem, 0.38vw, 0.34rem);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(10, 22, 11, 0.54) 0%,
+    rgba(10, 22, 11, 0.34) 50%,
+    rgba(10, 22, 11, 0) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .hero-steve-badge {
   position: absolute;
   left: 56%;
@@ -449,6 +468,11 @@
     bottom: calc(100% - 0.14em);
   }
 
+  .hero-steve-landing-shadow {
+    width: clamp(0.88rem, 2.2vw, 1.4rem);
+    height: clamp(0.2rem, 0.45vw, 0.3rem);
+  }
+
   .hero-parallax-layer {
     inset: -6vh -10vw;
   }
@@ -470,6 +494,14 @@
     filter: drop-shadow(0 1px 0 rgba(12, 26, 13, 0.75)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
   }
 
+  .hero-steve-landing-shadow {
+    left: 55%;
+    width: 0.8rem;
+    height: 0.18rem;
+    bottom: 0.03em;
+    opacity: 0.9;
+  }
+
   .hero-steve-badge::after {
     filter: blur(4.5px) saturate(1.08);
     opacity: 0.52;
@@ -487,6 +519,10 @@
   .hero-parallax-shell { display: none; }
   .hero-steve-badge img {
     animation: none !important;
+  }
+
+  .hero-steve-landing-shadow {
+    opacity: 0.85;
   }
 
   .hero-steve-badge::after {

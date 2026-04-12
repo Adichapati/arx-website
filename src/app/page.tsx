@@ -32,6 +32,7 @@ function HeroHeadline() {
         {beforeT}
         <span className="hero-local-first-t">
           {tChar}
+          <span className="hero-steve-landing-shadow" aria-hidden="true" />
           <span className="hero-steve-badge" aria-hidden="true">
             <Image
               src="/assets/sprites/steve-wave.gif"
