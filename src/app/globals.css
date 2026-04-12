@@ -527,53 +527,51 @@
 .mc-scene-stars {
   background-image: radial-gradient(color-mix(in srgb, var(--heading) 55%, transparent) 1.2px, transparent 1.2px);
   background-size: 46px 26px;
-  opacity: 0.45;
+  opacity: 0.38;
 }
 
 .mc-scene-clouds {
-  background:
-    linear-gradient(transparent 40%, color-mix(in srgb, var(--heading) 12%, transparent) 40% 50%, transparent 50%),
-    repeating-linear-gradient(90deg, transparent 0 52px, color-mix(in srgb, var(--heading) 18%, transparent) 52px 72px, transparent 72px 118px);
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan3.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
   opacity: 0.34;
 }
 
 .mc-scene-hills {
   top: 40px;
-  background:
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--emerald) 34%, transparent) 0 18px, color-mix(in srgb, var(--bg-surface) 88%, black) 18px 34px),
-    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg-surface) 88%, black) 60%);
-  clip-path: polygon(0% 72%, 8% 62%, 16% 68%, 25% 55%, 34% 70%, 43% 58%, 52% 72%, 61% 60%, 70% 74%, 79% 57%, 88% 72%, 100% 62%, 100% 100%, 0 100%);
-  opacity: 0.6;
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan5.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  opacity: 0.58;
 }
 
 .mc-scene-trees {
   top: 54px;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 8px,
-      color-mix(in srgb, var(--emerald) 58%, transparent) 8px 12px,
-      color-mix(in srgb, var(--bg-surface) 86%, black) 12px 14px,
-      transparent 14px 22px
-    );
-  clip-path: polygon(0 72%, 6% 64%, 10% 72%, 16% 58%, 22% 72%, 28% 60%, 34% 74%, 42% 58%, 48% 74%, 56% 56%, 64% 74%, 72% 60%, 80% 74%, 88% 58%, 94% 72%, 100% 64%, 100% 100%, 0 100%);
-  opacity: 0.56;
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan6.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  opacity: 0.52;
 }
 
 .mc-scene-foreground {
   top: 62px;
-  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent) 0 10px, color-mix(in srgb, var(--bg-surface) 92%, black) 10px 16px);
-  clip-path: polygon(0 48%, 4% 30%, 8% 50%, 12% 28%, 16% 52%, 22% 34%, 28% 56%, 34% 30%, 40% 60%, 48% 34%, 56% 58%, 64% 32%, 72% 56%, 80% 28%, 88% 52%, 96% 26%, 100% 48%, 100% 100%, 0 100%);
-  opacity: 0.6;
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan6.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  opacity: 0.38;
 }
 
 .mc-scene-fireflies {
   background-image:
-    radial-gradient(color-mix(in srgb, var(--emerald) 68%, transparent) 1px, transparent 1px),
-    radial-gradient(color-mix(in srgb, var(--accent-soft) 62%, transparent) 1px, transparent 1px);
+    radial-gradient(color-mix(in srgb, #ffe59c 75%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in srgb, #ffd07b 62%, transparent) 1px, transparent 1px);
   background-size: 54px 32px, 70px 40px;
   background-position: 0 0, 22px 14px;
-  opacity: 0.25;
+  opacity: 0.22;
 }
 
 .mc-scene-mist {
@@ -684,9 +682,9 @@
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 12% 24%, color-mix(in srgb, var(--ambient-2) 28%, transparent), transparent 36%),
-    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--ambient-1) 30%, transparent), transparent 42%),
-    linear-gradient(180deg, color-mix(in srgb, var(--bg) 12%, transparent), color-mix(in srgb, var(--bg) 72%, black));
+    radial-gradient(circle at 12% 24%, color-mix(in srgb, var(--ambient-2) 20%, transparent), transparent 36%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--ambient-1) 24%, transparent), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 8%, transparent), color-mix(in srgb, var(--bg) 56%, black));
 }
 
 .mc-immersive-backdrop {
@@ -696,54 +694,52 @@
   overflow: hidden;
 }
 
+.mc-backdrop-autumn-base,
+.mc-backdrop-autumn-layer,
 .mc-backdrop-stars,
-.mc-backdrop-clouds,
-.mc-backdrop-ridge,
 .mc-backdrop-fog {
   position: absolute;
   inset: 0;
 }
 
+.mc-backdrop-autumn-base {
+  background-image: url('/assets/autumn-optimized/hero-bg-2.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  opacity: 0.95;
+}
+
+.mc-backdrop-autumn-layer {
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+}
+
+.mc-backdrop-autumn-layer-mid {
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan5.png');
+  opacity: 0.34;
+}
+
+.mc-backdrop-autumn-layer-fore {
+  background-image: url('/assets/autumn-optimized/hero-layer-2-plan6.png');
+  opacity: 0.24;
+}
+
 .mc-backdrop-stars {
   background-image:
-    radial-gradient(color-mix(in srgb, var(--heading) 68%, transparent) 1px, transparent 1px),
-    radial-gradient(color-mix(in srgb, var(--accent-soft) 46%, transparent) 1px, transparent 1px);
+    radial-gradient(color-mix(in srgb, var(--heading) 42%, transparent) 1px, transparent 1px),
+    radial-gradient(color-mix(in srgb, var(--accent-soft) 30%, transparent) 1px, transparent 1px);
   background-size: 52px 36px, 80px 52px;
   background-position: 0 0, 25px 12px;
-  opacity: 0.52;
+  opacity: 0.34;
   animation: pulse-soft 6.5s ease-in-out infinite;
-}
-
-.mc-backdrop-clouds {
-  top: 8%;
-  height: 38%;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 110px, color-mix(in srgb, var(--heading) 12%, transparent) 110px 148px, transparent 148px 230px),
-    linear-gradient(180deg, color-mix(in srgb, var(--heading) 10%, transparent) 0 42%, transparent 42%);
-  opacity: 0.42;
-}
-
-.mc-backdrop-ridge-far {
-  top: 42%;
-  background:
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--emerald) 20%, transparent) 0 36px, color-mix(in srgb, var(--bg-surface) 90%, black) 36px 74px),
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg-surface) 76%, black));
-  clip-path: polygon(0 70%, 8% 58%, 15% 68%, 23% 52%, 31% 68%, 40% 56%, 49% 72%, 58% 58%, 66% 74%, 75% 54%, 84% 71%, 92% 57%, 100% 69%, 100% 100%, 0 100%);
-  opacity: 0.66;
-}
-
-.mc-backdrop-ridge-near {
-  top: 56%;
-  background:
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent) 0 18px, color-mix(in srgb, var(--bg-surface) 88%, black) 18px 34px),
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg) 76%, black));
-  clip-path: polygon(0 60%, 6% 46%, 12% 64%, 18% 42%, 26% 68%, 35% 44%, 44% 70%, 52% 46%, 61% 72%, 70% 44%, 79% 70%, 88% 46%, 95% 64%, 100% 52%, 100% 100%, 0 100%);
-  opacity: 0.88;
 }
 
 .mc-backdrop-fog {
   background:
-    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 32%, transparent) 58%, color-mix(in srgb, var(--bg) 76%, black) 100%);
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, #2d1a0f 20%, transparent) 44%, color-mix(in srgb, #140d0b 64%, black) 100%);
 }
 
 .mc-hero-stage {
@@ -757,6 +753,10 @@
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--heading) 12%, transparent),
     0 28px 70px color-mix(in srgb, var(--accent) 24%, transparent);
+  background-image: url('/assets/autumn-optimized/hero-bg-2.png');
+  background-size: cover;
+  background-position: center bottom;
+  image-rendering: pixelated;
 }
 
 .mc-hero-console {
@@ -793,8 +793,13 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg-surface) 16%, transparent));
-  opacity: 0.45;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #6f3d1f 9%, transparent), color-mix(in srgb, #2e1a10 22%, transparent)),
+    url('/assets/autumn-optimized/section-bg-4.png');
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated;
+  opacity: 0.26;
 }
 
 .mc-world-section > .container-wide {
@@ -849,6 +854,12 @@
 
   .mc-scene-strip-immersive {
     height: 190px;
+    background-position: 62% bottom;
+  }
+
+  .mc-backdrop-autumn-base,
+  .mc-backdrop-autumn-layer {
+    background-position: 62% bottom;
   }
 
   .mc-stat-row {
