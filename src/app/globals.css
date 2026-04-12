@@ -373,9 +373,45 @@
     radial-gradient(circle at 50% 36%, transparent 16%, color-mix(in srgb, var(--bg) 30%, black) 72%);
 }
 
+.hero-local-first-word {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-local-first-t {
+  position: relative;
+  display: inline-flex;
+}
+
+.hero-steve-badge {
+  position: absolute;
+  left: 56%;
+  bottom: calc(100% - 0.18em);
+  transform: translateX(-50%);
+  width: clamp(1.95rem, 3.1vw, 3.2rem);
+  aspect-ratio: 104 / 143;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 2px 0 rgba(12, 26, 13, 0.72)) drop-shadow(0 5px 12px rgba(0, 0, 0, 0.34));
+}
+
+.hero-steve-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  user-select: none;
+}
+
 @media (max-width: 1024px) {
   .home-with-parallax section[id] {
     scroll-margin-top: 66px;
+  }
+
+  .hero-steve-badge {
+    width: clamp(1.72rem, 5.1vw, 2.7rem);
+    bottom: calc(100% - 0.14em);
   }
 
   .hero-parallax-layer {
@@ -391,6 +427,13 @@
   .hero-parallax-shell {
     display: none;
   }
+
+  .hero-steve-badge {
+    width: 1.58rem;
+    left: 55%;
+    bottom: calc(100% - 0.08em);
+    filter: drop-shadow(0 1px 0 rgba(12, 26, 13, 0.75)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+  }
 }
 
 /* Reduced motion */
@@ -402,4 +445,7 @@
   }
   html { scroll-behavior: auto; }
   .hero-parallax-shell { display: none; }
+  .hero-steve-badge img {
+    animation: none !important;
+  }
 }

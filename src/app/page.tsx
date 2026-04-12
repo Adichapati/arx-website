@@ -10,6 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal, RevealedRule } from "@/components/ScrollReveal";
 import { CodeBlock } from "@/components/CodeBlock";
@@ -19,17 +20,45 @@ import { Check, Github } from "lucide-react";
 /* ─── WORD-STAGGER hero headline ─── */
 function HeroHeadline() {
   const words = ["LOCAL-FIRST", "MINECRAFT", "OPERATIONS."];
+
+  const renderWord = (word: string, index: number) => {
+    if (index !== 0) return word;
+
+    const beforeT = word.slice(0, -1);
+    const tChar = word.slice(-1);
+
+    return (
+      <span className="hero-local-first-word">
+        {beforeT}
+        <span className="hero-local-first-t">
+          {tChar}
+          <span className="hero-steve-badge" aria-hidden="true">
+            <Image
+              src="/assets/sprites/steve-wave.gif"
+              alt=""
+              fill
+              unoptimized
+              priority
+              sizes="(max-width: 768px) 24px, (max-width: 1024px) 40px, 56px"
+              draggable={false}
+            />
+          </span>
+        </span>
+      </span>
+    );
+  };
+
   return (
     <h1 className="display font-bold mb-6 leading-none" style={{ fontSize: "clamp(2.5rem, 7.2vw, 6.4rem)", letterSpacing: "-0.03em", color: "var(--heading)" }}>
       {words.map((word, wi) => (
-        <span key={wi} className="block overflow-hidden">
+        <span key={wi} className={wi === 0 ? "block overflow-visible" : "block overflow-hidden"}>
           <motion.span
             className="block"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ delay: wi * 0.12, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            {word}
+            {renderWord(word, wi)}
           </motion.span>
         </span>
       ))}
