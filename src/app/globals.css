@@ -392,7 +392,30 @@
   aspect-ratio: 104 / 143;
   pointer-events: none;
   z-index: 2;
+  isolation: isolate;
   filter: drop-shadow(0 2px 0 rgba(12, 26, 13, 0.72)) drop-shadow(0 5px 12px rgba(0, 0, 0, 0.34));
+}
+
+.hero-steve-badge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 16%;
+  width: 84%;
+  height: 58%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 50% 55%,
+    color-mix(in srgb, var(--accent) 50%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 42%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  filter: blur(6px) saturate(1.14);
+  opacity: 0.64;
+  z-index: -1;
+  animation: steve-rim-breathe 3.8s ease-in-out infinite;
 }
 
 .hero-steve-badge img {
@@ -402,6 +425,18 @@
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   user-select: none;
+}
+
+@keyframes steve-rim-breathe {
+  0%,
+  100% {
+    opacity: 0.52;
+    transform: translateX(-50%) scale(0.95);
+  }
+  50% {
+    opacity: 0.74;
+    transform: translateX(-50%) scale(1.05);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -434,6 +469,11 @@
     bottom: calc(100% - 0.08em);
     filter: drop-shadow(0 1px 0 rgba(12, 26, 13, 0.75)) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
   }
+
+  .hero-steve-badge::after {
+    filter: blur(4.5px) saturate(1.08);
+    opacity: 0.52;
+  }
 }
 
 /* Reduced motion */
@@ -447,5 +487,11 @@
   .hero-parallax-shell { display: none; }
   .hero-steve-badge img {
     animation: none !important;
+  }
+
+  .hero-steve-badge::after {
+    animation: none !important;
+    opacity: 0.58;
+    transform: translateX(-50%) scale(1);
   }
 }
