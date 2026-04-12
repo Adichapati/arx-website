@@ -680,6 +680,12 @@
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
+  --runner-a-frame: 720ms;
+  --runner-b-frame: 980ms;
+  --runner-c-frame: 640ms;
+  --runner-a-speed: 24s;
+  --runner-b-speed: 32s;
+  --runner-c-speed: 20s;
 }
 
 .mc-scene-layer {
@@ -722,6 +728,7 @@
     radial-gradient(circle at 20% 18%, color-mix(in srgb, #f8c576 15%, transparent), transparent 38%),
     radial-gradient(circle at 84% 20%, color-mix(in srgb, #e47d3d 14%, transparent), transparent 40%),
     linear-gradient(180deg, color-mix(in srgb, #2f1a0f 8%, transparent), color-mix(in srgb, #120d0a 56%, black));
+  transition: filter 420ms ease, opacity 420ms ease;
 }
 
 .mc-sprite-track {
@@ -744,16 +751,16 @@
   top: 0;
   background-image: url('/assets/sprites-optimized/runner-run.png');
   animation:
-    sprite-run-6 720ms steps(6) infinite,
-    runner-path-a 24s linear infinite;
+    sprite-run-6 var(--runner-a-frame) steps(6) infinite,
+    runner-path-a var(--runner-a-speed) linear infinite;
 }
 
 .mc-runner-b {
   top: 8px;
   background-image: url('/assets/sprites-optimized/guardian-idle.png');
   animation:
-    sprite-idle-4 980ms steps(4) infinite,
-    runner-path-b 32s linear infinite;
+    sprite-idle-4 var(--runner-b-frame) steps(4) infinite,
+    runner-path-b var(--runner-b-speed) linear infinite;
   opacity: 0.78;
 }
 
@@ -761,8 +768,8 @@
   top: 4px;
   background-image: url('/assets/sprites-optimized/striker-run-attack.png');
   animation:
-    sprite-run-6 640ms steps(6) infinite,
-    runner-path-c 20s linear infinite;
+    sprite-run-6 var(--runner-c-frame) steps(6) infinite,
+    runner-path-c var(--runner-c-speed) linear infinite;
 }
 
 .mc-runner-static {
@@ -850,6 +857,58 @@
 
 .mc-faq-item:hover {
   background: color-mix(in srgb, #c4763f 12%, transparent);
+}
+
+.mc-zone-spawn {
+  --runner-a-frame: 620ms;
+  --runner-b-frame: 980ms;
+  --runner-c-frame: 620ms;
+  --runner-a-speed: 20s;
+  --runner-b-speed: 30s;
+  --runner-c-speed: 17s;
+}
+
+.mc-zone-spawn .mc-scene-vignette {
+  filter: brightness(1.04) saturate(1.06);
+}
+
+.mc-zone-inventory {
+  --runner-a-frame: 760ms;
+  --runner-b-frame: 1100ms;
+  --runner-c-frame: 700ms;
+  --runner-a-speed: 26s;
+  --runner-b-speed: 34s;
+  --runner-c-speed: 22s;
+}
+
+.mc-zone-inventory .mc-scene-vignette {
+  filter: brightness(0.98) saturate(0.96);
+}
+
+.mc-zone-operations {
+  --runner-a-frame: 560ms;
+  --runner-b-frame: 900ms;
+  --runner-c-frame: 520ms;
+  --runner-a-speed: 18s;
+  --runner-b-speed: 28s;
+  --runner-c-speed: 15s;
+}
+
+.mc-zone-operations .mc-scene-vignette {
+  filter: brightness(1.08) saturate(1.14);
+}
+
+.mc-zone-guidebook {
+  --runner-a-frame: 860ms;
+  --runner-b-frame: 1240ms;
+  --runner-c-frame: 780ms;
+  --runner-a-speed: 30s;
+  --runner-b-speed: 38s;
+  --runner-c-speed: 25s;
+}
+
+.mc-zone-guidebook .mc-scene-vignette {
+  filter: brightness(0.94) saturate(0.88);
 }
 
 @keyframes sprite-run-6 {
