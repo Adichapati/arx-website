@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-biome="overworld">
+    <html lang="en" data-biome="nether">
       <body className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`} style={{ backgroundColor: "var(--bg)", color: "var(--heading)" }}>
         {/* Ambient world glow system */}
         <div className="ambient-root" aria-hidden="true">

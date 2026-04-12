@@ -43,6 +43,17 @@ export function WorldScrollScene() {
         <span className={`mc-runner mc-runner-b ${reduced ? "mc-runner-static" : ""}`} />
         <span className={`mc-runner mc-runner-c ${reduced ? "mc-runner-static" : ""}`} />
       </div>
+
+      {!reduced && (
+        <div className="mc-battle-layer">
+          <span className="mc-roamer mc-roamer-melee mc-roamer-1" />
+          <span className="mc-roamer mc-roamer-bow mc-roamer-2" />
+          <span className="mc-roamer mc-roamer-spell mc-roamer-3" />
+          <span className="mc-roamer mc-roamer-melee mc-roamer-4" />
+          <span className="mc-roamer mc-roamer-bow mc-roamer-5" />
+          <span className="mc-roamer mc-roamer-spell mc-roamer-6" />
+        </div>
+      )}
     </div>
   );
 }

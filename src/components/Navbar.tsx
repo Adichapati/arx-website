@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
-import { BiomeThemeControl } from "@/components/BiomeThemeControl";
 
 const HOME_LINKS = [
   { label: "Journey", href: "/#journey" },
@@ -41,7 +40,7 @@ export function Navbar() {
         borderBottom: scrolled ? "1px solid var(--border-bright)" : "1px solid var(--border)",
       }}
     >
-      <nav className="hidden lg:grid" style={{ gridTemplateColumns: `220px repeat(${HOME_LINKS.length}, minmax(0,1fr)) 220px 150px` }}>
+      <nav className="hidden lg:grid" style={{ gridTemplateColumns: `220px repeat(${HOME_LINKS.length}, minmax(0,1fr)) 150px` }}>
         <Link
           href="/"
           aria-label="ARX Home"
@@ -60,17 +59,15 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`nav-link flex items-center justify-center px-4 py-4 border-r text-center ${active ? "active" : ""}`}
+              className={`nav-link nav-link-shot flex items-center justify-center px-4 py-4 border-r text-center ${active ? "active" : ""}`}
               style={{ borderColor: "var(--border)" }}
+              data-shot="true"
             >
-              {link.label}
+              <span className="nav-link-label">{link.label}</span>
+              <span className="nav-arrow-shot" aria-hidden="true" />
             </Link>
           );
         })}
-
-        <div className="flex items-center justify-center px-4 py-4 border-r" style={{ borderColor: "var(--border)" }}>
-          <BiomeThemeControl />
-        </div>
 
         <Link href="/install" className="btn-primary flex items-center justify-center px-4 py-4 text-center" style={{ borderLeft: "none" }}>
           Install
@@ -115,9 +112,8 @@ export function Navbar() {
                 </Link>
               </motion.div>
             ))}
-            <div className="px-4 pt-4 pb-2" style={{ borderBottom: "1px solid var(--border)" }}>
-              <p className="label-caps mb-2" style={{ color: "var(--muted)" }}>Biome Theme</p>
-              <BiomeThemeControl compact />
+            <div className="px-5 py-3 label-caps" style={{ borderBottom: "1px solid var(--border)", color: "var(--muted)" }}>
+              Autumn Theme Active
             </div>
             <div className="p-4">
               <Link href="/install" className="btn-primary w-full justify-center">Install ARX</Link>

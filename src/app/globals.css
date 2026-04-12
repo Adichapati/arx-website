@@ -240,6 +240,35 @@
     color: var(--heading);
   }
 
+  .nav-link-shot {
+    overflow: hidden;
+  }
+
+  .nav-link-label {
+    position: relative;
+    z-index: 2;
+  }
+
+  .nav-arrow-shot {
+    position: absolute;
+    left: -34px;
+    top: calc(50% - 9px);
+    width: 18px;
+    height: 18px;
+    background-image: url('/assets/sprites-optimized/bow-arrow.png');
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    opacity: 0;
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 80%, transparent));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .nav-link-shot:hover .nav-arrow-shot {
+    animation: nav-arrow-shot 620ms linear 1;
+  }
+
   /* ===== FOOTER LINK HOVER ===== */
   .footer-link {
     color: var(--muted);
@@ -778,7 +807,7 @@
 
 .mc-world-hero {
   position: relative;
-  min-height: 72vh;
+  min-height: 64vh;
   border-bottom: 1px solid var(--border);
 }
 
@@ -936,6 +965,102 @@
   to { transform: translateX(120vw); }
 }
 
+@keyframes nav-arrow-shot {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(220px);
+    opacity: 0;
+  }
+}
+
+.mc-battle-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mc-roamer {
+  position: absolute;
+  opacity: 0;
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+}
+
+.mc-roamer-melee,
+.mc-roamer-bow {
+  width: 42px;
+  height: 42px;
+}
+
+.mc-roamer-spell {
+  width: 72px;
+  height: 72px;
+}
+
+.mc-roamer-melee {
+  background-image: url('/assets/sprites-optimized/striker-run-attack.png');
+  animation:
+    sprite-run-6 540ms steps(6) infinite,
+    roam-1 14s linear infinite;
+}
+
+.mc-roamer-bow {
+  background-image: url('/assets/sprites-optimized/archer-attack.png');
+  animation:
+    sprite-run-6 640ms steps(6) infinite,
+    roam-2 16s linear infinite;
+}
+
+.mc-roamer-spell {
+  background-image: url('/assets/sprites-optimized/spell-burst.png');
+  animation:
+    spell-burst-8 900ms steps(8) infinite,
+    roam-3 18s linear infinite;
+}
+
+.mc-roamer-1 { animation-delay: 0s, -1.4s; }
+.mc-roamer-2 { animation-delay: -2.1s, -4.2s; }
+.mc-roamer-3 { animation-delay: -0.7s, -6.8s; }
+.mc-roamer-4 { animation-delay: -3.3s, -9.6s; }
+.mc-roamer-5 { animation-delay: -1.6s, -11.2s; }
+.mc-roamer-6 { animation-delay: -4.8s, -13.4s; }
+
+@keyframes spell-burst-8 {
+  from { background-position: 0 0; }
+  to { background-position: -576px 0; }
+}
+
+@keyframes roam-1 {
+  0% { opacity: 0; transform: translate(4vw, 12vh) scale(0.84); }
+  10% { opacity: 0.9; }
+  50% { opacity: 1; transform: translate(72vw, 34vh) scale(1); }
+  100% { opacity: 0; transform: translate(104vw, 58vh) scale(0.92); }
+}
+
+@keyframes roam-2 {
+  0% { opacity: 0; transform: translate(108vw, 18vh) scale(0.9); }
+  12% { opacity: 0.92; }
+  52% { opacity: 1; transform: translate(42vw, 50vh) scale(1); }
+  100% { opacity: 0; transform: translate(-10vw, 72vh) scale(0.9); }
+}
+
+@keyframes roam-3 {
+  0% { opacity: 0; transform: translate(12vw, 72vh) scale(0.9); }
+  18% { opacity: 0.88; }
+  50% { opacity: 1; transform: translate(60vw, 28vh) scale(1); }
+  100% { opacity: 0; transform: translate(88vw, 12vh) scale(0.9); }
+}
+
 @media (max-width: 1024px) {
   .mc-quest-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -943,6 +1068,13 @@
 
   .mc-inventory-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @keyframes nav-arrow-shot {
+    100% {
+      transform: translateX(140px);
+      opacity: 0;
+    }
   }
 }
 

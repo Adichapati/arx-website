@@ -21,7 +21,7 @@ function WorldHeroSection() {
 
   return (
     <section className="mc-world-hero" id="top">
-      <div className="container-wide section-padding relative z-20 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24">
+      <div className="container-wide section-padding relative z-20 pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-18">
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
           <div>
             <ScrollReveal>
