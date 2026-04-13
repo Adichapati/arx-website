@@ -389,9 +389,9 @@
 .hero-parallax-glow {
   inset: -13vh -11vw;
   background:
-    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.13), transparent 44%),
-    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.12), transparent 46%);
-  opacity: 0.28;
+    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.09), transparent 44%),
+    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.08), transparent 46%);
+  opacity: 0.18;
 }
 
 .hero-parallax-vignette {
