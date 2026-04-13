@@ -141,9 +141,18 @@
     border-color: var(--heading);
   }
 
-  /* ===== NAV UNDERLINE HOVER ===== */
-.nav-link {
+  /* ===== NAV UNDERLINE + VINE BLOOM ===== */
+.nav-link,
+.btn-primary,
+.btn-secondary,
+button.focus-ring,
+a.focus-ring {
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nav-link {
   color: var(--muted);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
@@ -151,45 +160,78 @@
   text-transform: uppercase;
   transition: color 200ms;
   display: inline-block;
-  overflow: visible;
 }
+
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 0;
   width: 0%;
   height: 1px;
   background: var(--heading);
   transition: width 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.nav-link::before {
+
+.nav-link::before,
+.btn-primary::before,
+.btn-secondary::before,
+button.focus-ring::before,
+a.focus-ring::before {
   content: '';
   position: absolute;
   left: 50%;
-  top: calc(100% + 3px);
+  bottom: 0;
   width: 52px;
   height: 52px;
-  transform: translateX(-50%) scale(0.35);
-  transform-origin: center top;
+  transform: translateX(-50%) scale(0.52);
+  transform-origin: center bottom;
   background: url('/assets/sprites/vines-bloom-strip.webp') 0 0 / 1872px 52px no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   opacity: 0;
   pointer-events: none;
+  z-index: 0;
   filter: drop-shadow(0 1px 0 rgba(7, 12, 9, 0.82));
 }
+
+.nav-link > *,
+.btn-primary > *,
+.btn-secondary > *,
+button.focus-ring > *,
+a.focus-ring > * {
+  position: relative;
+  z-index: 1;
+}
+
 .nav-link:hover {
   color: var(--heading);
 }
+
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 100%;
 }
-.nav-link:hover::before {
-  opacity: 0.88;
-  animation: nav-vine-bloom 900ms steps(36) forwards;
+
+.nav-link:hover::before,
+.nav-link:active::before,
+.nav-link:focus-visible::before,
+.btn-primary:hover::before,
+.btn-primary:active::before,
+.btn-primary:focus-visible::before,
+.btn-secondary:hover::before,
+.btn-secondary:active::before,
+.btn-secondary:focus-visible::before,
+button.focus-ring:hover::before,
+button.focus-ring:active::before,
+button.focus-ring:focus-visible::before,
+a.focus-ring:hover::before,
+a.focus-ring:active::before,
+a.focus-ring:focus-visible::before {
+  opacity: 0.92;
+  animation: nav-vine-bloom 2.3s steps(36) forwards;
 }
+
 .nav-link.active {
   color: var(--heading);
 }
@@ -463,11 +505,11 @@
 
 .hero-runner {
   position: absolute;
-  left: -4.2rem;
+  left: -4.8rem;
   top: 50%;
-  width: 3rem;
-  height: 1.8rem;
-  transform: translateY(-96%) scaleX(-1);
+  width: 3.7rem;
+  height: 2.22rem;
+  transform: translateY(-102%) scaleX(-1);
   background: url('/assets/sprites/steve-run-line.webp') center/contain no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -477,12 +519,12 @@
 
 @keyframes hero-runline-loop-ltr {
   0% {
-    left: -4.2rem;
-    transform: translateY(-96%) scaleX(-1);
+    left: -4.8rem;
+    transform: translateY(-102%) scaleX(-1);
   }
   100% {
-    left: calc(100% + 3.6rem);
-    transform: translateY(-96%) scaleX(-1);
+    left: calc(100% + 4.2rem);
+    transform: translateY(-102%) scaleX(-1);
   }
 }
 
@@ -602,6 +644,18 @@
     }
   }
 
+  .nav-link::before,
+  .btn-primary::before,
+  .btn-secondary::before,
+  button.focus-ring::before,
+  a.focus-ring::before {
+    width: 42px;
+    height: 42px;
+    bottom: 0;
+    transform: translateX(-50%) scale(0.54);
+    background-size: 1512px 42px;
+  }
+
   .hero-steve-badge {
     width: clamp(1.72rem, 5.1vw, 2.7rem);
     bottom: calc(100% - 0.14em);
@@ -638,7 +692,11 @@
     scroll-margin-top: var(--nav-offset);
   }
 
-  .nav-link::before {
+  .nav-link::before,
+  .btn-primary::before,
+  .btn-secondary::before,
+  button.focus-ring::before,
+  a.focus-ring::before {
     display: none;
   }
 
@@ -676,19 +734,19 @@
   }
 
   .hero-runner {
-    width: 2.25rem;
-    height: 1.35rem;
-    transform: translateY(-102%) scaleX(-1);
+    width: 2.7rem;
+    height: 1.62rem;
+    transform: translateY(-106%) scaleX(-1);
   }
 
   @keyframes hero-runline-loop-ltr {
     0% {
-      left: -3.2rem;
-      transform: translateY(-102%) scaleX(-1);
+      left: -3.8rem;
+      transform: translateY(-106%) scaleX(-1);
     }
     100% {
-      left: calc(100% + 2.8rem);
-      transform: translateY(-102%) scaleX(-1);
+      left: calc(100% + 3.2rem);
+      transform: translateY(-106%) scaleX(-1);
     }
   }
 }
