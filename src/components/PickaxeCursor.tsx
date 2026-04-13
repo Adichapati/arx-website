@@ -16,6 +16,7 @@ export function PickaxeCursor() {
     if (typeof window === "undefined") return;
 
     const root = document.documentElement;
+    root.dataset.customCursor = "on";
     root.style.setProperty("--pickaxe-x", "50vw");
     root.style.setProperty("--pickaxe-y", "50vh");
 
@@ -47,6 +48,7 @@ export function PickaxeCursor() {
     window.addEventListener("mousedown", onDown, { passive: true });
 
     return () => {
+      delete root.dataset.customCursor;
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", onDown);
       cancelAnimationFrame(rafRef.current);

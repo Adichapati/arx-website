@@ -34,16 +34,19 @@
     color: var(--heading);
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
+  }
+
+  html[data-custom-cursor="on"] body {
     cursor: none;
   }
 
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  [role="button"],
-  summary {
+  html[data-custom-cursor="on"] a,
+  html[data-custom-cursor="on"] button,
+  html[data-custom-cursor="on"] input,
+  html[data-custom-cursor="on"] textarea,
+  html[data-custom-cursor="on"] select,
+  html[data-custom-cursor="on"] [role="button"],
+  html[data-custom-cursor="on"] summary {
     cursor: none !important;
   }
 

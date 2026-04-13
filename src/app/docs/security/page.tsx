@@ -38,7 +38,7 @@ export default function SecurityPage() {
           <h2 id="release-integrity">Release Integrity</h2>
           <p>Every ARX release includes SHA-256 checksums so you can verify download authenticity:</p>
           <CodeBlock
-            code={`# Download checksums\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\n\n# Verify\nsha256sum -c checksums.txt`}
+            code={`# Download manifest + release artifacts\ncurl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\ncurl -fsSL https://arxmc.studio/install.ps1 -o install.ps1\ncurl -fsSL https://arxmc.studio/arx-runtime.zip -o arx-runtime.zip\n\n# Verify\nsha256sum -c checksums.txt`}
             language="bash"
           />
           <p>See <Link href="/docs/release-verification">Release Verification</Link> for the complete guide.</p>
