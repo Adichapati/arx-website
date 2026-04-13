@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
 
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
-  windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = [System.IO.Path]::Combine($env:TEMP, ([System.Guid]::NewGuid().ToString('N') + '.ps1')); irm 'https://arxmc.studio/install.ps1' -OutFile $tmp; & $tmp; Remove-Item -Force $tmp"`,
+  windows: `powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand "JAB0AG0AcAA9AEoAbwBpAG4ALQBQAGEAdABoACAAJABlAG4AdgA6AFQARQBNAFAAIAAoAFsAZwB1AGkAZABdADoAOgBOAGUAdwBHAHUAaQBkACgAKQAuAFQAbwBTAHQAcgBpAG4AZwAoACcATgAnACkAIAArACAAJwAuAHAAcwAxACcAKQA7ACAASQBuAHYAbwBrAGUALQBSAGUAcwB0AE0AZQB0AGgAbwBkACAAJwBoAHQAdABwAHMAOgAvAC8AYQByAHgAbQBjAC4AcwB0AHUAZABpAG8ALwBpAG4AcwB0AGEAbABsAC4AcABzADEAJwAgAC0ATwB1AHQARgBpAGwAZQAgACQAdABtAHAAOwAgACYAIAAkAHQAbQBwADsAIABSAGUAbQBvAHYAZQAtAEkAdABlAG0AIAAtAEYAbwByAGMAZQAgACQAdABtAHAA"`,
   githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
