@@ -181,11 +181,11 @@ a.focus-ring::before {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: 0;
+  top: 50%;
   width: 52px;
   height: 52px;
-  transform: translateX(-50%) scale(0.52);
-  transform-origin: center bottom;
+  transform: translate(-50%, -50%) scale(0.52);
+  transform-origin: center center;
   background: url('/assets/sprites/vines-bloom-strip.webp') 0 0 / 1872px 52px no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -651,8 +651,8 @@ a.focus-ring:focus-visible::before {
   a.focus-ring::before {
     width: 42px;
     height: 42px;
-    bottom: 0;
-    transform: translateX(-50%) scale(0.54);
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.54);
     background-size: 1512px 42px;
   }
 
