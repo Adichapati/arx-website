@@ -51,6 +51,11 @@ ARX runtime/backend repo:
 
 https://github.com/Adichapati/ARX
 
+## Repository cleanup policy
+
+This repository intentionally excludes AI-agent scaffolding and prompt-pack assets.
+Only production website code, docs, and release artifacts required for arxmc.studio should live here.
+
 ## License
 
 Use the repository license policy in this project.
