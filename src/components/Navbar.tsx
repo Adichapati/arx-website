@@ -133,7 +133,7 @@ export function Navbar() {
         <Link
           href="/"
           aria-label="ARX Home"
-          className="flex items-center px-6 py-5 border-r group"
+          className="brand-link flex items-center px-6 py-5 border-r group"
           style={{ borderColor: "var(--border)" }}
         >
           <span
@@ -142,6 +142,7 @@ export function Navbar() {
           >
             {SITE_CONFIG.name}
           </span>
+          <span className="brand-miner" aria-hidden="true" />
         </Link>
 
         {/* Nav link cells */}

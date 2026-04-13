@@ -245,6 +245,38 @@ a.focus-ring:focus-visible::before {
     color: var(--heading);
   }
 
+  /* ===== BRAND MINER ===== */
+  .brand-link {
+    position: relative;
+    overflow: visible;
+  }
+
+  .brand-miner {
+    position: absolute;
+    left: 1.05rem;
+    top: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    transform: translateY(-52%) scaleX(-1);
+    background: url('/assets/sprites/steve-mine-brand-strip.webp') 0 0 / 2016px 56px no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    opacity: 0.94;
+    pointer-events: none;
+    z-index: 2;
+    filter: drop-shadow(0 1px 0 rgba(7, 12, 9, 0.9)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+    animation: brand-mine-loop 2.4s steps(36) infinite;
+  }
+
+  @keyframes brand-mine-loop {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -2016px 0;
+    }
+  }
+
   /* ===== FOCUS ===== */
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-arx-accent focus-visible:ring-offset-2 focus-visible:ring-offset-arx-bg;
@@ -627,6 +659,13 @@ a.focus-ring:focus-visible::before {
     scroll-margin-top: var(--nav-offset);
   }
 
+  .brand-miner {
+    left: 0.88rem;
+    width: 1.88rem;
+    height: 1.88rem;
+    animation-duration: 2.6s;
+  }
+
   .nav-link::before {
     width: 42px;
     height: 42px;
@@ -690,6 +729,10 @@ a.focus-ring:focus-visible::before {
 @media (max-width: 768px) {
   .home-with-parallax section[id] {
     scroll-margin-top: var(--nav-offset);
+  }
+
+  .brand-miner {
+    display: none;
   }
 
   .nav-link::before,
