@@ -107,21 +107,15 @@ function MouseParallaxBackground() {
   const layer0Y = useTransform(smoothY, [-1, 1], [-6, 6]);
   const layer1X = useTransform(smoothX, [-1, 1], [-20, 20]);
   const layer1Y = useTransform(smoothY, [-1, 1], [-14, 14]);
-  const layer2X = useTransform(smoothX, [-1, 1], [-8, 8]);
-
   const layer0ScrollY = useTransform(scrollY, [0, 1400], [0, -60]);
   const layer1ScrollY = useTransform(scrollY, [0, 1400], [0, -120]);
-  const layer2ScrollY = useTransform(scrollY, [0, 1400], [0, -150]);
 
   const floatA = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, 2.5, -1.5, 3, -2, 1.5, 0]);
   const floatB = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, -3, 2, -2.5, 1.5, -1, 0]);
-  const floatC = useTransform(scrollY, [0, 240, 480, 720, 960, 1200, 1400], [0, 4, -2.5, 3.5, -2, 1, 0]);
 
   const baseY = useTransform(() => layer0Y.get() + layer0ScrollY.get() + floatA.get());
   const depthY = useTransform(() => layer1Y.get() + layer1ScrollY.get() + floatB.get());
-  const glowY = useTransform(() => layer2ScrollY.get() + floatC.get());
   const depthRotate = useTransform(smoothX, [-1, 1], [-1.5, 1.5]);
-  const glowScale = useTransform(smoothY, [-1, 1], [1.02, 1.06]);
 
   return (
     <div className="hero-parallax-shell" aria-hidden="true">
@@ -143,14 +137,7 @@ function MouseParallaxBackground() {
           <div className="hero-parallax-plane hero-parallax-depth" />
         </motion.div>
 
-        <motion.div
-          className="hero-parallax-layer hero-parallax-layer-glow"
-          style={reduced ? undefined : { x: layer2X, y: glowY, scale: glowScale }}
-        >
-          <div className="hero-parallax-plane hero-parallax-glow" />
-        </motion.div>
 
-        <div className="hero-parallax-vignette" />
       </motion.div>
     </div>
   );
