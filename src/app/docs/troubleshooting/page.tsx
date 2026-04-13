@@ -26,17 +26,6 @@ export default function TroubleshootingPage() {
             code={`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`}
             language="powershell"
           />
-
-          <h3>Windows bootstrap pasted into the wrong shell</h3>
-          <p>Run the Windows install block from Windows PowerShell. Do not paste it into Command Prompt, Git Bash, or a generic terminal wrapper.</p>
-          <CodeBlock
-            code={`# Open PowerShell first, then paste:
-$installer = Join-Path $env:TEMP "arx-install.ps1"
-Invoke-RestMethod 'https://arxmc.studio/install.ps1' -OutFile $installer
-& $installer
-Remove-Item -Force $installer`}
-            language="powershell"
-          />
         </section>
 
         <section>

@@ -245,7 +245,7 @@ function HeroSection() {
             step="2."
           />
           <p className="label-caps pt-3" style={{ color: "var(--muted)" }}>
-            {heroInstallTarget === "windows" ? "Paste this block into PowerShell on Windows." : "Shell one-liner for Linux."} &nbsp;
+            {heroInstallTarget === "windows" ? "PowerShell one-liner for Windows." : "Shell one-liner for Linux."} &nbsp;
             <Link href="/install" style={{ color: "var(--accent)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
               Full installer options →
             </Link>

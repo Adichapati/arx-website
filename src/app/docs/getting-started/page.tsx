@@ -29,11 +29,10 @@ export default function GettingStartedPage() {
             language="bash"
           />
 
-          <h3>Windows (open PowerShell, then paste)</h3>
+          <h3>Windows (PowerShell bootstrap)</h3>
           <CodeBlock code={INSTALLER.windows} language="powershell" />
 
           <p>
-            Open Windows PowerShell first, then paste the block above. Do not paste it into Command Prompt or Git Bash.
             Installer sets up ARX runtime, config, and local Ollama workflow with <code>{INSTALLER.model}</code>.
           </p>
         </section>

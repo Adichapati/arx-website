@@ -25,7 +25,7 @@ const TROUBLESHOOT = [
   { issue: "Command not found after install", fix: "Restart your terminal or run source ~/.bashrc" },
   { issue: "Ollama fails to start", fix: "Ensure port 11434 is free and run ollama serve" },
   { issue: "Permission denied on Linux", fix: "Run the install script with sudo" },
-  { issue: "Windows Defender blocks script", fix: "Open Windows PowerShell as Administrator, then paste the install block there instead of Command Prompt" },
+  { issue: "Windows Defender blocks script", fix: "Run PowerShell as Administrator with execution policy bypass" },
 ];
 
 export default function InstallPage() {
@@ -38,7 +38,7 @@ export default function InstallPage() {
     },
     windows: {
       cmd: INSTALLER.windows,
-      note: "Open PowerShell first, then paste the block. Do not run it from Command Prompt. Administrator mode is recommended for smoother Ollama and winget setup.",
+      note: "Run in PowerShell. Handles Ollama installation and model setup.",
     },
     macos: {
       cmd: INSTALLER.linux,

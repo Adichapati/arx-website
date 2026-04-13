@@ -11,11 +11,7 @@ export const SITE_CONFIG = {
 
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
-  windows: `# Open PowerShell and paste this block (not Command Prompt)
-$installer = Join-Path $env:TEMP "arx-install.ps1"
-Invoke-RestMethod 'https://arxmc.studio/install.ps1' -OutFile $installer
-& $installer
-Remove-Item -Force $installer`,
+  windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "$installer = Join-Path $env:TEMP 'arx-install.ps1'; Invoke-RestMethod 'https://arxmc.studio/install.ps1' -OutFile $installer; & $installer; Remove-Item -Force $installer"`,
   githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
