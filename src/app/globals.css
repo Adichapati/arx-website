@@ -711,13 +711,14 @@ a.focus-ring:focus-visible::before {
 }
 
 .cli-parrot-perch {
+  --parrot-perch-size: 2rem;
   position: absolute;
-  left: 50%;
-  bottom: calc(100% - 0.16em);
-  width: 2rem;
-  height: 2rem;
+  left: 56%;
+  bottom: calc(100% + 0.02em);
+  width: var(--parrot-perch-size);
+  height: var(--parrot-perch-size);
   transform: translateX(-50%);
-  background: url('/assets/sprites/parrot-perch-strip-v2.webp') 0 0 / 1440px 40px no-repeat;
+  background: url('/assets/sprites/parrot-perch-strip-v2.webp') 0 0 / calc(var(--parrot-perch-size) * 36) var(--parrot-perch-size) no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   pointer-events: none;
@@ -727,12 +728,13 @@ a.focus-ring:focus-visible::before {
 }
 
 .cli-parrot-fly {
+  --parrot-fly-size: 2.2rem;
   position: absolute;
   top: 2.5rem;
   left: -2.4rem;
-  width: 2.2rem;
-  height: 2.2rem;
-  background: url('/assets/sprites/parrot-fly-strip-v2.webp') 0 0 / 1584px 44px no-repeat;
+  width: var(--parrot-fly-size);
+  height: var(--parrot-fly-size);
+  background: url('/assets/sprites/parrot-fly-strip-v2.webp') 0 0 / calc(var(--parrot-fly-size) * 36) var(--parrot-fly-size) no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   pointer-events: none;
@@ -748,7 +750,7 @@ a.focus-ring:focus-visible::before {
     background-position: 0 0;
   }
   to {
-    background-position: -1440px 0;
+    background-position: calc(var(--parrot-perch-size) * -36) 0;
   }
 }
 
@@ -757,7 +759,7 @@ a.focus-ring:focus-visible::before {
     background-position: 0 0;
   }
   to {
-    background-position: -1584px 0;
+    background-position: calc(var(--parrot-fly-size) * -36) 0;
   }
 }
 
@@ -765,30 +767,30 @@ a.focus-ring:focus-visible::before {
   0% {
     left: -2.4rem;
     top: 2.2rem;
-    transform: scaleX(1) rotate(-4deg);
+    transform: scaleX(-1) rotate(-4deg);
   }
   25% {
     left: 32%;
     top: -0.4rem;
-    transform: scaleX(1) rotate(5deg);
+    transform: scaleX(-1) rotate(5deg);
   }
   50% {
     left: 74%;
     top: 1.4rem;
-    transform: scaleX(1) rotate(-3deg);
+    transform: scaleX(-1) rotate(-3deg);
   }
   51% {
-    transform: scaleX(-1) rotate(-3deg);
+    transform: scaleX(1) rotate(-3deg);
   }
   75% {
     left: 38%;
     top: 3.2rem;
-    transform: scaleX(-1) rotate(6deg);
+    transform: scaleX(1) rotate(6deg);
   }
   100% {
     left: -2.4rem;
     top: 2.2rem;
-    transform: scaleX(-1) rotate(-4deg);
+    transform: scaleX(1) rotate(-4deg);
   }
 }
 
@@ -802,14 +804,16 @@ a.focus-ring:focus-visible::before {
   }
 
   .cli-parrot-perch {
-    width: 1.72rem;
-    height: 1.72rem;
-    bottom: calc(100% - 0.08em);
+    --parrot-perch-size: 1.72rem;
+    width: var(--parrot-perch-size);
+    height: var(--parrot-perch-size);
+    bottom: calc(100% - 0.04em);
   }
 
   .cli-parrot-fly {
-    width: 1.84rem;
-    height: 1.84rem;
+    --parrot-fly-size: 1.84rem;
+    width: var(--parrot-fly-size);
+    height: var(--parrot-fly-size);
     animation-duration: 1.35s, 11.5s;
   }
 
