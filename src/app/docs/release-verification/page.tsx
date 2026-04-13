@@ -23,7 +23,7 @@ export default function ReleaseVerificationPage() {
         <section>
           <h2 id="linux-macos">Linux/macOS verification</h2>
           <CodeBlock
-            code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\nsha256sum -c checksums.txt`}
+            code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\ncurl -fsSL https://arxmc.studio/install.ps1 -o install.ps1\ncurl -fsSL https://arxmc.studio/arx-runtime.zip -o arx-runtime.zip\nsha256sum -c checksums.txt`}
             language="bash"
           />
         </section>
@@ -31,7 +31,7 @@ export default function ReleaseVerificationPage() {
         <section>
           <h2 id="windows">Windows verification</h2>
           <CodeBlock
-            code={`Invoke-WebRequest https://arxmc.studio/checksums.txt -OutFile checksums.txt\nInvoke-WebRequest https://arxmc.studio/install.ps1 -OutFile install.ps1\nGet-FileHash .\\install.ps1 -Algorithm SHA256\nGet-Content .\\checksums.txt`}
+            code={`Invoke-WebRequest https://arxmc.studio/checksums.txt -OutFile checksums.txt\nInvoke-WebRequest https://arxmc.studio/install.sh -OutFile install.sh\nInvoke-WebRequest https://arxmc.studio/install.ps1 -OutFile install.ps1\nInvoke-WebRequest https://arxmc.studio/arx-runtime.zip -OutFile arx-runtime.zip\nGet-FileHash .\\install.sh -Algorithm SHA256\nGet-FileHash .\\install.ps1 -Algorithm SHA256\nGet-FileHash .\\arx-runtime.zip -Algorithm SHA256\nGet-Content .\\checksums.txt`}
             language="bash"
           />
         </section>

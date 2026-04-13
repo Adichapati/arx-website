@@ -156,22 +156,22 @@ export default function InstallPage() {
             </h2>
             <div className="max-w-xl space-y-0">
               <CodeBlock
-                code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt`}
+                code={`curl -fsSL https://arxmc.studio/checksums.txt -o checksums.txt\ncurl -fsSL https://arxmc.studio/install.sh -o install.sh\ncurl -fsSL https://arxmc.studio/install.ps1 -o install.ps1\ncurl -fsSL https://arxmc.studio/arx-runtime.zip -o arx-runtime.zip`}
                 language="bash"
-                label="DOWNLOAD CHECKSUMS"
+                label="DOWNLOAD RELEASE ARTIFACTS"
                 step="1."
               />
               <CodeBlock
                 code={`sha256sum -c checksums.txt`}
                 language="bash"
-                label="VERIFY (LINUX)"
+                label="VERIFY (LINUX/MACOS)"
                 step="2."
               />
               <CodeBlock
-                code={`Get-FileHash install.ps1 -Algorithm SHA256\nGet-FileHash arx-runtime.zip -Algorithm SHA256`}
+                code={`Get-FileHash .\\install.sh -Algorithm SHA256\nGet-FileHash .\\install.ps1 -Algorithm SHA256\nGet-FileHash .\\arx-runtime.zip -Algorithm SHA256\nGet-Content .\\checksums.txt`}
                 language="bash"
                 label="VERIFY (WINDOWS)"
-                step="2."
+                step="3."
               />
             </div>
             <Link href="/docs/release-verification" className="btn-secondary inline-flex mt-8">

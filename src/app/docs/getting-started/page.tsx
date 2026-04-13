@@ -20,7 +20,10 @@ export default function GettingStartedPage() {
 
         <section>
           <h2 id="install">Step 1: Install ARX</h2>
-          <h3>Linux/macOS (recommended stable path)</h3>
+          <h3>Linux/macOS (hosted one-liner)</h3>
+          <CodeBlock code={INSTALLER.linux} language="bash" />
+
+          <h3>Linux/macOS (source install fallback)</h3>
           <CodeBlock
             code={`git clone https://github.com/Adichapati/ARX.git\ncd ARX\n./install.sh`}
             language="bash"
