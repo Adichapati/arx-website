@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
 
 export const INSTALLER = {
   linux: `curl -fsSL https://arxmc.studio/install.sh | bash`,
-  windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://arxmc.studio/install.ps1 | iex"`,
+  windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = [System.IO.Path]::Combine($env:TEMP, [System.Guid]::NewGuid().ToString('N') + '.ps1'); (New-Object Net.WebClient).DownloadFile('https://arxmc.studio/install.ps1', $tmp); & $tmp; Remove-Item -Force $tmp"`,
   githubFallback: `https://github.com/Adichapati/ARX/releases`,
   model: "gemma4:e2b",
 } as const;
