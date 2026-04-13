@@ -9,6 +9,8 @@ interface ScrollRevealProps {
   direction?: "up" | "down" | "left" | "right" | "none";
   className?: string;
   once?: boolean;
+  /** Add a subtle scale-in to the reveal (default: true) */
+  scale?: boolean;
 }
 
 export function ScrollReveal({
@@ -17,27 +19,36 @@ export function ScrollReveal({
   direction = "up",
   className = "",
   once = true,
+  scale = true,
 }: ScrollRevealProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once, margin: "-60px" });
 
   const offsets: Record<string, object> = {
-    up: { y: 24 },
-    down: { y: -24 },
-    left: { x: 24 },
-    right: { x: -24 },
+    up: { y: 28 },
+    down: { y: -28 },
+    left: { x: 32 },
+    right: { x: -32 },
     none: {},
   };
+
+  const scaleInitial = scale ? { scale: 0.97 } : {};
+  const scaleAnimate = scale ? { scale: 1 } : {};
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, ...offsets[direction] }}
-      animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...offsets[direction] }}
+      initial={{ opacity: 0, filter: "blur(4px)", ...scaleInitial, ...offsets[direction] }}
+      animate={
+        isInView
+          ? { opacity: 1, filter: "blur(0px)", x: 0, y: 0, ...scaleAnimate }
+          : { opacity: 0, filter: "blur(4px)", ...scaleInitial, ...offsets[direction] }
+      }
       transition={{
-        duration: 0.7,
+        duration: 0.8,
         delay,
         ease: [0.16, 1, 0.3, 1],
+        filter: { duration: 0.6, delay: delay + 0.1 },
       }}
       className={className}
     >

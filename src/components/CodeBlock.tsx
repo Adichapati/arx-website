@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 interface CodeBlockProps {
   code: string;
@@ -12,6 +12,7 @@ interface CodeBlockProps {
 
 export function CodeBlock({ code, language = "bash", label, step }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const blockRef = useRef<HTMLDivElement>(null);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -25,11 +26,23 @@ export function CodeBlock({ code, language = "bash", label, step }: CodeBlockPro
       document.body.removeChild(t);
     }
     setCopied(true);
+
+    // Flash the block background briefly
+    const el = blockRef.current;
+    if (el) {
+      el.style.backgroundColor = "rgba(200, 230, 60, 0.04)";
+      el.style.transition = "background-color 120ms ease-out";
+      setTimeout(() => {
+        el.style.backgroundColor = "transparent";
+        el.style.transition = "background-color 600ms ease-out";
+      }, 180);
+    }
+
     setTimeout(() => setCopied(false), 2000);
   }, [code]);
 
   return (
-    <div className="group" style={{ borderBottom: "1px solid var(--border)" }}>
+    <div ref={blockRef} className="group" style={{ borderBottom: "1px solid var(--border)" }}>
       {/* Header row */}
       {(label || step) && (
         <div

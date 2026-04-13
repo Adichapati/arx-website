@@ -117,10 +117,13 @@ export function Navbar() {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 overflow-visible"
+      className="fixed top-0 left-0 right-0 z-50 overflow-visible"
       style={{
-        backgroundColor: "var(--bg-nav)",
-        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid var(--border)",
+        backgroundColor: scrolled ? "var(--bg-nav)" : "rgba(10, 22, 11, 0.6)",
+        backdropFilter: scrolled ? "blur(12px) saturate(1.4)" : "blur(0px)",
+        WebkitBackdropFilter: scrolled ? "blur(12px) saturate(1.4)" : "blur(0px)",
+        borderBottom: "1px solid var(--border)",
+        transition: "background-color 400ms cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 400ms cubic-bezier(0.16, 1, 0.3, 1), -webkit-backdrop-filter 400ms cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
       {/* Desktop nav — column grid */}

@@ -55,9 +55,14 @@ function HeroHeadline() {
         <span key={wi} className={wi === 0 ? "block overflow-visible" : "block overflow-hidden"}>
           <motion.span
             className="block"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ delay: wi * 0.12, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ y: "110%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: 0.15 + wi * 0.14,
+              duration: 0.9,
+              ease: [0.16, 1, 0.3, 1],
+              opacity: { duration: 0.5, delay: 0.15 + wi * 0.14 },
+            }}
           >
             {renderWord(word, wi)}
           </motion.span>
@@ -176,9 +181,9 @@ function HeroSection() {
         {/* Overline */}
         <motion.p
           className="label-caps mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           style={{ color: "var(--muted)" }}
         >
           {SITE_CONFIG.fullName} &bull; Open Source &bull; Local AI
@@ -191,9 +196,9 @@ function HeroSection() {
         <motion.p
           className="max-w-2xl text-base sm:text-lg leading-relaxed mb-5"
           style={{ color: "var(--body)" }}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           ARX is a local-first Minecraft operations platform: install once, run your server reliably,
           and manage day-to-day ops from one dashboard + CLI with Gemma on Ollama.
@@ -203,9 +208,9 @@ function HeroSection() {
         {/* Hermes-style numbered install steps */}
         <motion.div
           className="max-w-xl space-y-0"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.78, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex items-center gap-4 pb-3" style={{ borderBottom: "1px solid var(--border)" }}>
             <button
@@ -295,9 +300,17 @@ function TrustStrip() {
       <div className="container-wide">
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           {trustItems.map((item, idx) => (
-            <li
+            <motion.li
               key={item}
               className="label-caps py-3 pr-5"
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{
+                delay: idx * 0.08,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               style={{
                 color: "var(--muted)",
                 borderRight: idx < trustItems.length - 1 ? "1px solid var(--border)" : "none",
@@ -308,7 +321,7 @@ function TrustStrip() {
                 ●
               </span>
               {item}
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
@@ -346,17 +359,26 @@ function HowItWorksSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
           {steps.map((step, i) => (
             <ScrollReveal key={step.n} delay={i * 0.08}>
-              <div
-                className="py-10 pr-8 group"
+              <motion.div
+                className="py-10 pr-8"
                 style={{ borderRight: i < 3 ? "1px solid var(--border)" : "none", paddingLeft: i > 0 ? "2rem" : 0 }}
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
               >
-                <p className="label-caps mb-6" style={{ color: "var(--muted)" }}>{step.n}</p>
-                <h3 className="display font-semibold text-2xl mb-3 transition-colors duration-200 group-hover:text-accent"
+                <motion.p
+                  className="label-caps mb-6"
+                  style={{ color: "var(--muted)" }}
+                  whileHover={{ color: "var(--accent)" }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {step.n}
+                </motion.p>
+                <h3 className="display font-semibold text-2xl mb-3 transition-colors duration-200"
                   style={{ color: "var(--heading)" }}>
                   {step.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{step.desc}</p>
-              </div>
+              </motion.div>
             </ScrollReveal>
           ))}
         </div>
@@ -390,22 +412,24 @@ function FeaturesSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
           {features.map((feat, i) => (
             <ScrollReveal key={feat.title} delay={i * 0.06}>
-              <div
-                className="py-8 group cursor-default"
+              <motion.div
+                className="py-8 cursor-default"
                 style={{
                   borderRight: (i % 3 !== 2) ? "1px solid var(--border)" : "none",
                   borderBottom: i < 3 ? "1px solid var(--border)" : "none",
                   paddingLeft: (i % 3 !== 0) ? "2rem" : 0,
                   paddingRight: "2rem",
-                  transition: "background 200ms",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "var(--bg-surface)")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
+                whileHover={{
+                  backgroundColor: "var(--bg-surface)",
+                  y: -2,
+                  transition: { type: "spring", stiffness: 300, damping: 22 },
+                }}
               >
                 <p className="label-caps mb-3" style={{ color: "var(--accent)" }}>{feat.tag}</p>
                 <h3 className="display font-semibold text-xl mb-3" style={{ color: "var(--heading)" }}>{feat.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--body)" }}>{feat.desc}</p>
-              </div>
+              </motion.div>
             </ScrollReveal>
           ))}
         </div>
@@ -439,12 +463,12 @@ function CLISection() {
             <div style={{ borderLeft: "1px solid var(--border)" }} className="pl-0 lg:pl-12">
               <div className="space-y-0">
                 {CLI_COMMANDS.map((cmd, i) => (
-                  <div
+                  <motion.div
                     key={i}
-                    className="flex items-start justify-between gap-4 py-4 group transition-colors duration-150"
+                    className="flex items-start justify-between gap-4 py-4 group"
                     style={{ borderBottom: "1px solid var(--border)" }}
-                    onMouseEnter={e => (e.currentTarget.style.paddingLeft = "0.5rem")}
-                    onMouseLeave={e => (e.currentTarget.style.paddingLeft = "0")}
+                    whileHover={{ paddingLeft: "0.75rem", backgroundColor: "var(--bg-surface)" }}
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
                     <code className="text-sm font-mono flex-shrink-0" style={{ color: "var(--accent)", fontFamily: "'JetBrains Mono', monospace" }}>
                       {cmd.command}
@@ -452,7 +476,7 @@ function CLISection() {
                     <span className="text-xs text-right" style={{ color: "var(--muted)", fontFamily: "'JetBrains Mono', monospace" }}>
                       {cmd.description}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -537,14 +561,25 @@ function SecuritySection() {
           <ScrollReveal delay={0.12}>
             <div className="space-y-0">
               {safeguards.map((s, i) => (
-                <div
+                <motion.div
                   key={i}
                   className="flex items-center gap-4 py-4"
                   style={{ borderBottom: "1px solid var(--border)" }}
+                  initial={{ opacity: 0, x: 16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ delay: 0.12 + i * 0.07, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Check className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "var(--accent)" }} />
+                  <motion.div
+                    initial={{ scale: 0, rotate: -90 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.07, type: "spring", stiffness: 400, damping: 18 }}
+                  >
+                    <Check className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "var(--accent)" }} />
+                  </motion.div>
                   <span className="text-sm" style={{ color: "var(--body)" }}>{s}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
           </ScrollReveal>
@@ -565,21 +600,35 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         aria-expanded={open}
       >
         <span className="text-sm font-medium" style={{ color: "var(--heading)" }}>{question}</span>
-        <motion.span animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.2 }}
-          className="label-caps flex-shrink-0 mt-0.5" style={{ color: "var(--muted)" }}>
+        <motion.span
+          animate={{ rotate: open ? 45 : 0, scale: open ? 1.15 : 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="label-caps flex-shrink-0 mt-0.5" style={{ color: open ? "var(--accent)" : "var(--muted)" }}>
           +
         </motion.span>
       </button>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            transition={{
+              height: { type: "spring", stiffness: 400, damping: 34, mass: 0.8 },
+              opacity: { duration: 0.25, ease: "easeInOut" },
+            }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-sm leading-relaxed" style={{ color: "var(--body)", maxWidth: "56ch" }}>{answer}</p>
+            <motion.p
+              initial={{ y: -8 }}
+              animate={{ y: 0 }}
+              exit={{ y: -8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              className="pb-5 text-sm leading-relaxed"
+              style={{ color: "var(--body)", maxWidth: "56ch" }}
+            >
+              {answer}
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -627,12 +676,24 @@ function CTABanner() {
         <ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
             <div>
-              <h2 className="display font-bold mb-6"
-                style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}>
+              <motion.h2
+                className="display font-bold mb-6"
+                style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", color: "var(--heading)", letterSpacing: "-0.03em", lineHeight: 0.95 }}
+                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              >
                 Ready to run?
-              </h2>
+              </motion.h2>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 lg:justify-end"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
               <Link href="/install" className="btn-primary">
                 Install ARX
               </Link>
@@ -643,7 +704,7 @@ function CTABanner() {
                 <Github className="w-3.5 h-3.5" />
                 GitHub
               </a>
-            </div>
+            </motion.div>
           </div>
         </ScrollReveal>
       </div>
