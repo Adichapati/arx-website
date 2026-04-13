@@ -16,6 +16,8 @@ PLAYIT_ENABLED=""
 PLAYIT_URL=""
 ADMIN_USER=""
 ADMIN_PASS=""
+OLLAMA_INSTALL_SH_URL="https://ollama.com/install.sh"
+OLLAMA_INSTALL_SH_SHA256="25f64b810b947145095956533e1bdf56eacea2673c55a7e586be4515fc882c9f"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -111,18 +113,112 @@ fi
 STEP_TOTAL=11
 STEP_CUR=0
 
+supports_unicode() {
+  if [[ "${ARX_FORCE_ASCII:-}" =~ ^(1|true|yes|on)$ ]]; then
+    return 1
+  fi
+
+  local lang_hint="${LC_ALL:-${LANG:-}}"
+  if [[ "${lang_hint,,}" == *"utf"* ]]; then
+    return 0
+  fi
+
+  if need_cmd locale; then
+    local cm
+    cm="$(locale charmap 2>/dev/null || true)"
+    if [[ "${cm,,}" == *"utf"* ]]; then
+      return 0
+    fi
+  fi
+
+  return 1
+}
+
+installer_state_style() {
+  local state_file="$ROOT_DIR/state/arx_ui.json"
+  if [[ ! -f "$state_file" ]]; then
+    return 0
+  fi
+
+  sed -n 's/.*"style"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$state_file" | head -n1
+}
+
+resolve_installer_style() {
+  # Allowed style values: underground|dos|minimal|off
+  local style="${ARX_STYLE:-}"
+  if [[ -z "$style" ]]; then
+    style="$(installer_state_style)"
+  fi
+  style="${style,,}"
+
+  case "$style" in
+    underground|dos|minimal|off) ;;
+    *) style="underground" ;;
+  esac
+
+  if [[ "$style" == "underground" ]] && ! supports_unicode; then
+    style="minimal"
+  fi
+
+  printf '%s' "$style"
+}
+
+installer_logo() {
+  local style="$1"
+  case "$style" in
+    underground)
+      cat <<'EOF'
+ █████╗ ██████╗ ██╗  ██╗
+██╔══██╗██╔══██╗╚██╗██╔╝
+███████║██████╔╝ ╚███╔╝
+██╔══██║██╔══██╗ ██╔██╗
+██║  ██║██║  ██║██╔╝ ██╗
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+EOF
+      ;;
+    dos)
+      cat <<'EOF'
+______   ______  __   __
+|  _  \ /  __  \ \ \ / /
+| | | | | /  \ |  \ V /
+| | | | | |  | |   > <
+| |/ /  | \__/ |  / . \
+|___/    \____/  /_/ \_\
+EOF
+      ;;
+    minimal)
+      cat <<'EOF'
+    ___    ____  _  __
+   /   |  / __ \| |/ /
+  / /| | / /_/ /   /
+ / ___ |/ _, _/   |
+/_/  |_/_/ |_/_/|_|
+EOF
+      ;;
+    off)
+      ;;
+    *)
+      cat <<'EOF'
+    ___    ____  _  __
+   /   |  / __ \| |/ /
+  / /| | / /_/ /   /
+ / ___ |/ _, _/   |
+/_/  |_/_/ |_/_/|_|
+EOF
+      ;;
+  esac
+}
+
+INSTALLER_STYLE="$(resolve_installer_style)"
+
 banner() {
   if [[ -n "${TERM:-}" && "$UI_ENABLED" == true ]]; then
     clear || true
   fi
+  echo
+  installer_logo "$INSTALLER_STYLE"
+  echo
   cat <<'EOF'
-
-      ___      ____   __   __
-     /   |    / __ \  \ \ / /
-    / /| |   / /_/ /   \ V /
-   / ___ |  / _, _/     > <
-  /_/  |_| /_/ |_|     /_/\_\
-
 +------------------------------------------------------------------+
 | Agentic Runtime for eXecution | Production Setup                |
 +------------------------------------------------------------------+
@@ -493,8 +589,31 @@ ensure_ollama() {
   if ! need_cmd ollama; then
     if [[ "$PLATFORM" == "linux" || "$PLATFORM" == "macos" ]]; then
       local tmp_installer
+      local actual_sha
       tmp_installer="$(mktemp)"
-      curl -fsSL https://ollama.com/install.sh -o "$tmp_installer"
+      curl -fsSL "$OLLAMA_INSTALL_SH_URL" -o "$tmp_installer"
+
+      if need_cmd sha256sum; then
+        actual_sha="$(sha256sum "$tmp_installer" | awk '{print $1}')"
+      elif need_cmd shasum; then
+        actual_sha="$(shasum -a 256 "$tmp_installer" | awk '{print $1}')"
+      elif need_cmd openssl; then
+        actual_sha="$(openssl dgst -sha256 "$tmp_installer" | awk '{print $NF}')"
+      else
+        rm -f "$tmp_installer"
+        err "No SHA-256 tool found (sha256sum/shasum/openssl). Cannot verify Ollama installer integrity."
+        exit 1
+      fi
+
+      if [[ "${actual_sha,,}" != "${OLLAMA_INSTALL_SH_SHA256,,}" ]]; then
+        rm -f "$tmp_installer"
+        err "Ollama installer checksum mismatch."
+        err "Expected: $OLLAMA_INSTALL_SH_SHA256"
+        err "Actual  : $actual_sha"
+        err "Refusing to execute unverified installer."
+        exit 1
+      fi
+
       chmod +x "$tmp_installer"
       if ! run_as_root sh "$tmp_installer"; then
         rm -f "$tmp_installer"

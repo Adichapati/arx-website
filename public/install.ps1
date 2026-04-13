@@ -16,9 +16,43 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $BootstrapZipUrl = if ([string]::IsNullOrWhiteSpace($env:ARX_BOOTSTRAP_ZIP_URL)) { 'https://arxmc.studio/arx-runtime.zip' } else { $env:ARX_BOOTSTRAP_ZIP_URL }
+$BootstrapChecksumsUrl = if ([string]::IsNullOrWhiteSpace($env:ARX_BOOTSTRAP_CHECKSUMS_URL)) { 'https://arxmc.studio/checksums.txt' } else { $env:ARX_BOOTSTRAP_CHECKSUMS_URL }
 $BootstrapInstallDir = if ([string]::IsNullOrWhiteSpace($env:ARX_INSTALL_DIR)) { Join-Path $env:USERPROFILE 'ARX' } else { $env:ARX_INSTALL_DIR }
 $ScriptDir = if ([string]::IsNullOrWhiteSpace($PSScriptRoot)) { (Get-Location).Path } else { $PSScriptRoot }
 if (-not (Test-Path $ScriptDir)) { $ScriptDir = (Get-Location).Path }
+
+function Get-BootstrapExpectedHash([string]$ChecksumsText, [string]$TargetFileName) {
+    foreach ($rawLine in ($ChecksumsText -split "`n")) {
+        $line = $rawLine.Trim()
+        if ([string]::IsNullOrWhiteSpace($line) -or $line.StartsWith('#')) { continue }
+        $m = [regex]::Match($line, '^(?<hash>[a-fA-F0-9]{64})\s+\*?(?<name>.+)$')
+        if (-not $m.Success) { continue }
+        if ($m.Groups['name'].Value.Trim() -eq $TargetFileName) {
+            return $m.Groups['hash'].Value.ToLowerInvariant()
+        }
+    }
+    return ''
+}
+
+function Assert-BootstrapZipIntegrity([string]$ZipPath, [string]$ZipUrl, [string]$ChecksumsUrl) {
+    $checksums = Invoke-RestMethod -Uri $ChecksumsUrl
+    if ($checksums -isnot [string]) { $checksums = [string]$checksums }
+
+    $targetFile = [System.IO.Path]::GetFileName(([System.Uri]$ZipUrl).AbsolutePath)
+    if ([string]::IsNullOrWhiteSpace($targetFile)) {
+        throw "Unable to determine target filename from bootstrap URL: $ZipUrl"
+    }
+
+    $expected = Get-BootstrapExpectedHash -ChecksumsText $checksums -TargetFileName $targetFile
+    if ([string]::IsNullOrWhiteSpace($expected)) {
+        throw "Missing checksum entry for $targetFile in $ChecksumsUrl"
+    }
+
+    $actual = (Get-FileHash -Path $ZipPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($actual -ne $expected) {
+        throw "Bootstrap checksum mismatch for $targetFile. Expected $expected but got $actual"
+    }
+}
 
 function Test-ProjectRoot([string]$BaseDir) {
     return (Test-Path (Join-Path $BaseDir 'requirements.txt')) -and
@@ -33,6 +67,7 @@ if (-not (Test-ProjectRoot $ScriptDir)) {
     $zipPath = Join-Path ([System.IO.Path]::GetTempPath()) ("arx-runtime-{0}.zip" -f ([Guid]::NewGuid().ToString('N')))
     try {
         Invoke-WebRequest -Uri $BootstrapZipUrl -OutFile $zipPath
+        Assert-BootstrapZipIntegrity -ZipPath $zipPath -ZipUrl $BootstrapZipUrl -ChecksumsUrl $BootstrapChecksumsUrl
         Expand-Archive -Path $zipPath -DestinationPath $BootstrapInstallDir -Force
     }
     finally {
@@ -79,6 +114,65 @@ function Test-InteractiveConsole {
 
 $script:CanUseFancyUi = Test-InteractiveConsole
 
+function Test-UnicodeSupport {
+    $forceAscii = if ($env:ARX_FORCE_ASCII) { [string]$env:ARX_FORCE_ASCII } else { '' }
+    if ($forceAscii.Trim().ToLowerInvariant() -in @('1', 'true', 'yes', 'on')) {
+        return $false
+    }
+
+    try {
+        $encName = [Console]::OutputEncoding.WebName
+        if ($encName -and $encName.ToLowerInvariant().Contains('utf')) {
+            return $true
+        }
+    } catch {
+    }
+
+    $langHint = if ($env:LC_ALL) { [string]$env:LC_ALL } elseif ($env:LANG) { [string]$env:LANG } else { '' }
+    return $langHint.Trim().ToLowerInvariant().Contains('utf')
+}
+
+function Get-StateStyle {
+    $statePath = Join-Path $ScriptDir 'state\arx_ui.json'
+    if (-not (Test-Path $statePath)) {
+        return ''
+    }
+
+    try {
+        $raw = Get-Content -Path $statePath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($raw -and $raw.style) {
+            return ([string]$raw.style).Trim().ToLowerInvariant()
+        }
+    } catch {
+    }
+
+    return ''
+}
+
+function Resolve-InstallerStyle {
+    # Allowed styles: underground, dos, minimal, off
+    $style = ''
+    if (-not [string]::IsNullOrWhiteSpace($env:ARX_STYLE)) {
+        $style = $env:ARX_STYLE
+    }
+    if ([string]::IsNullOrWhiteSpace($style)) {
+        $style = Get-StateStyle
+    }
+
+    $style = ([string]$style).Trim().ToLowerInvariant()
+    if ($style -notin @('underground', 'dos', 'minimal', 'off')) {
+        $style = 'underground'
+    }
+
+    if ($style -eq 'underground' -and -not (Test-UnicodeSupport)) {
+        return 'minimal'
+    }
+
+    return $style
+}
+
+$script:InstallerStyle = Resolve-InstallerStyle
+
 function Safe-Clear {
     if ($script:CanUseFancyUi) {
         try { Clear-Host } catch { }
@@ -86,24 +180,62 @@ function Safe-Clear {
 }
 
 function Get-BannerLines {
-    return @(
-        '      ___      ____   __   __',
-        '     /   |    / __ \  \ \ / /',
-        '    / /| |   / /_/ /   \ V / ',
-        '   / ___ |  / _, _/     > <  ',
-        '  /_/  |_| /_/ |_|     /_/\_\ '
-    )
+    switch ($script:InstallerStyle) {
+        'underground' {
+            return @(
+                ' █████╗ ██████╗ ██╗  ██╗',
+                '██╔══██╗██╔══██╗╚██╗██╔╝',
+                '███████║██████╔╝ ╚███╔╝ ',
+                '██╔══██║██╔══██╗ ██╔██╗ ',
+                '██║  ██║██║  ██║██╔╝ ██╗',
+                '╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝'
+            )
+        }
+        'dos' {
+            return @(
+                '______   ______  __   __',
+                '|  _  \ /  __  \ \ \ / /',
+                '| | | | | /  \ |  \ V /',
+                '| | | | | |  | |   > <',
+                '| |/ /  | \__/ |  / . \',
+                '|___/    \____/  /_/ \_\'
+            )
+        }
+        'minimal' {
+            return @(
+                '    ___    ____  _  __',
+                '   /   |  / __ \| |/ /',
+                '  / /| | / /_/ /   /',
+                ' / ___ |/ _, _/   |',
+                '/_/  |_/_/ |_/_/|_|'
+            )
+        }
+        'off' {
+            return @()
+        }
+        default {
+            return @(
+                '    ___    ____  _  __',
+                '   /   |  / __ \| |/ /',
+                '  / /| | / /_/ /   /',
+                ' / ___ |/ _, _/   |',
+                '/_/  |_/_/ |_/_/|_|'
+            )
+        }
+    }
 }
 
 function Show-Banner {
     Safe-Clear
     Write-Host ''
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
-    for ($i = 0; $i -lt $lines.Count; $i++) {
-        Write-Host $lines[$i] -ForegroundColor $colors[$i]
+    if ($lines.Count -gt 0) {
+        $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'Blue')
+        for ($i = 0; $i -lt $lines.Count; $i++) {
+            Write-Host $lines[$i] -ForegroundColor $colors[$i % $colors.Count]
+        }
+        Write-Host ''
     }
-    Write-Host ''
     Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
     Write-Host '| Agentic Runtime for eXecution | Production Setup                |' -ForegroundColor White
     Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
@@ -114,7 +246,9 @@ function Show-TitleAnimation {
     if ($Yes -or -not $script:CanUseFancyUi) { return }
 
     $lines = Get-BannerLines
-    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta')
+    if ($lines.Count -eq 0) { return }
+
+    $colors = @('DarkCyan', 'Cyan', 'Green', 'Yellow', 'Magenta', 'Blue')
     $maxLen = ($lines | ForEach-Object { $_.Length } | Measure-Object -Maximum).Maximum
 
     for ($col = 1; $col -le $maxLen; $col += 2) {
@@ -125,7 +259,7 @@ function Show-TitleAnimation {
             $n = [Math]::Min($col, $line.Length)
             $left = $line.Substring(0, $n)
             $pad = ' ' * ($maxLen - $n)
-            Write-Host ($left + $pad) -ForegroundColor $colors[$i]
+            Write-Host ($left + $pad) -ForegroundColor $colors[$i % $colors.Count]
         }
         Write-Host ''
         Write-Host '+------------------------------------------------------------------+' -ForegroundColor DarkGray
@@ -802,10 +936,18 @@ try {
             if ([string]::IsNullOrWhiteSpace($AdminUser)) { $AdminUser = 'admin' }
         }
         if ([string]::IsNullOrWhiteSpace($AdminPass)) {
-            $AdminPass = Prompt-TextWithArt -Title 'Admin Account' -ArtTag 'admin' -PromptText 'Admin password (required, min 8 chars)'
+            if (-not [string]::IsNullOrWhiteSpace($env:ARX_ADMIN_PASS)) {
+                $AdminPass = $env:ARX_ADMIN_PASS
+            }
+            if ([string]::IsNullOrWhiteSpace($AdminPass)) {
+                $AdminPass = Prompt-TextWithArt -Title 'Admin Account' -ArtTag 'admin' -PromptText 'Admin password (required, min 8 chars)'
+            }
         }
     } else {
         if ([string]::IsNullOrWhiteSpace($AdminUser)) { $AdminUser = 'admin' }
+        if ([string]::IsNullOrWhiteSpace($AdminPass) -and -not [string]::IsNullOrWhiteSpace($env:ARX_ADMIN_PASS)) {
+            $AdminPass = $env:ARX_ADMIN_PASS
+        }
     }
 
     # Context is fixed by default for setup stability.
