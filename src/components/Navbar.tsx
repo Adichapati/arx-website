@@ -117,7 +117,7 @@ export function Navbar() {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300 overflow-visible"
       style={{
         backgroundColor: "var(--bg-nav)",
         borderBottom: scrolled ? "1px solid var(--border)" : "1px solid var(--border)",
@@ -138,7 +138,7 @@ export function Navbar() {
         >
           <span
             className="brand-wordmark display font-bold text-xl tracking-tight transition-opacity duration-200 group-hover:opacity-80"
-            style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)", marginLeft: "2.25rem" }}
+            style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)", marginLeft: "1.6rem" }}
           >
             {SITE_CONFIG.name}
           </span>
