@@ -467,7 +467,7 @@
   top: 50%;
   width: 3rem;
   height: 1.8rem;
-  transform: translateY(-96%);
+  transform: translateY(-96%) scaleX(-1);
   background: url('/assets/sprites/steve-run-line.webp') center/contain no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -478,11 +478,11 @@
 @keyframes hero-runline-loop-ltr {
   0% {
     left: -4.2rem;
-    transform: translateY(-96%);
+    transform: translateY(-96%) scaleX(-1);
   }
   100% {
     left: calc(100% + 3.6rem);
-    transform: translateY(-96%);
+    transform: translateY(-96%) scaleX(-1);
   }
 }
 
@@ -678,17 +678,17 @@
   .hero-runner {
     width: 2.25rem;
     height: 1.35rem;
-    transform: translateY(-102%);
+    transform: translateY(-102%) scaleX(-1);
   }
 
   @keyframes hero-runline-loop-ltr {
     0% {
       left: -3.2rem;
-      transform: translateY(-102%);
+      transform: translateY(-102%) scaleX(-1);
     }
     100% {
       left: calc(100% + 2.8rem);
-      transform: translateY(-102%);
+      transform: translateY(-102%) scaleX(-1);
     }
   }
 }
