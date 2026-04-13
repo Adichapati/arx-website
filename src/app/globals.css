@@ -459,7 +459,7 @@ a.focus-ring:focus-visible::before {
 
 .hero-parallax-section {
   position: relative;
-  overflow: clip;
+  overflow: visible;
 }
 
 .hero-parallax-shell {

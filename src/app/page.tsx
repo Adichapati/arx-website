@@ -50,7 +50,7 @@ function HeroHeadline() {
   };
 
   return (
-    <h1 className="display font-bold mb-6 leading-none" style={{ fontSize: "clamp(2.5rem, 7.2vw, 6.4rem)", letterSpacing: "-0.03em", color: "var(--heading)" }}>
+    <h1 className="display font-bold mb-6 leading-none overflow-visible" style={{ fontSize: "clamp(2.5rem, 7.2vw, 6.4rem)", letterSpacing: "-0.03em", color: "var(--heading)" }}>
       {words.map((word, wi) => (
         <span key={wi} className={wi === 0 ? "block overflow-visible" : "block overflow-hidden"}>
           <motion.span
