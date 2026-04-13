@@ -248,6 +248,12 @@ function HeroSection() {
         </motion.div>
       </div>
 
+      <div className="hero-runline-wrap" aria-hidden="true">
+        <div className="hero-runline-track" />
+        <div className="hero-runline-dust" />
+        <div className="hero-runner" />
+      </div>
+
       {/* Bottom row — scroll hint */}
       <motion.div
         className="relative z-20 flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 max-w-7xl mx-auto w-full"
