@@ -495,6 +495,9 @@ a.focus-ring:focus-visible::before {
   transform: translateZ(34px);
 }
 
+.hero-parallax-layer-glow {
+  transform: translateZ(96px);
+}
 
 .hero-parallax-plane {
   position: absolute;
@@ -519,6 +522,22 @@ a.focus-ring:focus-visible::before {
   filter: saturate(1.22) contrast(1.1);
 }
 
+.hero-parallax-glow {
+  inset: -13vh -11vw;
+  background:
+    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.09), transparent 44%),
+    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.08), transparent 46%);
+  opacity: 0.18;
+}
+
+.hero-parallax-vignette {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(130px);
+  background:
+    linear-gradient(180deg, rgba(5, 8, 12, 0.06), rgba(3, 5, 8, 0.34)),
+    radial-gradient(circle at 50% 36%, transparent 28%, rgba(0, 0, 0, 0.2) 76%);
+}
 
 .hero-runline-wrap {
   position: relative;
@@ -861,6 +880,9 @@ a.focus-ring:focus-visible::before {
     transform: translateZ(20px);
   }
 
+  .hero-parallax-layer-glow {
+    transform: translateZ(58px);
+  }
 }
 
 @media (max-width: 768px) {
