@@ -717,7 +717,7 @@ a.focus-ring:focus-visible::before {
   width: 2rem;
   height: 2rem;
   transform: translateX(-50%);
-  background: url('/assets/sprites/parrot-perch-strip.webp') 0 0 / 1440px 40px no-repeat;
+  background: url('/assets/sprites/parrot-perch-strip-v2.webp') 0 0 / 1440px 40px no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   pointer-events: none;
@@ -732,7 +732,7 @@ a.focus-ring:focus-visible::before {
   left: -2.4rem;
   width: 2.2rem;
   height: 2.2rem;
-  background: url('/assets/sprites/parrot-fly-strip.webp') 0 0 / 1584px 44px no-repeat;
+  background: url('/assets/sprites/parrot-fly-strip-v2.webp') 0 0 / 1584px 44px no-repeat;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   pointer-events: none;
