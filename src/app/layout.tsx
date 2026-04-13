@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { GrainAndProgress } from "@/components/GrainAndProgress";
+import { PickaxeCursor } from "@/components/PickaxeCursor";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="grain-overlay" aria-hidden="true" />
         {/* Scroll progress */}
         <GrainAndProgress />
+        <PickaxeCursor />
         <Navbar />
         <main className="relative">{children}</main>
         <Footer />

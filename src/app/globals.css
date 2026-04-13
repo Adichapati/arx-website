@@ -34,6 +34,17 @@
     color: var(--heading);
     font-family: 'Inter', system-ui, sans-serif;
     overflow-x: hidden;
+    cursor: none;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  summary {
+    cursor: none !important;
   }
 
   ::selection {
@@ -395,6 +406,36 @@ a.focus-ring:focus-visible::before {
   animation: grain 8s steps(10) infinite;
 }
 
+/* ===== CUSTOM PICKAXE CURSOR ===== */
+.pickaxe-cursor {
+  position: fixed;
+  left: var(--pickaxe-x, 50vw);
+  top: var(--pickaxe-y, 50vh);
+  width: 3rem;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 1001;
+  transform: translate(-26%, -22%) rotate(-24deg);
+  transform-origin: 22% 82%;
+  background: url('/assets/sprites/diamond-pickaxe-cursor-strip.webp') 0 0 / 1728px 48px no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(0 1px 0 rgba(7, 12, 9, 0.9)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.pickaxe-cursor.active {
+  animation: pickaxe-mine 560ms steps(36) 1;
+}
+
+@keyframes pickaxe-mine {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -1728px 0;
+  }
+}
+
 /* ===== SCROLL PROGRESS LINE ===== */
 .scroll-progress-line {
   position: fixed;
@@ -735,6 +776,21 @@ a.focus-ring:focus-visible::before {
     scroll-margin-top: var(--nav-offset);
   }
 
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  summary {
+    cursor: auto !important;
+  }
+
+  .pickaxe-cursor {
+    display: none;
+  }
+
   .brand-wordmark {
     margin-left: 0 !important;
   }
@@ -810,6 +866,17 @@ a.focus-ring:focus-visible::before {
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role="button"],
+  summary {
+    cursor: auto !important;
+  }
+  .pickaxe-cursor { display: none; }
   .hero-parallax-shell { display: none; }
   .hero-runner { animation-duration: 0.01ms !important; }
   .hero-steve-badge img {
