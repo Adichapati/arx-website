@@ -137,8 +137,8 @@ export function Navbar() {
           style={{ borderColor: "var(--border)" }}
         >
           <span
-            className="display font-bold text-xl tracking-tight transition-opacity duration-200 group-hover:opacity-80"
-            style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)" }}
+            className="brand-wordmark display font-bold text-xl tracking-tight transition-opacity duration-200 group-hover:opacity-80"
+            style={{ letterSpacing: "-0.03em", lineHeight: 1, color: "var(--heading)", marginLeft: "2.25rem" }}
           >
             {SITE_CONFIG.name}
           </span>

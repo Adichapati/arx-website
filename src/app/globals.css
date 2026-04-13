@@ -659,6 +659,10 @@ a.focus-ring:focus-visible::before {
     scroll-margin-top: var(--nav-offset);
   }
 
+  .brand-wordmark {
+    margin-left: 1.95rem !important;
+  }
+
   .brand-miner {
     left: 0.88rem;
     width: 1.88rem;
@@ -729,6 +733,10 @@ a.focus-ring:focus-visible::before {
 @media (max-width: 768px) {
   .home-with-parallax section[id] {
     scroll-margin-top: var(--nav-offset);
+  }
+
+  .brand-wordmark {
+    margin-left: 0 !important;
   }
 
   .brand-miner {
