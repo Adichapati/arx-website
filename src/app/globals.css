@@ -714,7 +714,7 @@ a.focus-ring:focus-visible::before {
   --parrot-perch-size: 2rem;
   position: absolute;
   left: 56%;
-  bottom: calc(100% + 0.02em);
+  bottom: calc(100% - 0.35em);
   width: var(--parrot-perch-size);
   height: var(--parrot-perch-size);
   transform: translateX(-50%);
@@ -807,7 +807,7 @@ a.focus-ring:focus-visible::before {
     --parrot-perch-size: 1.72rem;
     width: var(--parrot-perch-size);
     height: var(--parrot-perch-size);
-    bottom: calc(100% - 0.04em);
+    bottom: calc(100% - 0.32em);
   }
 
   .cli-parrot-fly {
