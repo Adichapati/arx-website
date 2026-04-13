@@ -517,17 +517,17 @@ a.focus-ring:focus-visible::before {
 
 .hero-parallax-depth {
   background-image: url('/assets/wallpapers/mc-depth-parallax-depth.webp');
-  opacity: 0.62;
-  mix-blend-mode: soft-light;
-  filter: saturate(1.22) contrast(1.1);
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  filter: saturate(1.1) contrast(1.15);
 }
 
 .hero-parallax-glow {
   inset: -13vh -11vw;
   background:
-    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.09), transparent 44%),
-    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.08), transparent 46%);
-  opacity: 0.18;
+    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.05), transparent 44%),
+    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.04), transparent 46%);
+  opacity: 0.1;
 }
 
 .hero-parallax-vignette {
