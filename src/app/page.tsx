@@ -248,12 +248,6 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="hero-runline-wrap" aria-hidden="true">
-        <div className="hero-runline-track" />
-        <div className="hero-runline-dust" />
-        <div className="hero-runner" />
-      </div>
-
       {/* Bottom row — scroll hint */}
       <motion.div
         className="relative z-20 flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 max-w-7xl mx-auto w-full"
@@ -334,7 +328,14 @@ function HowItWorksSection() {
   return (
     <section className="section-padding" id="how-it-works">
       <div className="container-wide">
-        <RevealedRule className="mb-16" />
+        <div className="relative mb-16">
+          <RevealedRule />
+          <div className="hero-runline-wrap hero-runline-on-divider" aria-hidden="true">
+            <div className="hero-runline-track" />
+            <div className="hero-runline-dust" />
+            <div className="hero-runner" />
+          </div>
+        </div>
         <ScrollReveal>
           <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>How it works</p>
           <h2 className="display font-semibold mb-16" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
