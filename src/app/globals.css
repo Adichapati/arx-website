@@ -375,22 +375,23 @@
 
 .hero-parallax-base {
   background-image: url('/assets/wallpapers/mc-depth-parallax-base.webp');
-  opacity: 0.62;
+  opacity: 0.72;
+  filter: saturate(1.16) contrast(1.08);
 }
 
 .hero-parallax-depth {
   background-image: url('/assets/wallpapers/mc-depth-parallax-depth.webp');
-  opacity: 0.5;
-  mix-blend-mode: normal;
-  filter: saturate(1.02) contrast(1.02);
+  opacity: 0.62;
+  mix-blend-mode: soft-light;
+  filter: saturate(1.22) contrast(1.1);
 }
 
 .hero-parallax-glow {
   inset: -13vh -11vw;
   background:
-    radial-gradient(circle at 25% 24%, rgba(255, 255, 255, 0.12), transparent 44%),
-    radial-gradient(circle at 78% 28%, rgba(156, 188, 255, 0.1), transparent 46%);
-  opacity: 0.34;
+    radial-gradient(circle at 25% 24%, rgba(255, 248, 220, 0.13), transparent 44%),
+    radial-gradient(circle at 78% 28%, rgba(176, 210, 255, 0.12), transparent 46%);
+  opacity: 0.28;
 }
 
 .hero-parallax-vignette {
@@ -398,8 +399,8 @@
   inset: 0;
   transform: translateZ(130px);
   background:
-    linear-gradient(180deg, rgba(6, 8, 12, 0.08), rgba(4, 6, 10, 0.46)),
-    radial-gradient(circle at 50% 36%, transparent 24%, rgba(0, 0, 0, 0.28) 74%);
+    linear-gradient(180deg, rgba(5, 8, 12, 0.06), rgba(3, 5, 8, 0.34)),
+    radial-gradient(circle at 50% 36%, transparent 28%, rgba(0, 0, 0, 0.2) 76%);
 }
 
 .hero-local-first-word {
