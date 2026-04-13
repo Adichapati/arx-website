@@ -332,17 +332,44 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+.hero-parallax-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hero-parallax-layer {
   position: absolute;
-  inset: -8vh -6vw;
+  inset: -9vh -8vw;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.hero-parallax-layer-base {
+  transform: translateZ(-30px);
+}
+
+.hero-parallax-layer-depth {
+  transform: translateZ(34px);
+}
+
+.hero-parallax-layer-glow {
+  transform: translateZ(96px);
+}
+
+.hero-parallax-plane {
+  position: absolute;
+  inset: 0;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   image-rendering: auto;
-  will-change: transform;
-  backface-visibility: hidden;
   transform: translateZ(0);
 }
 
@@ -355,11 +382,11 @@
   background-image: url('/assets/wallpapers/mc-depth-parallax-depth.webp');
   opacity: 0.52;
   mix-blend-mode: screen;
-  filter: saturate(1.08);
+  filter: saturate(1.08) contrast(1.04);
 }
 
 .hero-parallax-glow {
-  inset: -12vh -10vw;
+  inset: -13vh -11vw;
   background:
     radial-gradient(circle at 25% 24%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 42%),
     radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--heading) 22%, transparent), transparent 45%);
@@ -369,6 +396,7 @@
 .hero-parallax-vignette {
   position: absolute;
   inset: 0;
+  transform: translateZ(130px);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 22%, transparent), color-mix(in srgb, var(--bg) 62%, black)),
     radial-gradient(circle at 50% 36%, transparent 16%, color-mix(in srgb, var(--bg) 30%, black) 72%);
@@ -476,6 +504,22 @@
 
   .hero-parallax-layer {
     inset: -6vh -10vw;
+  }
+
+  .hero-parallax-shell {
+    perspective: 900px;
+  }
+
+  .hero-parallax-layer-base {
+    transform: translateZ(-18px);
+  }
+
+  .hero-parallax-layer-depth {
+    transform: translateZ(20px);
+  }
+
+  .hero-parallax-layer-glow {
+    transform: translateZ(58px);
   }
 }
 
