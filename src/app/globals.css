@@ -695,6 +695,103 @@ a.focus-ring:focus-visible::before {
   }
 }
 
+/* ===== CLI PARROTS ===== */
+.cli-parrot-section {
+  position: relative;
+}
+
+.cli-parrot-heading {
+  position: relative;
+  overflow: visible;
+}
+
+.cli-server-r-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.cli-parrot-perch {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 0.16em);
+  width: 2rem;
+  height: 2rem;
+  transform: translateX(-50%);
+  background: url('/assets/sprites/parrot-perch-strip.webp') 0 0 / 1440px 40px no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 1px 0 rgba(7, 12, 9, 0.85));
+  animation: cli-parrot-perch-anim 2.2s steps(36) infinite;
+}
+
+.cli-parrot-fly {
+  position: absolute;
+  top: 2.5rem;
+  left: -2.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  background: url('/assets/sprites/parrot-fly-strip.webp') 0 0 / 1584px 44px no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 1px 0 rgba(7, 12, 9, 0.78));
+  animation:
+    cli-parrot-fly-frames 1.25s steps(36) infinite,
+    cli-parrot-fly-path 13s linear infinite;
+}
+
+@keyframes cli-parrot-perch-anim {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -1440px 0;
+  }
+}
+
+@keyframes cli-parrot-fly-frames {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -1584px 0;
+  }
+}
+
+@keyframes cli-parrot-fly-path {
+  0% {
+    left: -2.4rem;
+    top: 2.2rem;
+    transform: scaleX(1) rotate(-4deg);
+  }
+  25% {
+    left: 32%;
+    top: -0.4rem;
+    transform: scaleX(1) rotate(5deg);
+  }
+  50% {
+    left: 74%;
+    top: 1.4rem;
+    transform: scaleX(1) rotate(-3deg);
+  }
+  51% {
+    transform: scaleX(-1) rotate(-3deg);
+  }
+  75% {
+    left: 38%;
+    top: 3.2rem;
+    transform: scaleX(-1) rotate(6deg);
+  }
+  100% {
+    left: -2.4rem;
+    top: 2.2rem;
+    transform: scaleX(-1) rotate(-4deg);
+  }
+}
+
 @media (max-width: 1024px) {
   .home-with-parallax section[id] {
     scroll-margin-top: var(--nav-offset);
@@ -702,6 +799,18 @@ a.focus-ring:focus-visible::before {
 
   .brand-wordmark {
     margin-left: 1.95rem !important;
+  }
+
+  .cli-parrot-perch {
+    width: 1.72rem;
+    height: 1.72rem;
+    bottom: calc(100% - 0.08em);
+  }
+
+  .cli-parrot-fly {
+    width: 1.84rem;
+    height: 1.84rem;
+    animation-duration: 1.35s, 11.5s;
   }
 
   .brand-miner {
@@ -796,6 +905,11 @@ a.focus-ring:focus-visible::before {
     margin-left: 0 !important;
   }
 
+  .cli-parrot-perch,
+  .cli-parrot-fly {
+    display: none;
+  }
+
   .brand-miner {
     display: none;
   }
@@ -880,6 +994,11 @@ a.focus-ring:focus-visible::before {
   .pickaxe-cursor { display: none; }
   .hero-parallax-shell { display: none; }
   .hero-runner { animation-duration: 0.01ms !important; }
+  .cli-parrot-perch,
+  .cli-parrot-fly {
+    animation: none !important;
+    display: none;
+  }
   .hero-steve-badge img {
     animation: none !important;
   }

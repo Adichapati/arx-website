@@ -417,14 +417,15 @@ function FeaturesSection() {
 /* ─── CLI REFERENCE ─── */
 function CLISection() {
   return (
-    <section className="section-padding" id="cli-preview">
-      <div className="container-wide">
+    <section className="section-padding cli-parrot-section" id="cli-preview">
+      <div className="container-wide relative">
+        <div className="cli-parrot-fly" aria-hidden="true" />
         <RevealedRule className="mb-16" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-20 items-start">
           <ScrollReveal>
             <p className="label-caps mb-4" style={{ color: "var(--muted)" }}>CLI Reference</p>
-            <h2 className="display font-semibold mb-6" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
-              Your entire server in a terminal.
+            <h2 className="display font-semibold mb-6 cli-parrot-heading" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "var(--heading)" }}>
+              Your entire serve<span className="cli-server-r-wrap">r<span className="cli-parrot-perch" aria-hidden="true" /></span> in a terminal.
             </h2>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "var(--body)" }}>
               The arx CLI provides complete lifecycle management. Available globally after installation.
